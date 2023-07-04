@@ -299,48 +299,11 @@ const TampilPenduduk = () => {
                   className="mb-3"
                   controlId="formPlaintextPassword"
                 >
-                  <Form.Label column sm="4" style={textRight}>
+                  <Form.Label column sm="3" style={textRight}>
                     Rt :
                   </Form.Label>
-                  <Col sm="8">
+                  <Col sm="9">
                     <Form.Control required value={kodeRt} disabled readOnly />
-                  </Col>
-                </Form.Group>
-              </Col>
-            </Row>
-            <Row>
-              <Col sm={6}>
-                <Form.Group
-                  as={Row}
-                  className="mb-3"
-                  controlId="formPlaintextPassword"
-                >
-                  <Form.Label column sm="4" style={textRight}>
-                    Latitude :
-                  </Form.Label>
-                  <Col sm="8">
-                    <Form.Control required value={latitude} disabled readOnly />
-                  </Col>
-                </Form.Group>
-              </Col>
-            </Row>
-            <Row>
-              <Col sm={6}>
-                <Form.Group
-                  as={Row}
-                  className="mb-3"
-                  controlId="formPlaintextPassword"
-                >
-                  <Form.Label column sm="4" style={textRight}>
-                    Longitude :
-                  </Form.Label>
-                  <Col sm="8">
-                    <Form.Control
-                      required
-                      value={longitude}
-                      disabled
-                      readOnly
-                    />
                   </Col>
                 </Form.Group>
               </Col>

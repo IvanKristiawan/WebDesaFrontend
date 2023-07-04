@@ -14,7 +14,7 @@ import {
   DialogContent,
   DialogContentText,
   DialogActions,
-  ButtonGroup
+  ButtonGroup,
 } from "@mui/material";
 import Map, {
   Marker,
@@ -22,7 +22,7 @@ import Map, {
   NavigationControl,
   FullscreenControl,
   ScaleControl,
-  GeolocateControl
+  GeolocateControl,
 } from "react-map-gl";
 import DeleteOutlineIcon from "@mui/icons-material/DeleteOutline";
 import EditIcon from "@mui/icons-material/Edit";
@@ -38,6 +38,7 @@ const TampilPendudukChild = () => {
   const [tempIdPendudukChild, setTempIdPendudukChild] = useState("");
   const [kkPenduduk, setKkPenduduk] = useState("");
   const [namaPenduduk, setNamaPenduduk] = useState("");
+  const [linkGoogleMaps, setLinkGoogleMaps] = useState("");
   const [latitude, setLatitude] = useState(0);
   const [longitude, setLongitude] = useState(0);
   const [penduduk, setPenduduk] = useState({});
@@ -64,13 +65,14 @@ const TampilPendudukChild = () => {
         `${tempUrl}/penduduks/${idPendudukChild}`,
         {
           _id: user.id,
-          token: user.token
+          token: user.token,
         }
       );
       setPenduduk(response.data);
       setTempIdPendudukChild(response.data.id);
       setKkPenduduk(response.data.kkPenduduk);
       setNamaPenduduk(response.data.namaPenduduk);
+      setLinkGoogleMaps(response.data.linkGoogleMaps);
       setLatitude(response.data.latitude);
       setLongitude(response.data.longitude);
     }
@@ -82,7 +84,7 @@ const TampilPendudukChild = () => {
       // Delete Penduduk
       await axios.post(`${tempUrl}/deletePenduduk/${tempIdPendudukChild}`, {
         _id: user.id,
-        token: user.token
+        token: user.token,
       });
       setLoading(false);
       navigate(`/daftarPenduduk/penduduk/${id}`);
@@ -96,7 +98,7 @@ const TampilPendudukChild = () => {
   }
 
   const textRight = {
-    textAlign: screenSize >= 650 && "right"
+    textAlign: screenSize >= 650 && "right",
   };
 
   return (
@@ -116,7 +118,7 @@ const TampilPendudukChild = () => {
           style={{
             width: `${screenSize - 400}px`,
             height: "400px",
-            marginTop: "20px"
+            marginTop: "20px",
           }}
         >
           <Map
@@ -125,7 +127,7 @@ const TampilPendudukChild = () => {
               longitude: longitude,
               zoom: 15,
               bearing: 0,
-              pitch: 0
+              pitch: 0,
             }}
             mapStyle="mapbox://styles/mapbox/streets-v9"
             mapboxAccessToken={TOKEN}
@@ -157,9 +159,9 @@ const TampilPendudukChild = () => {
                 latitude={Number(latitude)}
                 onClose={() => setPopupInfo(null)}
               >
-                <div>
-                  {kkPenduduk}, {namaPenduduk}
-                </div>
+                <div>KK : {kkPenduduk}</div>
+                <div>Nama : {namaPenduduk}</div>
+                <a href={linkGoogleMaps}>Lihat</a>
               </Popup>
             )}
           </Map>
@@ -254,50 +256,6 @@ const TampilPendudukChild = () => {
                 </Form.Group>
               </Col>
             </Row>
-            <Row>
-              <Col sm={6}>
-                <Form.Group
-                  as={Row}
-                  className="mb-3"
-                  controlId="formPlaintextPassword"
-                >
-                  <Form.Label column sm="3" style={textRight}>
-                    Latitude :
-                  </Form.Label>
-                  <Col sm="9">
-                    <Form.Control
-                      required
-                      type="number"
-                      value={latitude}
-                      disabled
-                      readOnly
-                    />
-                  </Col>
-                </Form.Group>
-              </Col>
-            </Row>
-            <Row>
-              <Col sm={6}>
-                <Form.Group
-                  as={Row}
-                  className="mb-3"
-                  controlId="formPlaintextPassword"
-                >
-                  <Form.Label column sm="3" style={textRight}>
-                    Longitude :
-                  </Form.Label>
-                  <Col sm="9">
-                    <Form.Control
-                      required
-                      type="number"
-                      value={longitude}
-                      disabled
-                      readOnly
-                    />
-                  </Col>
-                </Form.Group>
-              </Col>
-            </Row>
           </Form>
         </Card.Body>
       </Card>
@@ -311,5 +269,5 @@ const deleteButtonContainer = {
   mt: 4,
   display: "flex",
   flexWrap: "wrap",
-  justifyContent: "center"
+  justifyContent: "center",
 };
