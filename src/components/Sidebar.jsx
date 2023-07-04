@@ -77,7 +77,7 @@ const Sidebar = ({
       {/* Content */}
       <SidebarContent>
         <Menu iconShape="circle">
-          <SubMenu title={"Master"} icon={<FaBook />}>
+          <SubMenu title={"Desa"} icon={<FaBook />}>
             {user.akses.rt === true && (
               <MenuItem>
                 Rt <NavLink to="/rt" />
@@ -94,7 +94,7 @@ const Sidebar = ({
               </MenuItem>
             )}
           </SubMenu>
-          <SubMenu title={"Utility"} icon={<FaUserCog />}>
+          <SubMenu title={"Setelan"} icon={<FaUserCog />}>
             {user.akses.profilUser === true && (
               <MenuItem>
                 Profil User <NavLink to="/profilUser" />

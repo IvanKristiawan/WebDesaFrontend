@@ -11,7 +11,7 @@ import Map, {
   NavigationControl,
   FullscreenControl,
   ScaleControl,
-  GeolocateControl
+  GeolocateControl,
 } from "react-map-gl";
 import AddCircleOutlineIcon from "@mui/icons-material/AddCircleOutline";
 import jsPDF from "jspdf";
@@ -74,7 +74,7 @@ const TampilPenduduk = () => {
     setLoading(true);
     const response = await axios.post(`${tempUrl}/rts/${id}`, {
       _id: user.id,
-      token: user.token
+      token: user.token,
     });
     setKodeRt(response.data.kodeRt);
     setLatitude(response.data.latitude);
@@ -82,7 +82,7 @@ const TampilPenduduk = () => {
     const response2 = await axios.post(`${tempUrl}/penduduksByRt`, {
       rtId: id,
       _id: user.id,
-      token: user.token
+      token: user.token,
     });
     setPenduduksData(response2.data);
     setLoading(false);
@@ -93,29 +93,29 @@ const TampilPenduduk = () => {
     var current_date =
       date.getDate().toLocaleString("en-US", {
         minimumIntegerDigits: 2,
-        useGrouping: false
+        useGrouping: false,
       }) +
       "-" +
       (date.getMonth() + 1).toLocaleString("en-US", {
         minimumIntegerDigits: 2,
-        useGrouping: false
+        useGrouping: false,
       }) +
       "-" +
       date.getFullYear();
     var current_time =
       date.getHours().toLocaleString("en-US", {
         minimumIntegerDigits: 2,
-        useGrouping: false
+        useGrouping: false,
       }) +
       ":" +
       date.getMinutes().toLocaleString("en-US", {
         minimumIntegerDigits: 2,
-        useGrouping: false
+        useGrouping: false,
       }) +
       ":" +
       date.getSeconds().toLocaleString("en-US", {
         minimumIntegerDigits: 2,
-        useGrouping: false
+        useGrouping: false,
       });
     const doc = new jsPDF();
     doc.setFontSize(12);
@@ -134,8 +134,8 @@ const TampilPenduduk = () => {
       startY: doc.pageCount > 1 ? doc.autoTableEndPosY() + 20 : 45,
       headStyles: {
         fillColor: [117, 117, 117],
-        color: [0, 0, 0]
-      }
+        color: [0, 0, 0],
+      },
     });
     doc.save("daftarPenduduk.pdf");
   };
@@ -143,7 +143,7 @@ const TampilPenduduk = () => {
   const { onDownload } = useDownloadExcel({
     currentTableRef: tableRef.current,
     filename: "Penduduk",
-    sheet: "DaftarPenduduk"
+    sheet: "DaftarPenduduk",
   });
 
   if (loading) {
@@ -151,7 +151,7 @@ const TampilPenduduk = () => {
   }
 
   const textRight = {
-    textAlign: screenSize >= 650 && "right"
+    textAlign: screenSize >= 650 && "right",
   };
 
   return (
@@ -171,7 +171,7 @@ const TampilPenduduk = () => {
         style={{
           width: `${screenSize - 400}px`,
           height: "400px",
-          marginTop: "20px"
+          marginTop: "20px",
         }}
       >
         <Map
@@ -180,7 +180,7 @@ const TampilPenduduk = () => {
             longitude: longitude,
             zoom: 15,
             bearing: 0,
-            pitch: 0
+            pitch: 0,
           }}
           mapStyle="mapbox://styles/mapbox/streets-v9"
           mapboxAccessToken={TOKEN}
@@ -221,6 +221,7 @@ const TampilPenduduk = () => {
             variant="outlined"
             startIcon={<PrintIcon />}
             onClick={() => downloadPdf()}
+            style={{ marginTop: 20 }}
           >
             CETAK
           </Button>
@@ -248,6 +249,7 @@ const TampilPenduduk = () => {
             variant="outlined"
             startIcon={<DownloadIcon />}
             onClick={onDownload}
+            style={{ marginTop: 20 }}
           >
             EXCEL
           </Button>
@@ -376,24 +378,24 @@ const buttonModifierContainer = {
   mb: 4,
   display: "flex",
   flexWrap: "wrap",
-  justifyContent: "center"
+  justifyContent: "center",
 };
 
 const tableContainer = {
   pt: 4,
   display: "flex",
-  justifyContent: "center"
+  justifyContent: "center",
 };
 
 const searchBarContainer = {
   pt: 6,
   display: "flex",
-  justifyContent: "center"
+  justifyContent: "center",
 };
 
 const downloadButtons = {
   mt: 4,
   display: "flex",
   flexWrap: "wrap",
-  justifyContent: "center"
+  justifyContent: "center",
 };

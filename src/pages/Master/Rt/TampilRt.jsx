@@ -9,7 +9,7 @@ import {
   SearchBar,
   Loader,
   usePagination,
-  ButtonModifier
+  ButtonModifier,
 } from "../../../components";
 import { Container, Form, Row, Col } from "react-bootstrap";
 import { Box, Pagination, Button, ButtonGroup } from "@mui/material";
@@ -72,7 +72,7 @@ const TampilRt = () => {
     try {
       const response = await axios.post(`${tempUrl}/rts`, {
         _id: user.id,
-        token: user.token
+        token: user.token,
       });
       setRts(response.data);
     } catch (err) {
@@ -85,7 +85,7 @@ const TampilRt = () => {
     if (id) {
       const response = await axios.post(`${tempUrl}/rts/${id}`, {
         _id: user.id,
-        token: user.token
+        token: user.token,
       });
       setKodeRt(response.data.kodeRt);
       setLatitude(response.data.latitude);
@@ -98,7 +98,7 @@ const TampilRt = () => {
     try {
       await axios.post(`${tempUrl}/deleteRt/${id}`, {
         _id: user.id,
-        token: user.token
+        token: user.token,
       });
       getRts();
       setKodeRt("");
@@ -116,29 +116,29 @@ const TampilRt = () => {
     var current_date =
       date.getDate().toLocaleString("en-US", {
         minimumIntegerDigits: 2,
-        useGrouping: false
+        useGrouping: false,
       }) +
       "-" +
       (date.getMonth() + 1).toLocaleString("en-US", {
         minimumIntegerDigits: 2,
-        useGrouping: false
+        useGrouping: false,
       }) +
       "-" +
       date.getFullYear();
     var current_time =
       date.getHours().toLocaleString("en-US", {
         minimumIntegerDigits: 2,
-        useGrouping: false
+        useGrouping: false,
       }) +
       ":" +
       date.getMinutes().toLocaleString("en-US", {
         minimumIntegerDigits: 2,
-        useGrouping: false
+        useGrouping: false,
       }) +
       ":" +
       date.getSeconds().toLocaleString("en-US", {
         minimumIntegerDigits: 2,
-        useGrouping: false
+        useGrouping: false,
       });
     const doc = new jsPDF();
     doc.setFontSize(12);
@@ -157,8 +157,8 @@ const TampilRt = () => {
       startY: doc.pageCount > 1 ? doc.autoTableEndPosY() + 20 : 45,
       headStyles: {
         fillColor: [117, 117, 117],
-        color: [0, 0, 0]
-      }
+        color: [0, 0, 0],
+      },
     });
     doc.save("daftarRt.pdf");
   };
@@ -166,11 +166,11 @@ const TampilRt = () => {
   const { onDownload } = useDownloadExcel({
     currentTableRef: tableRef.current,
     filename: "Rt",
-    sheet: "DaftarRt"
+    sheet: "DaftarRt",
   });
 
   const textRight = {
-    textAlign: screenSize >= 650 && "right"
+    textAlign: screenSize >= 650 && "right",
   };
 
   if (loading) {
@@ -215,6 +215,7 @@ const TampilRt = () => {
             variant="outlined"
             startIcon={<PrintIcon />}
             onClick={() => downloadPdf()}
+            style={{ marginTop: 20 }}
           >
             CETAK
           </Button>
@@ -244,6 +245,7 @@ const TampilRt = () => {
             variant="outlined"
             startIcon={<DownloadIcon />}
             onClick={onDownload}
+            style={{ marginTop: 20 }}
           >
             EXCEL
           </Button>
@@ -358,24 +360,24 @@ const buttonModifierContainer = {
   mt: 4,
   display: "flex",
   flexWrap: "wrap",
-  justifyContent: "center"
+  justifyContent: "center",
 };
 
 const downloadButtons = {
   mt: 4,
   display: "flex",
   flexWrap: "wrap",
-  justifyContent: "center"
+  justifyContent: "center",
 };
 
 const searchBarContainer = {
   pt: 6,
   display: "flex",
-  justifyContent: "center"
+  justifyContent: "center",
 };
 
 const tableContainer = {
   pt: 4,
   display: "flex",
-  justifyContent: "center"
+  justifyContent: "center",
 };

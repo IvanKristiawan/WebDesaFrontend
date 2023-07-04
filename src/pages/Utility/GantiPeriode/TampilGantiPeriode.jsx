@@ -7,7 +7,13 @@ import { ShowTableGantiPeriode } from "../../../components/ShowTable";
 import { FetchErrorHandling } from "../../../components/FetchErrorHandling";
 import { SearchBar, Loader, usePagination } from "../../../components";
 import { Container, Form, Row, Col } from "react-bootstrap";
-import { Box, Pagination, Button, ButtonGroup } from "@mui/material";
+import {
+  Box,
+  Pagination,
+  Button,
+  ButtonGroup,
+  Typography,
+} from "@mui/material";
 import SearchIcon from "@mui/icons-material/Search";
 import ChangeCircleIcon from "@mui/icons-material/ChangeCircle";
 import jsPDF from "jspdf";
@@ -71,7 +77,7 @@ const TampilGantiPeriode = () => {
     try {
       const response = await axios.post(`${tempUrl}/tutupPeriodesAsc`, {
         _id: user.id,
-        token: user.token
+        token: user.token,
       });
       setPeriodes(response.data);
     } catch (err) {
@@ -84,7 +90,7 @@ const TampilGantiPeriode = () => {
     if (id) {
       const response = await axios.post(`${tempUrl}/tutupPeriodes/${id}`, {
         _id: user.id,
-        token: user.token
+        token: user.token,
       });
       setNamaPeriode(response.data.namaPeriode);
       setDariTanggal(response.data.dariTanggal);
@@ -96,20 +102,20 @@ const TampilGantiPeriode = () => {
     try {
       const findSetting = await axios.post(`${tempUrl}/lastSetting`, {
         _id: user.id,
-        token: user.token
+        token: user.token,
       });
       const gantiPeriodeUser = await axios.post(
         `${tempUrl}/updateUserThenLogin/${user.id}`,
         {
           namaPeriode,
           _id: user.id,
-          token: user.token
+          token: user.token,
         }
       );
       dispatch({
         type: "LOGIN_SUCCESS",
         payload: gantiPeriodeUser.data.details,
-        setting: findSetting.data
+        setting: findSetting.data,
       });
     } catch (err) {
       setIsFetchError(true);
@@ -121,29 +127,29 @@ const TampilGantiPeriode = () => {
     var current_date =
       date.getDate().toLocaleString("en-US", {
         minimumIntegerDigits: 2,
-        useGrouping: false
+        useGrouping: false,
       }) +
       "-" +
       (date.getMonth() + 1).toLocaleString("en-US", {
         minimumIntegerDigits: 2,
-        useGrouping: false
+        useGrouping: false,
       }) +
       "-" +
       date.getFullYear();
     var current_time =
       date.getHours().toLocaleString("en-US", {
         minimumIntegerDigits: 2,
-        useGrouping: false
+        useGrouping: false,
       }) +
       ":" +
       date.getMinutes().toLocaleString("en-US", {
         minimumIntegerDigits: 2,
-        useGrouping: false
+        useGrouping: false,
       }) +
       ":" +
       date.getSeconds().toLocaleString("en-US", {
         minimumIntegerDigits: 2,
-        useGrouping: false
+        useGrouping: false,
       });
     const doc = new jsPDF();
     doc.setFontSize(12);
@@ -162,8 +168,8 @@ const TampilGantiPeriode = () => {
       startY: doc.pageCount > 1 ? doc.autoTableEndPosY() + 20 : 45,
       headStyles: {
         fillColor: [117, 117, 117],
-        color: [0, 0, 0]
-      }
+        color: [0, 0, 0],
+      },
     });
     doc.save("daftarPeriode.pdf");
   };
@@ -171,16 +177,16 @@ const TampilGantiPeriode = () => {
   const { onDownload } = useDownloadExcel({
     currentTableRef: tableRef.current,
     filename: "Periode",
-    sheet: "DaftarPeriode"
+    sheet: "DaftarPeriode",
   });
 
   const textRight = {
-    textAlign: screenSize >= 650 && "right"
+    textAlign: screenSize >= 650 && "right",
   };
 
   const textRightSmall = {
     textAlign: screenSize >= 650 && "right",
-    fontSize: "13px"
+    fontSize: "13px",
   };
 
   if (loading) {
@@ -195,6 +201,9 @@ const TampilGantiPeriode = () => {
     <Container>
       <h3>Utility</h3>
       <h5 style={{ fontWeight: 400 }}>Daftar Periode</h5>
+      <Typography sx={subTitleText}>
+        Periode : {user.tutupperiode.namaPeriode}
+      </Typography>
       <Box sx={downloadButtons}>
         <ButtonGroup variant="outlined" color="secondary">
           <Button
@@ -225,6 +234,7 @@ const TampilGantiPeriode = () => {
             variant="outlined"
             startIcon={<PrintIcon />}
             onClick={() => downloadPdf()}
+            style={{ marginTop: 20 }}
           >
             CETAK
           </Button>
@@ -254,6 +264,7 @@ const TampilGantiPeriode = () => {
             variant="outlined"
             startIcon={<DownloadIcon />}
             onClick={onDownload}
+            style={{ marginTop: 20 }}
           >
             EXCEL
           </Button>
@@ -377,24 +388,28 @@ const buttonModifierContainer = {
   mt: 4,
   display: "flex",
   flexWrap: "wrap",
-  justifyContent: "center"
+  justifyContent: "center",
 };
 
 const downloadButtons = {
   mt: 4,
   display: "flex",
   flexWrap: "wrap",
-  justifyContent: "center"
+  justifyContent: "center",
 };
 
 const searchBarContainer = {
   pt: 6,
   display: "flex",
-  justifyContent: "center"
+  justifyContent: "center",
 };
 
 const tableContainer = {
   pt: 4,
   display: "flex",
-  justifyContent: "center"
+  justifyContent: "center",
+};
+
+const subTitleText = {
+  fontWeight: "900",
 };

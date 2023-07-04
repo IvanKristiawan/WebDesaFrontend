@@ -9,7 +9,7 @@ import {
   Button,
   Divider,
   Snackbar,
-  Alert
+  Alert,
 } from "@mui/material";
 import { Container } from "react-bootstrap";
 import DriveFileRenameOutlineIcon from "@mui/icons-material/DriveFileRenameOutline";
@@ -44,7 +44,7 @@ const TutupPeriode = () => {
         `${tempUrl}/lastTutupPeriodeNoFormatDate`,
         {
           _id: user.id,
-          token: user.token
+          token: user.token,
         }
       );
       let tempTgl = new Date(periode.data.dariTanggal);
@@ -149,30 +149,30 @@ const TutupPeriode = () => {
       await axios.post(`${tempUrl}/saveLastTutupPeriode`, {
         userIdInput: user.id,
         _id: user.id,
-        token: user.token
+        token: user.token,
       });
 
       // Ganti Periode
       const periode = await axios.post(`${tempUrl}/lastTutupPeriode`, {
         _id: user.id,
-        token: user.token
+        token: user.token,
       });
       const findSetting = await axios.post(`${tempUrl}/lastSetting`, {
         _id: user.id,
-        token: user.token
+        token: user.token,
       });
       const gantiPeriodeUser = await axios.post(
         `${tempUrl}/updateUserThenLogin/${user.id}`,
         {
           periodeId: periode.data.id,
           _id: user.id,
-          token: user.token
+          token: user.token,
         }
       );
       dispatch({
         type: "LOGIN_SUCCESS",
         payload: gantiPeriodeUser.data.details,
-        setting: findSetting.data
+        setting: findSetting.data,
       });
       setOpen(true);
       getPeriode();
@@ -238,21 +238,21 @@ const TutupPeriode = () => {
 export default TutupPeriode;
 
 const subTitleText = {
-  fontWeight: "900"
+  fontWeight: "900",
 };
 
 const dividerStyle = {
-  mt: 2
+  mt: 2,
 };
 
 const spacingTop = {
   mt: 4,
-  mb: 2
+  mb: 2,
 };
 
 const labelInput = {
   fontWeight: "600",
-  marginLeft: 1
+  marginLeft: 1,
 };
 
 const showDataWrapper = {
@@ -260,6 +260,6 @@ const showDataWrapper = {
   flex: 1,
   flexDirection: "column",
   maxWidth: {
-    md: "40vw"
-  }
+    md: "40vw",
+  },
 };

@@ -9,7 +9,7 @@ import {
   SearchBar,
   Loader,
   usePagination,
-  ButtonModifier
+  ButtonModifier,
 } from "../../../components";
 import { Container, Form, Row, Col } from "react-bootstrap";
 import { Box, Pagination, Button, ButtonGroup } from "@mui/material";
@@ -96,7 +96,7 @@ const DaftarUser = () => {
       const response = await axios.post(`${tempUrl}/users`, {
         tipeAdmin: user.tipeUser,
         _id: user.id,
-        token: user.token
+        token: user.token,
       });
       setUser(response.data);
     } catch (err) {
@@ -109,7 +109,7 @@ const DaftarUser = () => {
     if (id) {
       const response = await axios.post(`${tempUrl}/findUser/${id}`, {
         _id: user.id,
-        token: user.token
+        token: user.token,
       });
       setUsername(response.data.username);
       setTipeUser(response.data.tipeUser);
@@ -133,7 +133,7 @@ const DaftarUser = () => {
       await axios.post(`${tempUrl}/users/deleteUser/${id}`, {
         tipeAdmin: user.tipeUser,
         _id: user.id,
-        token: user.token
+        token: user.token,
       });
       getUsers();
 
@@ -151,29 +151,29 @@ const DaftarUser = () => {
     var current_date =
       date.getDate().toLocaleString("en-US", {
         minimumIntegerDigits: 2,
-        useGrouping: false
+        useGrouping: false,
       }) +
       "-" +
       (date.getMonth() + 1).toLocaleString("en-US", {
         minimumIntegerDigits: 2,
-        useGrouping: false
+        useGrouping: false,
       }) +
       "-" +
       date.getFullYear();
     var current_time =
       date.getHours().toLocaleString("en-US", {
         minimumIntegerDigits: 2,
-        useGrouping: false
+        useGrouping: false,
       }) +
       ":" +
       date.getMinutes().toLocaleString("en-US", {
         minimumIntegerDigits: 2,
-        useGrouping: false
+        useGrouping: false,
       }) +
       ":" +
       date.getSeconds().toLocaleString("en-US", {
         minimumIntegerDigits: 2,
-        useGrouping: false
+        useGrouping: false,
       });
     const doc = new jsPDF();
     doc.setFontSize(12);
@@ -192,8 +192,8 @@ const DaftarUser = () => {
       startY: doc.pageCount > 1 ? doc.autoTableEndPosY() + 20 : 45,
       headStyles: {
         fillColor: [117, 117, 117],
-        color: [0, 0, 0]
-      }
+        color: [0, 0, 0],
+      },
     });
     doc.save("daftarUser.pdf");
   };
@@ -201,16 +201,16 @@ const DaftarUser = () => {
   const { onDownload } = useDownloadExcel({
     currentTableRef: tableRef.current,
     filename: "Daftar User",
-    sheet: "DaftarUser"
+    sheet: "DaftarUser",
   });
 
   const textRight = {
-    textAlign: screenSize >= 650 && "right"
+    textAlign: screenSize >= 650 && "right",
   };
 
   const textRightSmall = {
     textAlign: screenSize >= 650 && "right",
-    fontSize: "14px"
+    fontSize: "14px",
   };
 
   if (loading) {
@@ -255,6 +255,7 @@ const DaftarUser = () => {
             variant="outlined"
             startIcon={<PrintIcon />}
             onClick={() => downloadPdf()}
+            style={{ marginTop: 20 }}
           >
             CETAK
           </Button>
@@ -282,6 +283,7 @@ const DaftarUser = () => {
             variant="outlined"
             startIcon={<DownloadIcon />}
             onClick={onDownload}
+            style={{ marginTop: 20 }}
           >
             EXCEL
           </Button>
@@ -437,14 +439,14 @@ const buttonModifierContainer = {
   mt: 4,
   display: "flex",
   flexWrap: "wrap",
-  justifyContent: "center"
+  justifyContent: "center",
 };
 
 const downloadButtons = {
   mt: 4,
   display: "flex",
   flexWrap: "wrap",
-  justifyContent: "center"
+  justifyContent: "center",
 };
 
 const showDataContainer = {
@@ -452,8 +454,8 @@ const showDataContainer = {
   display: "flex",
   flexDirection: {
     xs: "column",
-    sm: "row"
-  }
+    sm: "row",
+  },
 };
 
 const showDataWrapper = {
@@ -461,37 +463,37 @@ const showDataWrapper = {
   flex: 1,
   flexDirection: "column",
   maxWidth: {
-    md: "40vw"
-  }
+    md: "40vw",
+  },
 };
 
 const secondWrapper = {
   marginLeft: {
-    sm: 4
+    sm: 4,
   },
   marginTop: {
     sm: 0,
-    xs: 2
-  }
+    xs: 2,
+  },
 };
 
 const checkboxTitle = {
-  marginBottom: 0
+  marginBottom: 0,
 };
 
 const secondCheckboxTitle = {
   marginTop: 15,
-  marginBottom: 0
+  marginBottom: 0,
 };
 
 const searchBarContainer = {
   pt: 6,
   display: "flex",
-  justifyContent: "center"
+  justifyContent: "center",
 };
 
 const tableContainer = {
   pt: 4,
   display: "flex",
-  justifyContent: "center"
+  justifyContent: "center",
 };

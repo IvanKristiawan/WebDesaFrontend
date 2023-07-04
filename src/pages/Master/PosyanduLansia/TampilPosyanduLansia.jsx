@@ -9,7 +9,7 @@ import {
   SearchBar,
   Loader,
   usePagination,
-  ButtonModifier
+  ButtonModifier,
 } from "../../../components";
 import { Container, Form, Row, Col } from "react-bootstrap";
 import {
@@ -17,7 +17,7 @@ import {
   Pagination,
   Button,
   ButtonGroup,
-  Typography
+  Typography,
 } from "@mui/material";
 import SearchIcon from "@mui/icons-material/Search";
 import jsPDF from "jspdf";
@@ -88,7 +88,7 @@ const TampilPosyanduLansia = () => {
         dariTanggal: user.tutupperiode.dariTanggal,
         sampaiTanggal: user.tutupperiode.sampaiTanggal,
         _id: user.id,
-        token: user.token
+        token: user.token,
       });
       setPosyanduLansias(response.data);
     } catch (err) {
@@ -103,7 +103,7 @@ const TampilPosyanduLansia = () => {
         dariTanggal: user.tutupperiode.dariTanggal,
         sampaiTanggal: user.tutupperiode.sampaiTanggal,
         _id: user.id,
-        token: user.token
+        token: user.token,
       });
       setKkPosyanduLansia(response.data.kkPosyanduLansia);
       setNikPosyanduLansia(response.data.nikPosyanduLansia);
@@ -114,10 +114,10 @@ const TampilPosyanduLansia = () => {
         .getDate()
         .toLocaleString("en-US", {
           minimumIntegerDigits: 2,
-          useGrouping: false
+          useGrouping: false,
         })}-${(newTanggalLahir.getMonth() + 1).toLocaleString("en-US", {
         minimumIntegerDigits: 2,
-        useGrouping: false
+        useGrouping: false,
       })}-${newTanggalLahir.getFullYear()}`;
       setTglLahirPosyanduLansia(tempTanggalLahir);
       setBbPosyanduLansia(response.data.bbPosyanduLansia);
@@ -130,7 +130,7 @@ const TampilPosyanduLansia = () => {
     try {
       await axios.post(`${tempUrl}/deletePosyanduLansia/${id}`, {
         _id: user.id,
-        token: user.token
+        token: user.token,
       });
       getPosyanduLansias();
       setKkPosyanduLansia("");
@@ -153,29 +153,29 @@ const TampilPosyanduLansia = () => {
     var current_date =
       date.getDate().toLocaleString("en-US", {
         minimumIntegerDigits: 2,
-        useGrouping: false
+        useGrouping: false,
       }) +
       "-" +
       (date.getMonth() + 1).toLocaleString("en-US", {
         minimumIntegerDigits: 2,
-        useGrouping: false
+        useGrouping: false,
       }) +
       "-" +
       date.getFullYear();
     var current_time =
       date.getHours().toLocaleString("en-US", {
         minimumIntegerDigits: 2,
-        useGrouping: false
+        useGrouping: false,
       }) +
       ":" +
       date.getMinutes().toLocaleString("en-US", {
         minimumIntegerDigits: 2,
-        useGrouping: false
+        useGrouping: false,
       }) +
       ":" +
       date.getSeconds().toLocaleString("en-US", {
         minimumIntegerDigits: 2,
-        useGrouping: false
+        useGrouping: false,
       });
     const doc = new jsPDF();
     doc.setFontSize(12);
@@ -194,8 +194,8 @@ const TampilPosyanduLansia = () => {
       startY: doc.pageCount > 1 ? doc.autoTableEndPosY() + 20 : 45,
       headStyles: {
         fillColor: [117, 117, 117],
-        color: [0, 0, 0]
-      }
+        color: [0, 0, 0],
+      },
     });
     doc.save("daftarPosyanduLansia.pdf");
   };
@@ -203,11 +203,11 @@ const TampilPosyanduLansia = () => {
   const { onDownload } = useDownloadExcel({
     currentTableRef: tableRef.current,
     filename: "PosyanduLansia",
-    sheet: "DaftarPosyanduLansia"
+    sheet: "DaftarPosyanduLansia",
   });
 
   const textRight = {
-    textAlign: screenSize >= 650 && "right"
+    textAlign: screenSize >= 650 && "right",
   };
 
   if (loading) {
@@ -255,6 +255,7 @@ const TampilPosyanduLansia = () => {
             variant="outlined"
             startIcon={<PrintIcon />}
             onClick={() => downloadPdf()}
+            style={{ marginTop: 20 }}
           >
             CETAK
           </Button>
@@ -291,6 +292,7 @@ const TampilPosyanduLansia = () => {
             variant="outlined"
             startIcon={<DownloadIcon />}
             onClick={onDownload}
+            style={{ marginTop: 20 }}
           >
             EXCEL
           </Button>
@@ -496,28 +498,28 @@ const buttonModifierContainer = {
   mt: 4,
   display: "flex",
   flexWrap: "wrap",
-  justifyContent: "center"
+  justifyContent: "center",
 };
 
 const downloadButtons = {
   mt: 4,
   display: "flex",
   flexWrap: "wrap",
-  justifyContent: "center"
+  justifyContent: "center",
 };
 
 const searchBarContainer = {
   pt: 6,
   display: "flex",
-  justifyContent: "center"
+  justifyContent: "center",
 };
 
 const tableContainer = {
   pt: 4,
   display: "flex",
-  justifyContent: "center"
+  justifyContent: "center",
 };
 
 const subTitleText = {
-  fontWeight: "900"
+  fontWeight: "900",
 };
