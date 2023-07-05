@@ -14,7 +14,7 @@ import {
   DialogTitle,
   DialogContent,
   DialogContentText,
-  DialogActions
+  DialogActions,
 } from "@mui/material";
 import EditIcon from "@mui/icons-material/Edit";
 
@@ -28,10 +28,17 @@ const UbahUser = () => {
   const [tipeUser, setTipeUser] = useState("");
   const [password, setPassword] = useState("");
 
-  // Akses Master
+  // Akses Desa
   const [rt, setRt] = useState(false);
   const [penduduk, setPenduduk] = useState(false);
   const [bankSampah, setBankSampah] = useState(false);
+
+  // Lokasi Web
+  const [lokasiPetinggi, setLokasiPetinggi] = useState(false);
+  const [lokasiUmkm, setLokasiUmkm] = useState(false);
+  const [lokasiWisata, setLokasiWisata] = useState(false);
+
+  // Akses Posyandu
   const [posyanduLansia, setPosyanduLansia] = useState(false);
 
   // Akses Utility
@@ -71,18 +78,24 @@ const UbahUser = () => {
     setLoading(true);
     const response = await axios.post(`${tempUrl}/findUser/${id}`, {
       _id: user.id,
-      token: user.token
+      token: user.token,
     });
     setUsername(response.data.username);
     setUsernameLama(response.data.username);
     setTipeUser(response.data.tipeUser);
 
-    // Akses Master
+    // Akses Desa
     setRt(response.data.akses.rt);
     setPenduduk(response.data.akses.penduduk);
     setBankSampah(response.data.akses.bankSampah);
+
+    // Akses Lokasi Web
+    setLokasiPetinggi(response.data.akses.lokasiPetinggi);
+    setLokasiUmkm(response.data.akses.lokasiUmkm);
+    setLokasiWisata(response.data.akses.lokasiWisata);
+
+    // Akses Posyandu
     setPosyanduLansia(response.data.akses.posyanduLansia);
-    setSettingAkses(response.data.akses.setting);
 
     // Akses Utility
     setProfilUser(response.data.akses.profilUser);
@@ -102,7 +115,7 @@ const UbahUser = () => {
         let tempUsername = await axios.post(`${tempUrl}/getUsername`, {
           username,
           _id: user.id,
-          token: user.token
+          token: user.token,
         });
         let isUsernameNotValid =
           tempUsername.data.length > 0 && username !== usernameLama;
@@ -122,13 +135,16 @@ const UbahUser = () => {
               rt,
               penduduk,
               bankSampah,
+              lokasiPetinggi,
+              lokasiUmkm,
+              lokasiWisata,
               posyanduLansia,
               profilUser,
               daftarUser,
-              setting: settingAkses
+              setting: settingAkses,
             },
             _id: user.id,
-            token: user.token
+            token: user.token,
           });
           setLoading(false);
 
@@ -151,12 +167,12 @@ const UbahUser = () => {
   };
 
   const textRight = {
-    textAlign: screenSize >= 650 && "right"
+    textAlign: screenSize >= 650 && "right",
   };
 
   const textRightSmall = {
     textAlign: screenSize >= 650 && "right",
-    fontSize: "14px"
+    fontSize: "14px",
   };
 
   if (loading) {
@@ -265,7 +281,7 @@ const UbahUser = () => {
               <h4>Hak Akses User</h4>
               <Box sx={showDataContainer}>
                 <Box sx={showDataWrapper}>
-                  <p style={checkboxTitle}>Master</p>
+                  <p style={checkboxTitle}>Desa</p>
                   <Form>
                     <Form.Check
                       type="checkbox"
@@ -288,6 +304,36 @@ const UbahUser = () => {
                     <Form.Check
                       type="checkbox"
                       label="Posyandu Lansia"
+                      checked={posyanduLansia}
+                      onChange={() => setPosyanduLansia(!posyanduLansia)}
+                    />
+                  </Form>
+                  <p style={checkboxTitle}>Lokasi Web</p>
+                  <Form>
+                    <Form.Check
+                      type="checkbox"
+                      label="Petinggi"
+                      checked={lokasiPetinggi}
+                      onChange={() => setLokasiPetinggi(!lokasiPetinggi)}
+                    />
+                    <Form.Check
+                      type="checkbox"
+                      label="Umkm"
+                      checked={lokasiUmkm}
+                      onChange={() => setLokasiUmkm(!lokasiUmkm)}
+                    />
+                    <Form.Check
+                      type="checkbox"
+                      label="Wisata"
+                      checked={lokasiWisata}
+                      onChange={() => setLokasiWisata(!lokasiWisata)}
+                    />
+                  </Form>
+                  <p style={checkboxTitle}>Posyandu</p>
+                  <Form>
+                    <Form.Check
+                      type="checkbox"
+                      label="Lansia"
                       checked={posyanduLansia}
                       onChange={() => setPosyanduLansia(!posyanduLansia)}
                     />
@@ -356,8 +402,8 @@ const showDataContainer = {
   display: "flex",
   flexDirection: {
     xs: "column",
-    sm: "row"
-  }
+    sm: "row",
+  },
 };
 
 const showDataWrapper = {
@@ -365,33 +411,33 @@ const showDataWrapper = {
   flex: 1,
   flexDirection: "column",
   maxWidth: {
-    md: "40vw"
-  }
+    md: "40vw",
+  },
 };
 
 const spacingTop = {
-  mt: 4
+  mt: 4,
 };
 
 const alertBox = {
-  width: "100%"
+  width: "100%",
 };
 
 const secondWrapper = {
   marginLeft: {
-    sm: 4
+    sm: 4,
   },
   marginTop: {
     sm: 0,
-    xs: 4
-  }
+    xs: 4,
+  },
 };
 
 const checkboxTitle = {
-  marginBottom: 0
+  marginBottom: 0,
 };
 
 const secondCheckboxTitle = {
   marginTop: 15,
-  marginBottom: 0
+  marginBottom: 0,
 };

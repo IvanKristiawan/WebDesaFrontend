@@ -31,10 +31,17 @@ const DaftarUser = () => {
   const [username, setUsername] = useState("");
   const [tipeUser, setTipeUser] = useState("");
 
-  // Akses Master
+  // Akses Desa
   const [rt, setRt] = useState(false);
   const [penduduk, setPenduduk] = useState(false);
   const [bankSampah, setBankSampah] = useState(false);
+
+  // Lokasi Web
+  const [lokasiPetinggi, setLokasiPetinggi] = useState(false);
+  const [lokasiUmkm, setLokasiUmkm] = useState(false);
+  const [lokasiWisata, setLokasiWisata] = useState(false);
+
+  // Akses Posyandu
   const [posyanduLansia, setPosyanduLansia] = useState(false);
 
   // Akses Utility
@@ -114,10 +121,17 @@ const DaftarUser = () => {
       setUsername(response.data.username);
       setTipeUser(response.data.tipeUser);
 
-      // Akses Master
+      // Akses Desa
       setRt(response.data.akses.rt);
       setPenduduk(response.data.akses.penduduk);
       setBankSampah(response.data.akses.bankSampah);
+
+      // Akses Lokasi Web
+      setLokasiPetinggi(response.data.akses.lokasiPetinggi);
+      setLokasiUmkm(response.data.akses.lokasiUmkm);
+      setLokasiWisata(response.data.akses.lokasiWisata);
+
+      // Akses Posyandu
       setPosyanduLansia(response.data.akses.posyanduLansia);
 
       // Akses Utility
@@ -357,7 +371,7 @@ const DaftarUser = () => {
               <h4>Hak Akses User</h4>
               <Box sx={showDataContainer}>
                 <Box sx={showDataWrapper}>
-                  <p style={checkboxTitle}>Master</p>
+                  <p style={checkboxTitle}>Desa</p>
                   <Form>
                     <Form.Check
                       type="checkbox"
@@ -377,9 +391,33 @@ const DaftarUser = () => {
                       disabled
                       checked={bankSampah}
                     />
+                  </Form>
+                  <p style={checkboxTitle}>Lokasi Web</p>
+                  <Form>
                     <Form.Check
                       type="checkbox"
-                      label="Posyandu Lansia"
+                      label="Petinggi"
+                      disabled
+                      checked={lokasiPetinggi}
+                    />
+                    <Form.Check
+                      type="checkbox"
+                      label="Umkm"
+                      disabled
+                      checked={lokasiUmkm}
+                    />
+                    <Form.Check
+                      type="checkbox"
+                      label="Wisata"
+                      disabled
+                      checked={lokasiWisata}
+                    />
+                  </Form>
+                  <p style={checkboxTitle}>Posyandu</p>
+                  <Form>
+                    <Form.Check
+                      type="checkbox"
+                      label="Lansia"
                       disabled
                       checked={posyanduLansia}
                     />

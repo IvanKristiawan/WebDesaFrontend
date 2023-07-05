@@ -103,7 +103,7 @@ const TampilPendudukChild = () => {
 
   return (
     <Container>
-      <h3>Master</h3>
+      <h3>Desa</h3>
       <h5 style={{ fontWeight: 400 }}>Detail Penduduk</h5>
       <Button
         variant="outlined"

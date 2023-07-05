@@ -15,15 +15,15 @@ const useStyles = makeStyles({
   root: {
     "& .MuiTableCell-head": {
       color: "white",
-      backgroundColor: Colors.blue700
-    }
+      backgroundColor: Colors.blue700,
+    },
   },
   tableRightBorder: {
     borderWidth: 0,
     borderRightWidth: 1,
     borderColor: "white",
-    borderStyle: "solid"
-  }
+    borderStyle: "solid",
+  },
 });
 
 export function ShowTableUser({ currentPosts, searchTerm }) {
@@ -61,7 +61,7 @@ export function ShowTableUser({ currentPosts, searchTerm }) {
                 sx={{
                   "&:last-child td, &:last-child th": { border: 0 },
                   "&:hover": { bgcolor: Colors.grey300 },
-                  cursor: "pointer"
+                  cursor: "pointer",
                 }}
                 onClick={() => {
                   navigate(`/daftarUser/${user.id}`);
@@ -127,7 +127,7 @@ export function ShowTableGantiPeriode({ currentPosts, searchTerm }) {
                 sx={{
                   "&:last-child td, &:last-child th": { border: 0 },
                   "&:hover": { bgcolor: Colors.grey300 },
-                  cursor: "pointer"
+                  cursor: "pointer",
                 }}
                 onClick={() => {
                   navigate(`/gantiPeriode/${user.id}`);
@@ -174,7 +174,7 @@ export function ShowTableRt({ currentPosts, searchTerm }) {
                 sx={{
                   "&:last-child td, &:last-child th": { border: 0 },
                   "&:hover": { bgcolor: Colors.grey300 },
-                  cursor: "pointer"
+                  cursor: "pointer",
                 }}
                 onClick={() => {
                   navigate(`/rt/${user.id}`);
@@ -219,7 +219,7 @@ export function ShowTableDaftarPenduduk({ currentPosts, searchTerm }) {
                 sx={{
                   "&:last-child td, &:last-child th": { border: 0 },
                   "&:hover": { bgcolor: Colors.grey300 },
-                  cursor: "pointer"
+                  cursor: "pointer",
                 }}
                 onClick={() => {
                   navigate(`/daftarPenduduk/penduduk/${user.id}`);
@@ -276,7 +276,7 @@ export function ShowTablePenduduk({ id, currentPosts, searchTerm }) {
                   sx={{
                     "&:last-child td, &:last-child th": { border: 0 },
                     "&:hover": { bgcolor: Colors.grey300 },
-                    cursor: "pointer"
+                    cursor: "pointer",
                   }}
                   onClick={() => {
                     navigate(`/daftarPenduduk/penduduk/${id}/${user.id}`);
@@ -289,6 +289,147 @@ export function ShowTablePenduduk({ id, currentPosts, searchTerm }) {
                 </TableRow>
               );
             })}
+        </TableBody>
+      </Table>
+    </TableContainer>
+  );
+}
+
+export function ShowTableLokasiPetinggi({ currentPosts, searchTerm }) {
+  let navigate = useNavigate();
+  const classes = useStyles();
+  return (
+    <TableContainer component={Paper} sx={{ width: "100%" }}>
+      <Table aria-label="simple table">
+        <TableHead className={classes.root}>
+          <TableRow>
+            <TableCell sx={{ fontWeight: "bold" }}>Nama Petinggi</TableCell>
+          </TableRow>
+        </TableHead>
+        <TableBody>
+          {currentPosts
+            .filter((val) => {
+              if (searchTerm === "") {
+                return val;
+              } else if (
+                val.namaLokasiPetinggi
+                  .toUpperCase()
+                  .includes(searchTerm.toUpperCase())
+              ) {
+                return val;
+              }
+            })
+            .map((user, index) => (
+              <TableRow
+                key={user.id}
+                sx={{
+                  "&:last-child td, &:last-child th": { border: 0 },
+                  "&:hover": { bgcolor: Colors.grey300 },
+                  cursor: "pointer",
+                }}
+                onClick={() => {
+                  navigate(`/lokasiPetinggi/${user.id}`);
+                }}
+              >
+                <TableCell component="th" scope="row">
+                  {user.namaLokasiPetinggi}
+                </TableCell>
+              </TableRow>
+            ))}
+        </TableBody>
+      </Table>
+    </TableContainer>
+  );
+}
+
+export function ShowTableLokasiUmkm({ currentPosts, searchTerm }) {
+  let navigate = useNavigate();
+  const classes = useStyles();
+  return (
+    <TableContainer component={Paper} sx={{ width: "100%" }}>
+      <Table aria-label="simple table">
+        <TableHead className={classes.root}>
+          <TableRow>
+            <TableCell sx={{ fontWeight: "bold" }}>Nama Umkm</TableCell>
+          </TableRow>
+        </TableHead>
+        <TableBody>
+          {currentPosts
+            .filter((val) => {
+              if (searchTerm === "") {
+                return val;
+              } else if (
+                val.namaLokasiUmkm
+                  .toUpperCase()
+                  .includes(searchTerm.toUpperCase())
+              ) {
+                return val;
+              }
+            })
+            .map((user, index) => (
+              <TableRow
+                key={user.id}
+                sx={{
+                  "&:last-child td, &:last-child th": { border: 0 },
+                  "&:hover": { bgcolor: Colors.grey300 },
+                  cursor: "pointer",
+                }}
+                onClick={() => {
+                  navigate(`/lokasiUmkm/${user.id}`);
+                }}
+              >
+                <TableCell component="th" scope="row">
+                  {user.namaLokasiUmkm}
+                </TableCell>
+              </TableRow>
+            ))}
+        </TableBody>
+      </Table>
+    </TableContainer>
+  );
+}
+
+export function ShowTableLokasiWisata({ currentPosts, searchTerm }) {
+  let navigate = useNavigate();
+  const classes = useStyles();
+  return (
+    <TableContainer component={Paper} sx={{ width: "100%" }}>
+      <Table aria-label="simple table">
+        <TableHead className={classes.root}>
+          <TableRow>
+            <TableCell sx={{ fontWeight: "bold" }}>Nama Wisata</TableCell>
+          </TableRow>
+        </TableHead>
+        <TableBody>
+          {currentPosts
+            .filter((val) => {
+              if (searchTerm === "") {
+                return val;
+              } else if (
+                val.namaLokasiWisata
+                  .toUpperCase()
+                  .includes(searchTerm.toUpperCase())
+              ) {
+                return val;
+              }
+            })
+            .map((user, index) => (
+              <TableRow
+                key={user.id}
+                sx={{
+                  "&:last-child td, &:last-child th": { border: 0 },
+                  "&:hover": { bgcolor: Colors.grey300 },
+                  cursor: "pointer",
+                }}
+                onClick={() => {
+                  navigate(`/lokasiWisata/${user.id}`);
+                }}
+              >
+                <TableCell component="th" scope="row">
+                  {user.namaLokasiWisata}
+                </TableCell>
+              </TableRow>
+            ))}
         </TableBody>
       </Table>
     </TableContainer>
@@ -343,7 +484,7 @@ export function ShowTablePosyanduLansia({ currentPosts, searchTerm }) {
                 sx={{
                   "&:last-child td, &:last-child th": { border: 0 },
                   "&:hover": { bgcolor: Colors.grey300 },
-                  cursor: "pointer"
+                  cursor: "pointer",
                 }}
                 onClick={() => {
                   navigate(`/posyanduLansia/${user.id}`);

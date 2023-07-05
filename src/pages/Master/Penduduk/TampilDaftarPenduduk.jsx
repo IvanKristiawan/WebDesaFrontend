@@ -47,7 +47,7 @@ const TampilDaftarPenduduk = () => {
     try {
       const allBelis = await axios.post(`${tempUrl}/rts`, {
         _id: user.id,
-        token: user.token
+        token: user.token,
       });
       setRtsData(allBelis.data);
     } catch (err) {
@@ -66,7 +66,7 @@ const TampilDaftarPenduduk = () => {
 
   return (
     <Box>
-      <Typography color="#757575">Master</Typography>
+      <Typography color="#757575">Desa</Typography>
       <Typography variant="h4" sx={subTitleText}>
         Daftar Rt
       </Typography>
@@ -96,21 +96,21 @@ const TampilDaftarPenduduk = () => {
 export default TampilDaftarPenduduk;
 
 const subTitleText = {
-  fontWeight: "900"
+  fontWeight: "900",
 };
 
 const dividerStyle = {
-  pt: 4
+  pt: 4,
 };
 
 const searchBarContainer = {
   pt: 6,
   display: "flex",
-  justifyContent: "center"
+  justifyContent: "center",
 };
 
 const tableContainer = {
   pt: 4,
   display: "flex",
-  justifyContent: "center"
+  justifyContent: "center",
 };

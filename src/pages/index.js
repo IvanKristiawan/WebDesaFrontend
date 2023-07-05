@@ -26,3 +26,14 @@ export { default as UbahPendudukChild } from "./Master/Penduduk/UbahPendudukChil
 export { default as TampilPosyanduLansia } from "./Master/PosyanduLansia/TampilPosyanduLansia";
 export { default as TambahPosyanduLansia } from "./Master/PosyanduLansia/TambahPosyanduLansia";
 export { default as UbahPosyanduLansia } from "./Master/PosyanduLansia/UbahPosyanduLansia";
+// Lokasi Petinggi
+export { default as TampilLokasiPetinggi } from "./Master/LokasiPetinggi/TampilLokasiPetinggi";
+export { default as TambahLokasiPetinggi } from "./Master/LokasiPetinggi/TambahLokasiPetinggi";
+export { default as UbahLokasiPetinggi } from "./Master/LokasiPetinggi/UbahLokasiPetinggi";
+// Lokasi Umkm
+export { default as TampilLokasiUmkm } from "./Master/LokasiUmkm/TampilLokasiUmkm";
+export { default as TambahLokasiUmkm } from "./Master/LokasiUmkm/TambahLokasiUmkm";
+export { default as UbahLokasiUmkm } from "./Master/LokasiUmkm/UbahLokasiUmkm";
+// Lokasi Wisata
+export { default as TampilLokasiWisata } from "./Master/LokasiWisata/TampilLokasiWisata";
+export { default as TambahLokasiWisata } from "./Master/LokasiWisata/TambahLokasiWisata";

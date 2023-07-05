@@ -25,7 +25,15 @@ import {
   UbahPendudukChild,
   TampilPosyanduLansia,
   TambahPosyanduLansia,
-  UbahPosyanduLansia
+  UbahPosyanduLansia,
+  TampilLokasiPetinggi,
+  UbahLokasiPetinggi,
+  TambahLokasiPetinggi,
+  TampilLokasiUmkm,
+  UbahLokasiUmkm,
+  TambahLokasiUmkm,
+  TampilLokasiWisata,
+  TambahLokasiWisata,
 } from "./pages/index";
 import { FaBars } from "react-icons/fa";
 
@@ -117,6 +125,36 @@ const App = () => {
     const { user } = useContext(AuthContext);
 
     if (user.akses.posyanduLansia) {
+      return children;
+    }
+
+    return <Navigate to="/unauthorized" />;
+  };
+
+  const LOKASIPETINGGIRoute = ({ children }) => {
+    const { user } = useContext(AuthContext);
+
+    if (user.akses.lokasiPetinggi) {
+      return children;
+    }
+
+    return <Navigate to="/unauthorized" />;
+  };
+
+  const LOKASIUMKMRoute = ({ children }) => {
+    const { user } = useContext(AuthContext);
+
+    if (user.akses.lokasiUmkm) {
+      return children;
+    }
+
+    return <Navigate to="/unauthorized" />;
+  };
+
+  const LOKASIWISATARoute = ({ children }) => {
+    const { user } = useContext(AuthContext);
+
+    if (user.akses.lokasiWisata) {
       return children;
     }
 
@@ -349,6 +387,105 @@ const App = () => {
               <POSYANDULANSIARoute>
                 <TambahPosyanduLansia />
               </POSYANDULANSIARoute>
+            }
+          />
+          {/* Lokasi Petinggi */}
+          <Route
+            path="/lokasiPetinggi"
+            element={
+              <LOKASIPETINGGIRoute>
+                <TampilLokasiPetinggi />
+              </LOKASIPETINGGIRoute>
+            }
+          />
+          <Route
+            path="/lokasiPetinggi/:id"
+            element={
+              <LOKASIPETINGGIRoute>
+                <TampilLokasiPetinggi />
+              </LOKASIPETINGGIRoute>
+            }
+          />
+          <Route
+            path="/lokasiPetinggi/:id/edit"
+            element={
+              <LOKASIPETINGGIRoute>
+                <UbahLokasiPetinggi />
+              </LOKASIPETINGGIRoute>
+            }
+          />
+          <Route
+            path="/lokasiPetinggi/tambahLokasiPetinggi"
+            element={
+              <LOKASIPETINGGIRoute>
+                <TambahLokasiPetinggi />
+              </LOKASIPETINGGIRoute>
+            }
+          />
+          {/* Lokasi Umkm */}
+          <Route
+            path="/lokasiUmkm"
+            element={
+              <LOKASIUMKMRoute>
+                <TampilLokasiUmkm />
+              </LOKASIUMKMRoute>
+            }
+          />
+          <Route
+            path="/lokasiUmkm/:id"
+            element={
+              <LOKASIUMKMRoute>
+                <TampilLokasiUmkm />
+              </LOKASIUMKMRoute>
+            }
+          />
+          <Route
+            path="/lokasiUmkm/:id/edit"
+            element={
+              <LOKASIUMKMRoute>
+                <UbahLokasiUmkm />
+              </LOKASIUMKMRoute>
+            }
+          />
+          <Route
+            path="/lokasiUmkm/tambahLokasiUmkm"
+            element={
+              <LOKASIUMKMRoute>
+                <TambahLokasiUmkm />
+              </LOKASIUMKMRoute>
+            }
+          />
+          {/* Lokasi Wisata */}
+          <Route
+            path="/lokasiWisata"
+            element={
+              <LOKASIWISATARoute>
+                <TampilLokasiWisata />
+              </LOKASIWISATARoute>
+            }
+          />
+          <Route
+            path="/lokasiWisata/:id"
+            element={
+              <LOKASIWISATARoute>
+                <TampilLokasiWisata />
+              </LOKASIWISATARoute>
+            }
+          />
+          {/* <Route
+            path="/lokasiWisata/:id/edit"
+            element={
+              <LOKASIWISATARoute>
+                <UbahLokasiWisata />
+              </LOKASIWISATARoute>
+            }
+          /> */}
+          <Route
+            path="/lokasiWisata/tambahLokasiWisata"
+            element={
+              <LOKASIWISATARoute>
+                <TambahLokasiWisata />
+              </LOKASIWISATARoute>
             }
           />
         </Routes>

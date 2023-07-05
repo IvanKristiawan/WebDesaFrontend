@@ -16,6 +16,7 @@ const TambahPenduduk = () => {
   const [validated, setValidated] = useState(false);
   const [kkPenduduk, setKkPenduduk] = useState("");
   const [namaPenduduk, setNamaPenduduk] = useState("");
+  const [linkGoogleMaps, setLinkGoogleMaps] = useState("");
   const [latitude, setLatitude] = useState("");
   const [longitude, setLongitude] = useState("");
 
@@ -41,11 +42,12 @@ const TambahPenduduk = () => {
         await axios.post(`${tempUrl}/savePenduduk`, {
           kkPenduduk,
           namaPenduduk,
+          linkGoogleMaps,
           latitude,
           longitude,
           rtId: id,
           _id: user.id,
-          token: user.token
+          token: user.token,
         });
         setLoading(false);
         navigate(`/daftarPenduduk/penduduk/${id}`);
@@ -65,12 +67,12 @@ const TambahPenduduk = () => {
   }
 
   const textRight = {
-    textAlign: screenSize >= 650 && "right"
+    textAlign: screenSize >= 650 && "right",
   };
 
   return (
     <Container>
-      <h3>Master</h3>
+      <h3>Desa</h3>
       <h5 style={{ fontWeight: 400 }}>Tambah Penduduk</h5>
       <hr />
       <Card>
@@ -84,10 +86,10 @@ const TambahPenduduk = () => {
                   className="mb-3"
                   controlId="formPlaintextPassword"
                 >
-                  <Form.Label column sm="3" style={textRight}>
+                  <Form.Label column sm="4" style={textRight}>
                     KK :
                   </Form.Label>
-                  <Col sm="9">
+                  <Col sm="8">
                     <Form.Control
                       required
                       value={kkPenduduk}
@@ -106,10 +108,10 @@ const TambahPenduduk = () => {
                   className="mb-3"
                   controlId="formPlaintextPassword"
                 >
-                  <Form.Label column sm="3" style={textRight}>
+                  <Form.Label column sm="4" style={textRight}>
                     Nama :
                   </Form.Label>
-                  <Col sm="9">
+                  <Col sm="8">
                     <Form.Control
                       required
                       value={namaPenduduk}
@@ -128,10 +130,30 @@ const TambahPenduduk = () => {
                   className="mb-3"
                   controlId="formPlaintextPassword"
                 >
-                  <Form.Label column sm="3" style={textRight}>
+                  <Form.Label column sm="4" style={textRight}>
+                    Link Google Maps :
+                  </Form.Label>
+                  <Col sm="8">
+                    <Form.Control
+                      required
+                      value={linkGoogleMaps}
+                      onChange={(e) => setLinkGoogleMaps(e.target.value)}
+                    />
+                  </Col>
+                </Form.Group>
+              </Col>
+            </Row>
+            <Row>
+              <Col sm={6}>
+                <Form.Group
+                  as={Row}
+                  className="mb-3"
+                  controlId="formPlaintextPassword"
+                >
+                  <Form.Label column sm="4" style={textRight}>
                     Latitude :
                   </Form.Label>
-                  <Col sm="9">
+                  <Col sm="8">
                     <Form.Control
                       required
                       type="number"
@@ -151,10 +173,10 @@ const TambahPenduduk = () => {
                   className="mb-3"
                   controlId="formPlaintextPassword"
                 >
-                  <Form.Label column sm="3" style={textRight}>
+                  <Form.Label column sm="4" style={textRight}>
                     Longitude :
                   </Form.Label>
-                  <Col sm="9">
+                  <Col sm="8">
                     <Form.Control
                       required
                       type="number"
@@ -201,9 +223,9 @@ const TambahPenduduk = () => {
 export default TambahPenduduk;
 
 const spacingTop = {
-  mt: 4
+  mt: 4,
 };
 
 const alertBox = {
-  width: "100%"
+  width: "100%",
 };

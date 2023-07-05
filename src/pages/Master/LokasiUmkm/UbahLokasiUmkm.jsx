@@ -8,12 +8,13 @@ import { Container, Card, Form, Row, Col } from "react-bootstrap";
 import { Box, Button, Snackbar, Alert } from "@mui/material";
 import EditIcon from "@mui/icons-material/Edit";
 
-const UbahRt = () => {
+const UbahLokasiUmkm = () => {
   const { screenSize } = useStateContext();
   const { user } = useContext(AuthContext);
   const [open, setOpen] = useState(false);
   const [validated, setValidated] = useState(false);
-  const [kodeRt, setKodeRt] = useState("");
+  const [namaLokasiUmkm, setNamaLokasiUmkm] = useState("");
+  const [linkGoogleMaps, setLinkGoogleMaps] = useState("");
   const [latitude, setLatitude] = useState("");
   const [longitude, setLongitude] = useState("");
 
@@ -30,22 +31,23 @@ const UbahRt = () => {
   };
 
   useEffect(() => {
-    getRtById();
+    getLokasiUmkmById();
   }, []);
 
-  const getRtById = async () => {
+  const getLokasiUmkmById = async () => {
     setLoading(true);
-    const response = await axios.post(`${tempUrl}/rts/${id}`, {
+    const response = await axios.post(`${tempUrl}/lokasiUmkms/${id}`, {
       _id: user.id,
-      token: user.token
+      token: user.token,
     });
-    setKodeRt(response.data.kodeRt);
+    setNamaLokasiUmkm(response.data.namaLokasiUmkm);
+    setLinkGoogleMaps(response.data.linkGoogleMaps);
     setLatitude(response.data.latitude);
     setLongitude(response.data.longitude);
     setLoading(false);
   };
 
-  const updateRt = async (e) => {
+  const updateLokasiUmkm = async (e) => {
     e.preventDefault();
     e.stopPropagation();
     const form = e.currentTarget;
@@ -55,15 +57,16 @@ const UbahRt = () => {
         setLoading(true);
         try {
           setLoading(true);
-          await axios.post(`${tempUrl}/updateRt/${id}`, {
-            kodeRt,
+          await axios.post(`${tempUrl}/updateLokasiUmkm/${id}`, {
+            namaLokasiUmkm,
+            linkGoogleMaps,
             latitude,
             longitude,
             _id: user.id,
-            token: user.token
+            token: user.token,
           });
           setLoading(false);
-          navigate(`/rt/${id}`);
+          navigate(`/lokasiUmkm/${id}`);
         } catch (err) {
           console.log(err);
         }
@@ -80,7 +83,7 @@ const UbahRt = () => {
   };
 
   const textRight = {
-    textAlign: screenSize >= 650 && "right"
+    textAlign: screenSize >= 650 && "right",
   };
 
   if (loading) {
@@ -89,13 +92,13 @@ const UbahRt = () => {
 
   return (
     <Container>
-      <h3>Desa</h3>
-      <h5 style={{ fontWeight: 400 }}>Ubah Rt</h5>
+      <h3>Lokasi Web</h3>
+      <h5 style={{ fontWeight: 400 }}>Ubah Lokasi Umkm</h5>
       <hr />
       <Card>
-        <Card.Header>Rt</Card.Header>
+        <Card.Header>Lokasi Umkm</Card.Header>
         <Card.Body>
-          <Form noValidate validated={validated} onSubmit={updateRt}>
+          <Form noValidate validated={validated} onSubmit={updateLokasiUmkm}>
             <Row>
               <Col sm={6}>
                 <Form.Group
@@ -103,14 +106,16 @@ const UbahRt = () => {
                   className="mb-3"
                   controlId="formPlaintextPassword"
                 >
-                  <Form.Label column sm="3" style={textRight}>
-                    Kode :
+                  <Form.Label column sm="4" style={textRight}>
+                    Nama Umkm :
                   </Form.Label>
-                  <Col sm="9">
+                  <Col sm="8">
                     <Form.Control
                       required
-                      value={kodeRt}
-                      onChange={(e) => setKodeRt(e.target.value.toUpperCase())}
+                      value={namaLokasiUmkm}
+                      onChange={(e) =>
+                        setNamaLokasiUmkm(e.target.value.toUpperCase())
+                      }
                     />
                   </Col>
                 </Form.Group>
@@ -123,10 +128,30 @@ const UbahRt = () => {
                   className="mb-3"
                   controlId="formPlaintextPassword"
                 >
-                  <Form.Label column sm="3" style={textRight}>
+                  <Form.Label column sm="4" style={textRight}>
+                    Link Google Maps :
+                  </Form.Label>
+                  <Col sm="8">
+                    <Form.Control
+                      required
+                      value={linkGoogleMaps}
+                      onChange={(e) => setLinkGoogleMaps(e.target.value)}
+                    />
+                  </Col>
+                </Form.Group>
+              </Col>
+            </Row>
+            <Row>
+              <Col sm={6}>
+                <Form.Group
+                  as={Row}
+                  className="mb-3"
+                  controlId="formPlaintextPassword"
+                >
+                  <Form.Label column sm="4" style={textRight}>
                     Latitude :
                   </Form.Label>
-                  <Col sm="9">
+                  <Col sm="8">
                     <Form.Control
                       required
                       type="number"
@@ -146,10 +171,10 @@ const UbahRt = () => {
                   className="mb-3"
                   controlId="formPlaintextPassword"
                 >
-                  <Form.Label column sm="3" style={textRight}>
+                  <Form.Label column sm="4" style={textRight}>
                     Longitude :
                   </Form.Label>
-                  <Col sm="9">
+                  <Col sm="8">
                     <Form.Control
                       required
                       type="number"
@@ -166,7 +191,7 @@ const UbahRt = () => {
               <Button
                 variant="outlined"
                 color="secondary"
-                onClick={() => navigate("/rt")}
+                onClick={() => navigate("/lokasiUmkm")}
                 sx={{ marginRight: 2 }}
               >
                 {"< Kembali"}
@@ -193,8 +218,8 @@ const UbahRt = () => {
   );
 };
 
-export default UbahRt;
+export default UbahLokasiUmkm;
 
 const alertBox = {
-  width: "100%"
+  width: "100%",
 };

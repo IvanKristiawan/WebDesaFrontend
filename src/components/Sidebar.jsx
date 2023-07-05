@@ -8,7 +8,7 @@ import {
   SubMenu,
   SidebarHeader,
   SidebarFooter,
-  SidebarContent
+  SidebarContent,
 } from "react-pro-sidebar";
 import {
   FaAngleDoubleLeft,
@@ -19,7 +19,9 @@ import {
   FaDochub,
   FaFileInvoiceDollar,
   FaClipboardList,
-  FaExchangeAlt
+  FaExchangeAlt,
+  FaHandHoldingMedical,
+  FaMapMarkerAlt,
 } from "react-icons/fa";
 import sidebarBg from "../assets/bg1.jpg";
 
@@ -28,7 +30,7 @@ const Sidebar = ({
   collapsed,
   toggled,
   handleToggleSidebar,
-  handleCollapsedChange
+  handleCollapsedChange,
 }) => {
   const { user, dispatch } = useContext(AuthContext);
   const navigate = useNavigate();
@@ -65,7 +67,7 @@ const Sidebar = ({
                   textTransform: "uppercase",
                   fontWeight: "bold",
                   fontSize: 15,
-                  letterSpacing: "1px"
+                  letterSpacing: "1px",
                 }}
               >
                 Desa
@@ -88,9 +90,28 @@ const Sidebar = ({
                 Penduduk <NavLink to="/daftarPenduduk" />
               </MenuItem>
             )}
+          </SubMenu>
+          <SubMenu title={"Lokasi Web"} icon={<FaMapMarkerAlt />}>
+            {user.akses.lokasiPetinggi === true && (
+              <MenuItem>
+                Petinggi <NavLink to="/lokasiPetinggi" />
+              </MenuItem>
+            )}
+            {user.akses.lokasiUmkm === true && (
+              <MenuItem>
+                Umkm <NavLink to="/lokasiUmkm" />
+              </MenuItem>
+            )}
+            {user.akses.lokasiWisata === true && (
+              <MenuItem>
+                Wisata <NavLink to="/lokasiWisata" />
+              </MenuItem>
+            )}
+          </SubMenu>
+          <SubMenu title={"Posyandu"} icon={<FaHandHoldingMedical />}>
             {user.akses.posyanduLansia === true && (
               <MenuItem>
-                Posyandu Lansia <NavLink to="/posyanduLansia" />
+                Lansia <NavLink to="/posyanduLansia" />
               </MenuItem>
             )}
           </SubMenu>

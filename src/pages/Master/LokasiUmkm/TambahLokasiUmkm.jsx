@@ -1,25 +1,25 @@
-import React, { useState, useEffect, useContext } from "react";
-import { useNavigate, useParams } from "react-router-dom";
+import { useContext, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { AuthContext } from "../../../contexts/AuthContext";
 import { tempUrl, useStateContext } from "../../../contexts/ContextProvider";
 import { Loader } from "../../../components";
 import { Container, Card, Form, Row, Col } from "react-bootstrap";
-import { Box, Button, Snackbar, Alert } from "@mui/material";
-import EditIcon from "@mui/icons-material/Edit";
+import { Box, Alert, Button, Snackbar } from "@mui/material";
+import SaveIcon from "@mui/icons-material/Save";
 
-const UbahRt = () => {
+const TambahLokasiUmkm = () => {
   const { screenSize } = useStateContext();
   const { user } = useContext(AuthContext);
   const [open, setOpen] = useState(false);
   const [validated, setValidated] = useState(false);
-  const [kodeRt, setKodeRt] = useState("");
+  const [namaLokasiUmkm, setNamaLokasiUmkm] = useState("");
+  const [linkGoogleMaps, setLinkGoogleMaps] = useState("");
   const [latitude, setLatitude] = useState("");
   const [longitude, setLongitude] = useState("");
 
   const [error, setError] = useState(false);
   const navigate = useNavigate();
-  const { id } = useParams();
   const [loading, setLoading] = useState(false);
 
   const handleClose = (event, reason) => {
@@ -29,23 +29,7 @@ const UbahRt = () => {
     setOpen(false);
   };
 
-  useEffect(() => {
-    getRtById();
-  }, []);
-
-  const getRtById = async () => {
-    setLoading(true);
-    const response = await axios.post(`${tempUrl}/rts/${id}`, {
-      _id: user.id,
-      token: user.token
-    });
-    setKodeRt(response.data.kodeRt);
-    setLatitude(response.data.latitude);
-    setLongitude(response.data.longitude);
-    setLoading(false);
-  };
-
-  const updateRt = async (e) => {
+  const saveLokasiUmkm = async (e) => {
     e.preventDefault();
     e.stopPropagation();
     const form = e.currentTarget;
@@ -53,21 +37,16 @@ const UbahRt = () => {
       setLoading(true);
       try {
         setLoading(true);
-        try {
-          setLoading(true);
-          await axios.post(`${tempUrl}/updateRt/${id}`, {
-            kodeRt,
-            latitude,
-            longitude,
-            _id: user.id,
-            token: user.token
-          });
-          setLoading(false);
-          navigate(`/rt/${id}`);
-        } catch (err) {
-          console.log(err);
-        }
+        await axios.post(`${tempUrl}/saveLokasiUmkm`, {
+          namaLokasiUmkm,
+          linkGoogleMaps,
+          latitude,
+          longitude,
+          _id: user.id,
+          token: user.token,
+        });
         setLoading(false);
+        navigate("/lokasiUmkm");
       } catch (error) {
         alert(error);
       }
@@ -79,23 +58,23 @@ const UbahRt = () => {
     setValidated(true);
   };
 
-  const textRight = {
-    textAlign: screenSize >= 650 && "right"
-  };
-
   if (loading) {
     return <Loader />;
   }
 
+  const textRight = {
+    textAlign: screenSize >= 650 && "right",
+  };
+
   return (
     <Container>
-      <h3>Desa</h3>
-      <h5 style={{ fontWeight: 400 }}>Ubah Rt</h5>
+      <h3>Lokasi Web</h3>
+      <h5 style={{ fontWeight: 400 }}>Tambah Lokasi Umkm</h5>
       <hr />
       <Card>
-        <Card.Header>Rt</Card.Header>
+        <Card.Header>Lokasi Umkm</Card.Header>
         <Card.Body>
-          <Form noValidate validated={validated} onSubmit={updateRt}>
+          <Form noValidate validated={validated} onSubmit={saveLokasiUmkm}>
             <Row>
               <Col sm={6}>
                 <Form.Group
@@ -103,14 +82,16 @@ const UbahRt = () => {
                   className="mb-3"
                   controlId="formPlaintextPassword"
                 >
-                  <Form.Label column sm="3" style={textRight}>
-                    Kode :
+                  <Form.Label column sm="4" style={textRight}>
+                    Nama Umkm :
                   </Form.Label>
-                  <Col sm="9">
+                  <Col sm="8">
                     <Form.Control
                       required
-                      value={kodeRt}
-                      onChange={(e) => setKodeRt(e.target.value.toUpperCase())}
+                      value={namaLokasiUmkm}
+                      onChange={(e) =>
+                        setNamaLokasiUmkm(e.target.value.toUpperCase())
+                      }
                     />
                   </Col>
                 </Form.Group>
@@ -123,10 +104,30 @@ const UbahRt = () => {
                   className="mb-3"
                   controlId="formPlaintextPassword"
                 >
-                  <Form.Label column sm="3" style={textRight}>
+                  <Form.Label column sm="4" style={textRight}>
+                    Link Google Maps :
+                  </Form.Label>
+                  <Col sm="8">
+                    <Form.Control
+                      required
+                      value={linkGoogleMaps}
+                      onChange={(e) => setLinkGoogleMaps(e.target.value)}
+                    />
+                  </Col>
+                </Form.Group>
+              </Col>
+            </Row>
+            <Row>
+              <Col sm={6}>
+                <Form.Group
+                  as={Row}
+                  className="mb-3"
+                  controlId="formPlaintextPassword"
+                >
+                  <Form.Label column sm="4" style={textRight}>
                     Latitude :
                   </Form.Label>
-                  <Col sm="9">
+                  <Col sm="8">
                     <Form.Control
                       required
                       type="number"
@@ -146,10 +147,10 @@ const UbahRt = () => {
                   className="mb-3"
                   controlId="formPlaintextPassword"
                 >
-                  <Form.Label column sm="3" style={textRight}>
+                  <Form.Label column sm="4" style={textRight}>
                     Longitude :
                   </Form.Label>
-                  <Col sm="9">
+                  <Col sm="8">
                     <Form.Control
                       required
                       type="number"
@@ -162,21 +163,21 @@ const UbahRt = () => {
                 </Form.Group>
               </Col>
             </Row>
-            <Box>
+            <Box sx={spacingTop}>
               <Button
                 variant="outlined"
                 color="secondary"
-                onClick={() => navigate("/rt")}
+                onClick={() => navigate("/lokasiUmkm")}
                 sx={{ marginRight: 2 }}
               >
                 {"< Kembali"}
               </Button>
               <Button
                 variant="contained"
-                startIcon={<EditIcon />}
+                startIcon={<SaveIcon />}
                 type="submit"
               >
-                Edit
+                Simpan
               </Button>
             </Box>
           </Form>
@@ -193,8 +194,12 @@ const UbahRt = () => {
   );
 };
 
-export default UbahRt;
+export default TambahLokasiUmkm;
+
+const spacingTop = {
+  mt: 4,
+};
 
 const alertBox = {
-  width: "100%"
+  width: "100%",
 };

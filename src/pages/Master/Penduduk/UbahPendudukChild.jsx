@@ -17,6 +17,7 @@ const UbahPendudukChild = () => {
   const [kkPenduduk, setKkPenduduk] = useState("");
   const [kkPendudukLama, setKkPendudukLama] = useState("");
   const [namaPenduduk, setNamaPenduduk] = useState("");
+  const [linkGoogleMaps, setLinkGoogleMaps] = useState("");
   const [latitude, setLatitude] = useState("");
   const [longitude, setLongitude] = useState("");
 
@@ -41,12 +42,13 @@ const UbahPendudukChild = () => {
       `${tempUrl}/penduduks/${idPendudukChild}`,
       {
         _id: user.id,
-        token: user.token
+        token: user.token,
       }
     );
     setKkPenduduk(pickedBeliChild.data.kkPenduduk);
     setKkPendudukLama(pickedBeliChild.data.kkPenduduk);
     setNamaPenduduk(pickedBeliChild.data.namaPenduduk);
+    setLinkGoogleMaps(pickedBeliChild.data.linkGoogleMaps);
     setLatitude(pickedBeliChild.data.latitude);
     setLongitude(pickedBeliChild.data.longitude);
     setLoading(false);
@@ -64,10 +66,11 @@ const UbahPendudukChild = () => {
           kkPenduduk,
           kkPendudukLama,
           namaPenduduk,
+          linkGoogleMaps,
           latitude,
           longitude,
           _id: user.id,
-          token: user.token
+          token: user.token,
         });
         setLoading(false);
         navigate(`/daftarPenduduk/penduduk/${id}`);
@@ -87,12 +90,12 @@ const UbahPendudukChild = () => {
   }
 
   const textRight = {
-    textAlign: screenSize >= 650 && "right"
+    textAlign: screenSize >= 650 && "right",
   };
 
   return (
     <Container>
-      <h3>Master</h3>
+      <h3>Desa</h3>
       <h5 style={{ fontWeight: 400 }}>Ubah Detail Penduduk</h5>
       <hr />
       <Card>
@@ -106,10 +109,10 @@ const UbahPendudukChild = () => {
                   className="mb-3"
                   controlId="formPlaintextPassword"
                 >
-                  <Form.Label column sm="3" style={textRight}>
+                  <Form.Label column sm="4" style={textRight}>
                     KK :
                   </Form.Label>
-                  <Col sm="9">
+                  <Col sm="8">
                     <Form.Control
                       required
                       value={kkPenduduk}
@@ -128,10 +131,10 @@ const UbahPendudukChild = () => {
                   className="mb-3"
                   controlId="formPlaintextPassword"
                 >
-                  <Form.Label column sm="3" style={textRight}>
+                  <Form.Label column sm="4" style={textRight}>
                     Nama :
                   </Form.Label>
-                  <Col sm="9">
+                  <Col sm="8">
                     <Form.Control
                       required
                       value={namaPenduduk}
@@ -150,10 +153,30 @@ const UbahPendudukChild = () => {
                   className="mb-3"
                   controlId="formPlaintextPassword"
                 >
-                  <Form.Label column sm="3" style={textRight}>
+                  <Form.Label column sm="4" style={textRight}>
+                    Link Google Maps :
+                  </Form.Label>
+                  <Col sm="8">
+                    <Form.Control
+                      required
+                      value={linkGoogleMaps}
+                      onChange={(e) => setLinkGoogleMaps(e.target.value)}
+                    />
+                  </Col>
+                </Form.Group>
+              </Col>
+            </Row>
+            <Row>
+              <Col sm={6}>
+                <Form.Group
+                  as={Row}
+                  className="mb-3"
+                  controlId="formPlaintextPassword"
+                >
+                  <Form.Label column sm="4" style={textRight}>
                     Latitude :
                   </Form.Label>
-                  <Col sm="9">
+                  <Col sm="8">
                     <Form.Control
                       required
                       type="number"
@@ -173,10 +196,10 @@ const UbahPendudukChild = () => {
                   className="mb-3"
                   controlId="formPlaintextPassword"
                 >
-                  <Form.Label column sm="3" style={textRight}>
+                  <Form.Label column sm="4" style={textRight}>
                     Longitude :
                   </Form.Label>
-                  <Col sm="9">
+                  <Col sm="8">
                     <Form.Control
                       required
                       type="number"
@@ -225,9 +248,9 @@ const UbahPendudukChild = () => {
 export default UbahPendudukChild;
 
 const spacingTop = {
-  mt: 4
+  mt: 4,
 };
 
 const alertBox = {
-  width: "100%"
+  width: "100%",
 };

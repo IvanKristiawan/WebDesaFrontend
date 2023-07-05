@@ -3,7 +3,7 @@ import { useNavigate, useLocation } from "react-router-dom";
 import axios from "axios";
 import { AuthContext } from "../../../contexts/AuthContext";
 import { tempUrl, useStateContext } from "../../../contexts/ContextProvider";
-import { ShowTableRt } from "../../../components/ShowTable";
+import { ShowTableLokasiUmkm } from "../../../components/ShowTable";
 import { FetchErrorHandling } from "../../../components/FetchErrorHandling";
 import {
   SearchBar,
@@ -13,6 +13,15 @@ import {
 } from "../../../components";
 import { Container, Form, Row, Col } from "react-bootstrap";
 import { Box, Pagination, Button, ButtonGroup } from "@mui/material";
+import Map, {
+  Marker,
+  Popup,
+  NavigationControl,
+  FullscreenControl,
+  ScaleControl,
+  GeolocateControl,
+} from "react-map-gl";
+import Pin from "../../../assets/pin";
 import SearchIcon from "@mui/icons-material/Search";
 import jsPDF from "jspdf";
 import "jspdf-autotable";
@@ -20,22 +29,27 @@ import { useDownloadExcel } from "react-export-table-to-excel";
 import DownloadIcon from "@mui/icons-material/Download";
 import PrintIcon from "@mui/icons-material/Print";
 
-const TampilRt = () => {
+const TOKEN =
+  "pk.eyJ1IjoiaXZhbi1rcmlzdGlhd2FuIiwiYSI6ImNsMWN4dHljZzA3Z2ozcHFjcnpxbDhnaTIifQ.Z7KSBghh93LRW-7aCNQzEg"; // Set your mapbox token here
+
+const TampilLokasiUmkm = () => {
   const tableRef = useRef(null);
   const { user, setting } = useContext(AuthContext);
   const location = useLocation();
   const id = location.pathname.split("/")[2];
   const { screenSize } = useStateContext();
+  const [popupInfo, setPopupInfo] = useState(null);
 
   const [isFetchError, setIsFetchError] = useState(false);
-  const [kodeRt, setKodeRt] = useState("");
-  const [latitude, setLatitude] = useState("");
-  const [longitude, setLongitude] = useState("");
+  const [namaLokasiUmkm, setNamaLokasiUmkm] = useState("");
+  const [linkGoogleMaps, setLinkGoogleMaps] = useState("");
+  const [latitude, setLatitude] = useState(0);
+  const [longitude, setLongitude] = useState(0);
 
   const [previewPdf, setPreviewPdf] = useState(false);
   const [previewExcel, setPreviewExcel] = useState(false);
   const [searchTerm, setSearchTerm] = useState("");
-  const [rts, setRts] = useState([]);
+  const [lokasiUmkms, setLokasiUmkms] = useState([]);
   const navigate = useNavigate();
 
   const [loading, setLoading] = useState(false);
@@ -45,17 +59,19 @@ const TampilRt = () => {
   // Get current posts
   const indexOfLastPost = page * PER_PAGE;
   const indexOfFirstPost = indexOfLastPost - PER_PAGE;
-  const tempPosts = rts.filter((val) => {
+  const tempPosts = lokasiUmkms.filter((val) => {
     if (searchTerm === "") {
       return val;
-    } else if (val.kodeRt.toUpperCase().includes(searchTerm.toUpperCase())) {
+    } else if (
+      val.namaLokasiUmkm.toUpperCase().includes(searchTerm.toUpperCase())
+    ) {
       return val;
     }
   });
   const currentPosts = tempPosts.slice(indexOfFirstPost, indexOfLastPost);
 
   const count = Math.ceil(tempPosts.length / PER_PAGE);
-  const _DATA = usePagination(rts, PER_PAGE);
+  const _DATA = usePagination(lokasiUmkms, PER_PAGE);
 
   const handleChange = (e, p) => {
     setPage(p);
@@ -63,49 +79,53 @@ const TampilRt = () => {
   };
 
   useEffect(() => {
-    getRts();
-    id && getRtById();
+    getLokasiUmkms();
+    id && getLokasiUmkmById();
   }, [id]);
 
-  const getRts = async () => {
+  const getLokasiUmkms = async () => {
     setLoading(true);
     try {
-      const response = await axios.post(`${tempUrl}/rts`, {
+      const response = await axios.post(`${tempUrl}/lokasiUmkms`, {
         _id: user.id,
         token: user.token,
       });
-      setRts(response.data);
+      setLokasiUmkms(response.data);
     } catch (err) {
       setIsFetchError(true);
     }
     setLoading(false);
   };
 
-  const getRtById = async () => {
+  const getLokasiUmkmById = async () => {
     if (id) {
-      const response = await axios.post(`${tempUrl}/rts/${id}`, {
+      const response = await axios.post(`${tempUrl}/lokasiUmkms/${id}`, {
         _id: user.id,
         token: user.token,
       });
-      setKodeRt(response.data.kodeRt);
+      setNamaLokasiUmkm(response.data.namaLokasiUmkm);
+      setLinkGoogleMaps(response.data.linkGoogleMaps);
       setLatitude(response.data.latitude);
       setLongitude(response.data.longitude);
     }
   };
 
-  const deleteRt = async (id) => {
+  const deleteLokasiUmkm = async (id) => {
     setLoading(true);
     try {
-      await axios.post(`${tempUrl}/deleteRt/${id}`, {
+      await axios.post(`${tempUrl}/deleteLokasiUmkm/${id}`, {
         _id: user.id,
         token: user.token,
       });
-      getRts();
-      setKodeRt("");
-      navigate("/rt");
+      getLokasiUmkms();
+      setNamaLokasiUmkm("");
+      setLinkGoogleMaps("");
+      setLatitude("");
+      setLongitude("");
+      navigate("/lokasiUmkm");
     } catch (error) {
       if (error.response.data.message.includes("foreign key")) {
-        alert(`${kodeRt} tidak bisa dihapus karena sudah ada data!`);
+        alert(`${namaLokasiUmkm} tidak bisa dihapus karena sudah ada data!`);
       }
     }
     setLoading(false);
@@ -145,7 +165,7 @@ const TampilRt = () => {
     doc.text(`${setting.namaDesa} - ${setting.kotaDesa}`, 15, 10);
     doc.text(`${setting.alamatDesa}`, 15, 15);
     doc.setFontSize(16);
-    doc.text(`Daftar RT`, 85, 30);
+    doc.text(`Daftar Lokasi Umkm`, 75, 30);
     doc.setFontSize(10);
     doc.text(
       `Dicetak Oleh: ${user.username} | Tanggal : ${current_date} | Jam : ${current_time}`,
@@ -160,13 +180,13 @@ const TampilRt = () => {
         color: [0, 0, 0],
       },
     });
-    doc.save("daftarRt.pdf");
+    doc.save("daftarLokasiUmkm.pdf");
   };
 
   const { onDownload } = useDownloadExcel({
     currentTableRef: tableRef.current,
-    filename: "Rt",
-    sheet: "DaftarRt",
+    filename: "LokasiUmkm",
+    sheet: "DaftarLokasiUmkm",
   });
 
   const textRight = {
@@ -183,8 +203,61 @@ const TampilRt = () => {
 
   return (
     <Container>
-      <h3>Desa</h3>
-      <h5 style={{ fontWeight: 400 }}>Daftar Rt</h5>
+      <h3>Lokasi Web</h3>
+      <h5 style={{ fontWeight: 400 }}>Lokasi Umkm</h5>
+      {latitude !== 0 && id && (
+        <div
+          style={{
+            width: `${screenSize - 400}px`,
+            height: "400px",
+            marginTop: "20px",
+          }}
+        >
+          <Map
+            initialViewState={{
+              latitude: latitude,
+              longitude: longitude,
+              zoom: 15,
+              bearing: 0,
+              pitch: 0,
+            }}
+            mapStyle="mapbox://styles/mapbox/streets-v9"
+            mapboxAccessToken={TOKEN}
+          >
+            <GeolocateControl position="top-left" />
+            <FullscreenControl position="top-left" />
+            <NavigationControl position="top-left" />
+            <ScaleControl />
+
+            <Marker
+              key={`marker`}
+              longitude={longitude}
+              latitude={latitude}
+              anchor="bottom"
+              onClick={(e) => {
+                // If we let the click event propagates to the map, it will immediately close the popup
+                // with `closeOnClick: true`
+                e.originalEvent.stopPropagation();
+                setPopupInfo(lokasiUmkms);
+              }}
+            >
+              <Pin />
+            </Marker>
+
+            {popupInfo && (
+              <Popup
+                anchor="top"
+                longitude={Number(longitude)}
+                latitude={Number(latitude)}
+                onClose={() => setPopupInfo(null)}
+              >
+                <div>Umkm : {namaLokasiUmkm}</div>
+                <a href={linkGoogleMaps}>Lihat</a>
+              </Popup>
+            )}
+          </Map>
+        </div>
+      )}
       <Box sx={downloadButtons}>
         <ButtonGroup variant="outlined" color="secondary">
           <Button
@@ -222,13 +295,13 @@ const TampilRt = () => {
           <table class="table" id="table">
             <thead>
               <tr>
-                <th>Rt</th>
+                <th>Nama Umkm</th>
               </tr>
             </thead>
             <tbody>
-              {rts.map((user, index) => (
+              {lokasiUmkms.map((user, index) => (
                 <tr key={user.id}>
-                  <td>{user.kodeRt}</td>
+                  <td>{user.namaLokasiUmkm}</td>
                 </tr>
               ))}
             </tbody>
@@ -250,11 +323,11 @@ const TampilRt = () => {
           {previewExcel && (
             <tbody>
               <tr>
-                <th>Rt</th>
+                <th>Nama Umkm</th>
               </tr>
-              {rts.map((user, index) => (
+              {lokasiUmkms.map((user, index) => (
                 <tr key={user.id}>
-                  <td>{user.kodeRt}</td>
+                  <td>{user.namaLokasiUmkm}</td>
                 </tr>
               ))}
             </tbody>
@@ -265,10 +338,10 @@ const TampilRt = () => {
         <ButtonModifier
           id={id}
           kode={id}
-          addLink={`/rt/tambahRt`}
-          editLink={`/rt/${id}/edit`}
-          deleteUser={deleteRt}
-          nameUser={kodeRt}
+          addLink={`/lokasiUmkm/tambahLokasiUmkm`}
+          editLink={`/lokasiUmkm/${id}/edit`}
+          deleteUser={deleteLokasiUmkm}
+          nameUser={namaLokasiUmkm}
         />
       </Box>
       {id && (
@@ -283,10 +356,10 @@ const TampilRt = () => {
                   controlId="formPlaintextPassword"
                 >
                   <Form.Label column sm="3" style={textRight}>
-                    Kode :
+                    Nama Umkm :
                   </Form.Label>
                   <Col sm="9">
-                    <Form.Control value={kodeRt} disabled readOnly />
+                    <Form.Control value={namaLokasiUmkm} disabled readOnly />
                   </Col>
                 </Form.Group>
               </Col>
@@ -299,7 +372,10 @@ const TampilRt = () => {
         <SearchBar setSearchTerm={setSearchTerm} />
       </Box>
       <Box sx={tableContainer}>
-        <ShowTableRt currentPosts={currentPosts} searchTerm={searchTerm} />
+        <ShowTableLokasiUmkm
+          currentPosts={currentPosts}
+          searchTerm={searchTerm}
+        />
       </Box>
       <Box sx={tableContainer}>
         <Pagination
@@ -314,7 +390,7 @@ const TampilRt = () => {
   );
 };
 
-export default TampilRt;
+export default TampilLokasiUmkm;
 
 const buttonModifierContainer = {
   mt: 4,

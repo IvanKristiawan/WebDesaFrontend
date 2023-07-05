@@ -66,7 +66,7 @@ const TambahRt = () => {
 
   return (
     <Container>
-      <h3>Master</h3>
+      <h3>Desa</h3>
       <h5 style={{ fontWeight: 400 }}>Tambah Rt</h5>
       <hr />
       <Card>
