@@ -33,10 +33,11 @@ const UbahUser = () => {
   const [penduduk, setPenduduk] = useState(false);
   const [bankSampah, setBankSampah] = useState(false);
 
-  // Lokasi Web
+  // Data Web
   const [lokasiPetinggi, setLokasiPetinggi] = useState(false);
   const [lokasiUmkm, setLokasiUmkm] = useState(false);
   const [lokasiWisata, setLokasiWisata] = useState(false);
+  const [umkm, setUmkm] = useState(false);
 
   // Akses Posyandu
   const [posyanduLansia, setPosyanduLansia] = useState(false);
@@ -89,10 +90,11 @@ const UbahUser = () => {
     setPenduduk(response.data.akses.penduduk);
     setBankSampah(response.data.akses.bankSampah);
 
-    // Akses Lokasi Web
+    // Akses Data Web
     setLokasiPetinggi(response.data.akses.lokasiPetinggi);
     setLokasiUmkm(response.data.akses.lokasiUmkm);
     setLokasiWisata(response.data.akses.lokasiWisata);
+    setUmkm(response.data.akses.umkm);
 
     // Akses Posyandu
     setPosyanduLansia(response.data.akses.posyanduLansia);
@@ -138,6 +140,7 @@ const UbahUser = () => {
               lokasiPetinggi,
               lokasiUmkm,
               lokasiWisata,
+              umkm,
               posyanduLansia,
               profilUser,
               daftarUser,
@@ -308,25 +311,31 @@ const UbahUser = () => {
                       onChange={() => setPosyanduLansia(!posyanduLansia)}
                     />
                   </Form>
-                  <p style={checkboxTitle}>Lokasi Web</p>
+                  <p style={checkboxTitle}>Data Web</p>
                   <Form>
                     <Form.Check
                       type="checkbox"
-                      label="Petinggi"
+                      label="Lokasi Petinggi"
                       checked={lokasiPetinggi}
                       onChange={() => setLokasiPetinggi(!lokasiPetinggi)}
                     />
                     <Form.Check
                       type="checkbox"
-                      label="Umkm"
+                      label="Lokasi UMKM"
                       checked={lokasiUmkm}
                       onChange={() => setLokasiUmkm(!lokasiUmkm)}
                     />
                     <Form.Check
                       type="checkbox"
-                      label="Wisata"
+                      label="Lokasi Wisata"
                       checked={lokasiWisata}
                       onChange={() => setLokasiWisata(!lokasiWisata)}
+                    />
+                    <Form.Check
+                      type="checkbox"
+                      label="UMKM"
+                      checked={umkm}
+                      onChange={() => setUmkm(!umkm)}
                     />
                   </Form>
                   <p style={checkboxTitle}>Posyandu</p>

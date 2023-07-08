@@ -51,7 +51,9 @@ const TampilPenduduk = () => {
       return val;
     } else if (
       val.kkPenduduk.toUpperCase().includes(searchTerm.toUpperCase()) ||
-      val.namaPenduduk.toUpperCase().includes(searchTerm.toUpperCase())
+      val.namaPenduduk.toUpperCase().includes(searchTerm.toUpperCase()) ||
+      val.latitude == searchTerm ||
+      val.longitude == searchTerm
     ) {
       return val;
     }
@@ -304,6 +306,43 @@ const TampilPenduduk = () => {
                   </Form.Label>
                   <Col sm="9">
                     <Form.Control required value={kodeRt} disabled readOnly />
+                  </Col>
+                </Form.Group>
+              </Col>
+            </Row>
+            <Row>
+              <Col sm={6}>
+                <Form.Group
+                  as={Row}
+                  className="mb-3"
+                  controlId="formPlaintextPassword"
+                >
+                  <Form.Label column sm="3" style={textRight}>
+                    Latitude :
+                  </Form.Label>
+                  <Col sm="9">
+                    <Form.Control required value={latitude} disabled readOnly />
+                  </Col>
+                </Form.Group>
+              </Col>
+            </Row>
+            <Row>
+              <Col sm={6}>
+                <Form.Group
+                  as={Row}
+                  className="mb-3"
+                  controlId="formPlaintextPassword"
+                >
+                  <Form.Label column sm="3" style={textRight}>
+                    Longitude :
+                  </Form.Label>
+                  <Col sm="9">
+                    <Form.Control
+                      required
+                      value={longitude}
+                      disabled
+                      readOnly
+                    />
                   </Col>
                 </Form.Group>
               </Col>

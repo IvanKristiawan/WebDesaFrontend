@@ -48,7 +48,11 @@ const TampilRt = () => {
   const tempPosts = rts.filter((val) => {
     if (searchTerm === "") {
       return val;
-    } else if (val.kodeRt.toUpperCase().includes(searchTerm.toUpperCase())) {
+    } else if (
+      val.kodeRt.toUpperCase().includes(searchTerm.toUpperCase()) ||
+      val.latitude == searchTerm ||
+      val.longitude == searchTerm
+    ) {
       return val;
     }
   });
@@ -102,6 +106,8 @@ const TampilRt = () => {
       });
       getRts();
       setKodeRt("");
+      setLatitude("");
+      setLongitude("");
       navigate("/rt");
     } catch (error) {
       if (error.response.data.message.includes("foreign key")) {
@@ -287,6 +293,38 @@ const TampilRt = () => {
                   </Form.Label>
                   <Col sm="9">
                     <Form.Control value={kodeRt} disabled readOnly />
+                  </Col>
+                </Form.Group>
+              </Col>
+            </Row>
+            <Row>
+              <Col sm={6}>
+                <Form.Group
+                  as={Row}
+                  className="mb-3"
+                  controlId="formPlaintextPassword"
+                >
+                  <Form.Label column sm="3" style={textRight}>
+                    Latitude :
+                  </Form.Label>
+                  <Col sm="9">
+                    <Form.Control value={latitude} disabled readOnly />
+                  </Col>
+                </Form.Group>
+              </Col>
+            </Row>
+            <Row>
+              <Col sm={6}>
+                <Form.Group
+                  as={Row}
+                  className="mb-3"
+                  controlId="formPlaintextPassword"
+                >
+                  <Form.Label column sm="3" style={textRight}>
+                    Longitude :
+                  </Form.Label>
+                  <Col sm="9">
+                    <Form.Control value={longitude} disabled readOnly />
                   </Col>
                 </Form.Group>
               </Col>

@@ -91,20 +91,25 @@ const Sidebar = ({
               </MenuItem>
             )}
           </SubMenu>
-          <SubMenu title={"Lokasi Web"} icon={<FaMapMarkerAlt />}>
+          <SubMenu title={"Data Web"} icon={<FaMapMarkerAlt />}>
             {user.akses.lokasiPetinggi === true && (
               <MenuItem>
-                Petinggi <NavLink to="/lokasiPetinggi" />
+                Lokasi Petinggi <NavLink to="/lokasiPetinggi" />
               </MenuItem>
             )}
             {user.akses.lokasiUmkm === true && (
               <MenuItem>
-                Umkm <NavLink to="/lokasiUmkm" />
+                Lokasi UMKM <NavLink to="/lokasiUmkm" />
               </MenuItem>
             )}
             {user.akses.lokasiWisata === true && (
               <MenuItem>
-                Wisata <NavLink to="/lokasiWisata" />
+                Lokasi Wisata <NavLink to="/lokasiWisata" />
+              </MenuItem>
+            )}
+            {user.akses.umkm === true && (
+              <MenuItem>
+                UMKM <NavLink to="/umkm" />
               </MenuItem>
             )}
           </SubMenu>

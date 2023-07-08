@@ -92,7 +92,7 @@ const UbahLokasiPetinggi = () => {
 
   return (
     <Container>
-      <h3>Lokasi Web</h3>
+      <h3>Data Web</h3>
       <h5 style={{ fontWeight: 400 }}>Ubah Lokasi Petinggi</h5>
       <hr />
       <Card>

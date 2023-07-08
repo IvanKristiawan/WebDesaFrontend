@@ -63,7 +63,9 @@ const TampilLokasiPetinggi = () => {
     if (searchTerm === "") {
       return val;
     } else if (
-      val.namaLokasiPetinggi.toUpperCase().includes(searchTerm.toUpperCase())
+      val.namaLokasiPetinggi.toUpperCase().includes(searchTerm.toUpperCase()) ||
+      val.latitude == searchTerm ||
+      val.longitude == searchTerm
     ) {
       return val;
     }
@@ -205,7 +207,7 @@ const TampilLokasiPetinggi = () => {
 
   return (
     <Container>
-      <h3>Lokasi Web</h3>
+      <h3>Data Web</h3>
       <h5 style={{ fontWeight: 400 }}>Lokasi Petinggi</h5>
       {latitude !== 0 && id && (
         <div
@@ -366,6 +368,38 @@ const TampilLokasiPetinggi = () => {
                       disabled
                       readOnly
                     />
+                  </Col>
+                </Form.Group>
+              </Col>
+            </Row>
+            <Row>
+              <Col sm={6}>
+                <Form.Group
+                  as={Row}
+                  className="mb-3"
+                  controlId="formPlaintextPassword"
+                >
+                  <Form.Label column sm="3" style={textRight}>
+                    Latitude :
+                  </Form.Label>
+                  <Col sm="9">
+                    <Form.Control value={latitude} disabled readOnly />
+                  </Col>
+                </Form.Group>
+              </Col>
+            </Row>
+            <Row>
+              <Col sm={6}>
+                <Form.Group
+                  as={Row}
+                  className="mb-3"
+                  controlId="formPlaintextPassword"
+                >
+                  <Form.Label column sm="3" style={textRight}>
+                    Longitude :
+                  </Form.Label>
+                  <Col sm="9">
+                    <Form.Control value={longitude} disabled readOnly />
                   </Col>
                 </Form.Group>
               </Col>

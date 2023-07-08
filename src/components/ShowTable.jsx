@@ -154,7 +154,19 @@ export function ShowTableRt({ currentPosts, searchTerm }) {
       <Table aria-label="simple table">
         <TableHead className={classes.root}>
           <TableRow>
-            <TableCell sx={{ fontWeight: "bold" }}>RT</TableCell>
+            <TableCell
+              sx={{ fontWeight: "bold" }}
+              className={classes.tableRightBorder}
+            >
+              RT
+            </TableCell>
+            <TableCell
+              sx={{ fontWeight: "bold" }}
+              className={classes.tableRightBorder}
+            >
+              Latitude
+            </TableCell>
+            <TableCell sx={{ fontWeight: "bold" }}>Longitude</TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
@@ -163,7 +175,9 @@ export function ShowTableRt({ currentPosts, searchTerm }) {
               if (searchTerm === "") {
                 return val;
               } else if (
-                val.kodeRt.toUpperCase().includes(searchTerm.toUpperCase())
+                val.kodeRt.toUpperCase().includes(searchTerm.toUpperCase()) ||
+                val.latitude == searchTerm ||
+                val.longitude == searchTerm
               ) {
                 return val;
               }
@@ -183,6 +197,8 @@ export function ShowTableRt({ currentPosts, searchTerm }) {
                 <TableCell component="th" scope="row">
                   {user.kodeRt}
                 </TableCell>
+                <TableCell>{user.latitude}</TableCell>
+                <TableCell>{user.longitude}</TableCell>
               </TableRow>
             ))}
         </TableBody>
@@ -199,7 +215,19 @@ export function ShowTableDaftarPenduduk({ currentPosts, searchTerm }) {
       <Table aria-label="simple table">
         <TableHead className={classes.root}>
           <TableRow>
-            <TableCell sx={{ fontWeight: "bold" }}>RT</TableCell>
+            <TableCell
+              sx={{ fontWeight: "bold" }}
+              className={classes.tableRightBorder}
+            >
+              RT
+            </TableCell>
+            <TableCell
+              sx={{ fontWeight: "bold" }}
+              className={classes.tableRightBorder}
+            >
+              Latitude
+            </TableCell>
+            <TableCell sx={{ fontWeight: "bold" }}>Longitude</TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
@@ -208,7 +236,9 @@ export function ShowTableDaftarPenduduk({ currentPosts, searchTerm }) {
               if (searchTerm === "") {
                 return val;
               } else if (
-                val.kodeRt.toUpperCase().includes(searchTerm.toUpperCase())
+                val.kodeRt.toUpperCase().includes(searchTerm.toUpperCase()) ||
+                val.latitude == searchTerm ||
+                val.longitude == searchTerm
               ) {
                 return val;
               }
@@ -228,6 +258,8 @@ export function ShowTableDaftarPenduduk({ currentPosts, searchTerm }) {
                 <TableCell component="th" scope="row">
                   {user.kodeRt}
                 </TableCell>
+                <TableCell>{user.latitude}</TableCell>
+                <TableCell>{user.longitude}</TableCell>
               </TableRow>
             ))}
         </TableBody>
@@ -250,7 +282,19 @@ export function ShowTablePenduduk({ id, currentPosts, searchTerm }) {
             >
               KK
             </TableCell>
-            <TableCell sx={{ fontWeight: "bold" }}>Nama</TableCell>
+            <TableCell
+              sx={{ fontWeight: "bold" }}
+              className={classes.tableRightBorder}
+            >
+              Nama
+            </TableCell>
+            <TableCell
+              sx={{ fontWeight: "bold" }}
+              className={classes.tableRightBorder}
+            >
+              Latitude
+            </TableCell>
+            <TableCell sx={{ fontWeight: "bold" }}>Longitude</TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
@@ -264,7 +308,9 @@ export function ShowTablePenduduk({ id, currentPosts, searchTerm }) {
                   .includes(searchTerm.toUpperCase()) ||
                 val.namaPenduduk
                   .toUpperCase()
-                  .includes(searchTerm.toUpperCase())
+                  .includes(searchTerm.toUpperCase()) ||
+                val.latitude == searchTerm ||
+                val.longitude == searchTerm
               ) {
                 return val;
               }
@@ -286,6 +332,8 @@ export function ShowTablePenduduk({ id, currentPosts, searchTerm }) {
                     {user.kkPenduduk}
                   </TableCell>
                   <TableCell>{user.namaPenduduk}</TableCell>
+                  <TableCell>{user.latitude}</TableCell>
+                  <TableCell>{user.longitude}</TableCell>
                 </TableRow>
               );
             })}
@@ -303,7 +351,19 @@ export function ShowTableLokasiPetinggi({ currentPosts, searchTerm }) {
       <Table aria-label="simple table">
         <TableHead className={classes.root}>
           <TableRow>
-            <TableCell sx={{ fontWeight: "bold" }}>Nama Petinggi</TableCell>
+            <TableCell
+              sx={{ fontWeight: "bold" }}
+              className={classes.tableRightBorder}
+            >
+              Nama Petinggi
+            </TableCell>
+            <TableCell
+              sx={{ fontWeight: "bold" }}
+              className={classes.tableRightBorder}
+            >
+              Latitude
+            </TableCell>
+            <TableCell sx={{ fontWeight: "bold" }}>Longitude</TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
@@ -314,7 +374,9 @@ export function ShowTableLokasiPetinggi({ currentPosts, searchTerm }) {
               } else if (
                 val.namaLokasiPetinggi
                   .toUpperCase()
-                  .includes(searchTerm.toUpperCase())
+                  .includes(searchTerm.toUpperCase()) ||
+                val.latitude == searchTerm ||
+                val.longitude == searchTerm
               ) {
                 return val;
               }
@@ -334,6 +396,8 @@ export function ShowTableLokasiPetinggi({ currentPosts, searchTerm }) {
                 <TableCell component="th" scope="row">
                   {user.namaLokasiPetinggi}
                 </TableCell>
+                <TableCell>{user.latitude}</TableCell>
+                <TableCell>{user.longitude}</TableCell>
               </TableRow>
             ))}
         </TableBody>
@@ -350,7 +414,19 @@ export function ShowTableLokasiUmkm({ currentPosts, searchTerm }) {
       <Table aria-label="simple table">
         <TableHead className={classes.root}>
           <TableRow>
-            <TableCell sx={{ fontWeight: "bold" }}>Nama Umkm</TableCell>
+            <TableCell
+              sx={{ fontWeight: "bold" }}
+              className={classes.tableRightBorder}
+            >
+              Nama Umkm
+            </TableCell>
+            <TableCell
+              sx={{ fontWeight: "bold" }}
+              className={classes.tableRightBorder}
+            >
+              Latitude
+            </TableCell>
+            <TableCell sx={{ fontWeight: "bold" }}>Longitude</TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
@@ -361,7 +437,9 @@ export function ShowTableLokasiUmkm({ currentPosts, searchTerm }) {
               } else if (
                 val.namaLokasiUmkm
                   .toUpperCase()
-                  .includes(searchTerm.toUpperCase())
+                  .includes(searchTerm.toUpperCase()) ||
+                val.latitude == searchTerm ||
+                val.longitude == searchTerm
               ) {
                 return val;
               }
@@ -381,6 +459,8 @@ export function ShowTableLokasiUmkm({ currentPosts, searchTerm }) {
                 <TableCell component="th" scope="row">
                   {user.namaLokasiUmkm}
                 </TableCell>
+                <TableCell>{user.latitude}</TableCell>
+                <TableCell>{user.longitude}</TableCell>
               </TableRow>
             ))}
         </TableBody>
@@ -397,7 +477,19 @@ export function ShowTableLokasiWisata({ currentPosts, searchTerm }) {
       <Table aria-label="simple table">
         <TableHead className={classes.root}>
           <TableRow>
-            <TableCell sx={{ fontWeight: "bold" }}>Nama Wisata</TableCell>
+            <TableCell
+              sx={{ fontWeight: "bold" }}
+              className={classes.tableRightBorder}
+            >
+              Nama Wisata
+            </TableCell>
+            <TableCell
+              sx={{ fontWeight: "bold" }}
+              className={classes.tableRightBorder}
+            >
+              Latitude
+            </TableCell>
+            <TableCell sx={{ fontWeight: "bold" }}>Longitude</TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
@@ -408,7 +500,9 @@ export function ShowTableLokasiWisata({ currentPosts, searchTerm }) {
               } else if (
                 val.namaLokasiWisata
                   .toUpperCase()
-                  .includes(searchTerm.toUpperCase())
+                  .includes(searchTerm.toUpperCase()) ||
+                val.latitude == searchTerm ||
+                val.longitude == searchTerm
               ) {
                 return val;
               }
@@ -427,6 +521,53 @@ export function ShowTableLokasiWisata({ currentPosts, searchTerm }) {
               >
                 <TableCell component="th" scope="row">
                   {user.namaLokasiWisata}
+                </TableCell>
+                <TableCell>{user.latitude}</TableCell>
+                <TableCell>{user.longitude}</TableCell>
+              </TableRow>
+            ))}
+        </TableBody>
+      </Table>
+    </TableContainer>
+  );
+}
+
+export function ShowTableUmkm({ currentPosts, searchTerm }) {
+  let navigate = useNavigate();
+  const classes = useStyles();
+  return (
+    <TableContainer component={Paper} sx={{ width: "100%" }}>
+      <Table aria-label="simple table">
+        <TableHead className={classes.root}>
+          <TableRow>
+            <TableCell sx={{ fontWeight: "bold" }}>Nama UMKM</TableCell>
+          </TableRow>
+        </TableHead>
+        <TableBody>
+          {currentPosts
+            .filter((val) => {
+              if (searchTerm === "") {
+                return val;
+              } else if (
+                val.namaUmkm.toUpperCase().includes(searchTerm.toUpperCase())
+              ) {
+                return val;
+              }
+            })
+            .map((user, index) => (
+              <TableRow
+                key={user.id}
+                sx={{
+                  "&:last-child td, &:last-child th": { border: 0 },
+                  "&:hover": { bgcolor: Colors.grey300 },
+                  cursor: "pointer",
+                }}
+                onClick={() => {
+                  navigate(`/umkm/${user.id}`);
+                }}
+              >
+                <TableCell component="th" scope="row">
+                  {user.namaUmkm}
                 </TableCell>
               </TableRow>
             ))}

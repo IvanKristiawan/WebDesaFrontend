@@ -1,25 +1,25 @@
-import { useContext, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import React, { useState, useEffect, useContext } from "react";
+import { useNavigate, useParams } from "react-router-dom";
 import axios from "axios";
 import { AuthContext } from "../../../contexts/AuthContext";
 import { tempUrl, useStateContext } from "../../../contexts/ContextProvider";
 import { Loader } from "../../../components";
 import { Container, Card, Form, Row, Col } from "react-bootstrap";
-import { Box, Alert, Button, Snackbar } from "@mui/material";
-import SaveIcon from "@mui/icons-material/Save";
+import { Box, Button, Snackbar, Alert } from "@mui/material";
+import EditIcon from "@mui/icons-material/Edit";
 
-const TambahLokasiUmkm = () => {
+const UbahUmkm = () => {
   const { screenSize } = useStateContext();
   const { user } = useContext(AuthContext);
   const [open, setOpen] = useState(false);
   const [validated, setValidated] = useState(false);
-  const [namaLokasiUmkm, setNamaLokasiUmkm] = useState("");
-  const [linkGoogleMaps, setLinkGoogleMaps] = useState("");
-  const [latitude, setLatitude] = useState("");
-  const [longitude, setLongitude] = useState("");
+  const [namaUmkm, setNamaUmkm] = useState("");
+  const [linkImage, setLinkImage] = useState("");
+  const [linkWebsite, setLinkWebsite] = useState("");
 
   const [error, setError] = useState(false);
   const navigate = useNavigate();
+  const { id } = useParams();
   const [loading, setLoading] = useState(false);
 
   const handleClose = (event, reason) => {
@@ -29,7 +29,23 @@ const TambahLokasiUmkm = () => {
     setOpen(false);
   };
 
-  const saveLokasiUmkm = async (e) => {
+  useEffect(() => {
+    getUmkmById();
+  }, []);
+
+  const getUmkmById = async () => {
+    setLoading(true);
+    const response = await axios.post(`${tempUrl}/umkms/${id}`, {
+      _id: user.id,
+      token: user.token,
+    });
+    setNamaUmkm(response.data.namaUmkm);
+    setLinkImage(response.data.linkImage);
+    setLinkWebsite(response.data.linkWebsite);
+    setLoading(false);
+  };
+
+  const updateUmkm = async (e) => {
     e.preventDefault();
     e.stopPropagation();
     const form = e.currentTarget;
@@ -37,16 +53,21 @@ const TambahLokasiUmkm = () => {
       setLoading(true);
       try {
         setLoading(true);
-        await axios.post(`${tempUrl}/saveLokasiUmkm`, {
-          namaLokasiUmkm,
-          linkGoogleMaps,
-          latitude,
-          longitude,
-          _id: user.id,
-          token: user.token,
-        });
+        try {
+          setLoading(true);
+          await axios.post(`${tempUrl}/updateUmkm/${id}`, {
+            namaUmkm,
+            linkImage,
+            linkWebsite,
+            _id: user.id,
+            token: user.token,
+          });
+          setLoading(false);
+          navigate(`/umkm/${id}`);
+        } catch (err) {
+          console.log(err);
+        }
         setLoading(false);
-        navigate("/lokasiUmkm");
       } catch (error) {
         alert(error);
       }
@@ -58,23 +79,23 @@ const TambahLokasiUmkm = () => {
     setValidated(true);
   };
 
-  if (loading) {
-    return <Loader />;
-  }
-
   const textRight = {
     textAlign: screenSize >= 650 && "right",
   };
 
+  if (loading) {
+    return <Loader />;
+  }
+
   return (
     <Container>
       <h3>Data Web</h3>
-      <h5 style={{ fontWeight: 400 }}>Tambah Lokasi Umkm</h5>
+      <h5 style={{ fontWeight: 400 }}>Ubah UMKM</h5>
       <hr />
       <Card>
-        <Card.Header>Lokasi Umkm</Card.Header>
+        <Card.Header>UMKM</Card.Header>
         <Card.Body>
-          <Form noValidate validated={validated} onSubmit={saveLokasiUmkm}>
+          <Form noValidate validated={validated} onSubmit={updateUmkm}>
             <Row>
               <Col sm={6}>
                 <Form.Group
@@ -83,14 +104,14 @@ const TambahLokasiUmkm = () => {
                   controlId="formPlaintextPassword"
                 >
                   <Form.Label column sm="4" style={textRight}>
-                    Nama Umkm :
+                    Nama UMKM :
                   </Form.Label>
                   <Col sm="8">
                     <Form.Control
                       required
-                      value={namaLokasiUmkm}
+                      value={namaUmkm}
                       onChange={(e) =>
-                        setNamaLokasiUmkm(e.target.value.toUpperCase())
+                        setNamaUmkm(e.target.value.toUpperCase())
                       }
                     />
                   </Col>
@@ -105,13 +126,13 @@ const TambahLokasiUmkm = () => {
                   controlId="formPlaintextPassword"
                 >
                   <Form.Label column sm="4" style={textRight}>
-                    Link Google Maps :
+                    Link Image :
                   </Form.Label>
                   <Col sm="8">
                     <Form.Control
                       required
-                      value={linkGoogleMaps}
-                      onChange={(e) => setLinkGoogleMaps(e.target.value)}
+                      value={linkImage}
+                      onChange={(e) => setLinkImage(e.target.value)}
                     />
                   </Col>
                 </Form.Group>
@@ -125,59 +146,33 @@ const TambahLokasiUmkm = () => {
                   controlId="formPlaintextPassword"
                 >
                   <Form.Label column sm="4" style={textRight}>
-                    Latitude :
+                    Link Website :
                   </Form.Label>
                   <Col sm="8">
                     <Form.Control
                       required
-                      type="number"
-                      value={latitude}
-                      onChange={(e) =>
-                        setLatitude(e.target.value.toUpperCase())
-                      }
+                      value={linkWebsite}
+                      onChange={(e) => setLinkWebsite(e.target.value)}
                     />
                   </Col>
                 </Form.Group>
               </Col>
             </Row>
-            <Row>
-              <Col sm={6}>
-                <Form.Group
-                  as={Row}
-                  className="mb-3"
-                  controlId="formPlaintextPassword"
-                >
-                  <Form.Label column sm="4" style={textRight}>
-                    Longitude :
-                  </Form.Label>
-                  <Col sm="8">
-                    <Form.Control
-                      required
-                      type="number"
-                      value={longitude}
-                      onChange={(e) =>
-                        setLongitude(e.target.value.toUpperCase())
-                      }
-                    />
-                  </Col>
-                </Form.Group>
-              </Col>
-            </Row>
-            <Box sx={spacingTop}>
+            <Box>
               <Button
                 variant="outlined"
                 color="secondary"
-                onClick={() => navigate("/lokasiUmkm")}
+                onClick={() => navigate("/umkm")}
                 sx={{ marginRight: 2 }}
               >
                 {"< Kembali"}
               </Button>
               <Button
                 variant="contained"
-                startIcon={<SaveIcon />}
+                startIcon={<EditIcon />}
                 type="submit"
               >
-                Simpan
+                Edit
               </Button>
             </Box>
           </Form>
@@ -194,11 +189,7 @@ const TambahLokasiUmkm = () => {
   );
 };
 
-export default TambahLokasiUmkm;
-
-const spacingTop = {
-  mt: 4,
-};
+export default UbahUmkm;
 
 const alertBox = {
   width: "100%",

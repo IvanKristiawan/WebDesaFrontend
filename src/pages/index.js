@@ -37,3 +37,8 @@ export { default as UbahLokasiUmkm } from "./Master/LokasiUmkm/UbahLokasiUmkm";
 // Lokasi Wisata
 export { default as TampilLokasiWisata } from "./Master/LokasiWisata/TampilLokasiWisata";
 export { default as TambahLokasiWisata } from "./Master/LokasiWisata/TambahLokasiWisata";
+export { default as UbahLokasiWisata } from "./Master/LokasiWisata/UbahLokasiWisata";
+// UMKM
+export { default as TampilUmkm } from "./Master/Umkm/TampilUmkm";
+export { default as TambahUmkm } from "./Master/Umkm/TambahUmkm";
+export { default as UbahUmkm } from "./Master/Umkm/UbahUmkm";

@@ -33,7 +33,11 @@ import {
   UbahLokasiUmkm,
   TambahLokasiUmkm,
   TampilLokasiWisata,
+  UbahLokasiWisata,
   TambahLokasiWisata,
+  TampilUmkm,
+  TambahUmkm,
+  UbahUmkm,
 } from "./pages/index";
 import { FaBars } from "react-icons/fa";
 
@@ -155,6 +159,16 @@ const App = () => {
     const { user } = useContext(AuthContext);
 
     if (user.akses.lokasiWisata) {
+      return children;
+    }
+
+    return <Navigate to="/unauthorized" />;
+  };
+
+  const UMKMRoute = ({ children }) => {
+    const { user } = useContext(AuthContext);
+
+    if (user.akses.umkm) {
       return children;
     }
 
@@ -472,20 +486,53 @@ const App = () => {
               </LOKASIWISATARoute>
             }
           />
-          {/* <Route
+          <Route
             path="/lokasiWisata/:id/edit"
             element={
               <LOKASIWISATARoute>
                 <UbahLokasiWisata />
               </LOKASIWISATARoute>
             }
-          /> */}
+          />
           <Route
             path="/lokasiWisata/tambahLokasiWisata"
             element={
               <LOKASIWISATARoute>
                 <TambahLokasiWisata />
               </LOKASIWISATARoute>
+            }
+          />
+          {/* Lokasi Wisata */}
+          <Route
+            path="/umkm"
+            element={
+              <UMKMRoute>
+                <TampilUmkm />
+              </UMKMRoute>
+            }
+          />
+          <Route
+            path="/umkm/:id"
+            element={
+              <UMKMRoute>
+                <TampilUmkm />
+              </UMKMRoute>
+            }
+          />
+          <Route
+            path="/umkm/:id/edit"
+            element={
+              <UMKMRoute>
+                <UbahUmkm />
+              </UMKMRoute>
+            }
+          />
+          <Route
+            path="/umkm/tambahUmkm"
+            element={
+              <UMKMRoute>
+                <TambahUmkm />
+              </UMKMRoute>
             }
           />
         </Routes>

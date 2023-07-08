@@ -24,7 +24,11 @@ const TampilDaftarPenduduk = () => {
   const tempPosts = rtsData.filter((val) => {
     if (searchTerm === "") {
       return val;
-    } else if (val.kodeRt.toUpperCase().includes(searchTerm.toUpperCase())) {
+    } else if (
+      val.kodeRt.toUpperCase().includes(searchTerm.toUpperCase()) ||
+      val.latitude == searchTerm ||
+      val.longitude == searchTerm
+    ) {
       return val;
     }
   });

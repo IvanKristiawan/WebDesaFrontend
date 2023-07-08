@@ -3,7 +3,7 @@ import { useNavigate, useLocation } from "react-router-dom";
 import axios from "axios";
 import { AuthContext } from "../../../contexts/AuthContext";
 import { tempUrl, useStateContext } from "../../../contexts/ContextProvider";
-import { ShowTableUser } from "../../../components/ShowTable";
+import { ShowTableUmkm } from "../../../components/ShowTable";
 import { FetchErrorHandling } from "../../../components/FetchErrorHandling";
 import {
   SearchBar,
@@ -20,7 +20,7 @@ import { useDownloadExcel } from "react-export-table-to-excel";
 import DownloadIcon from "@mui/icons-material/Download";
 import PrintIcon from "@mui/icons-material/Print";
 
-const DaftarUser = () => {
+const TampilUmkm = () => {
   const tableRef = useRef(null);
   const { user, setting } = useContext(AuthContext);
   const location = useLocation();
@@ -28,43 +28,15 @@ const DaftarUser = () => {
   const { screenSize } = useStateContext();
 
   const [isFetchError, setIsFetchError] = useState(false);
-  const [username, setUsername] = useState("");
-  const [tipeUser, setTipeUser] = useState("");
-
-  // Akses Desa
-  const [rt, setRt] = useState(false);
-  const [penduduk, setPenduduk] = useState(false);
-  const [bankSampah, setBankSampah] = useState(false);
-
-  // Data Web
-  const [lokasiPetinggi, setLokasiPetinggi] = useState(false);
-  const [lokasiUmkm, setLokasiUmkm] = useState(false);
-  const [lokasiWisata, setLokasiWisata] = useState(false);
-  const [umkm, setUmkm] = useState(false);
-
-  // Akses Posyandu
-  const [posyanduLansia, setPosyanduLansia] = useState(false);
-
-  // Akses Utility
-  const [profilUser, setProfilUser] = useState(false);
-  const [daftarUser, setDaftarUser] = useState(false);
-  const [settingAkses, setSettingAkses] = useState(false);
+  const [namaUmkm, setNamaUmkm] = useState("");
+  const [linkImage, setLinkImage] = useState("");
+  const [linkWebsite, setLinkWebsite] = useState("");
 
   const [previewPdf, setPreviewPdf] = useState(false);
   const [previewExcel, setPreviewExcel] = useState(false);
   const [searchTerm, setSearchTerm] = useState("");
-  const [users, setUser] = useState([]);
+  const [umkms, setUmkms] = useState([]);
   const navigate = useNavigate();
-
-  const [open, setOpen] = useState(false);
-
-  const handleClickOpen = () => {
-    setOpen(true);
-  };
-
-  const handleClose = () => {
-    setOpen(false);
-  };
 
   const [loading, setLoading] = useState(false);
   let [page, setPage] = useState(1);
@@ -73,20 +45,17 @@ const DaftarUser = () => {
   // Get current posts
   const indexOfLastPost = page * PER_PAGE;
   const indexOfFirstPost = indexOfLastPost - PER_PAGE;
-  const tempPosts = users.filter((val) => {
+  const tempPosts = umkms.filter((val) => {
     if (searchTerm === "") {
       return val;
-    } else if (
-      val.username.toUpperCase().includes(searchTerm.toUpperCase()) ||
-      val.tipeUser.toUpperCase().includes(searchTerm.toUpperCase())
-    ) {
+    } else if (val.namaUmkm.toUpperCase().includes(searchTerm.toUpperCase())) {
       return val;
     }
   });
   const currentPosts = tempPosts.slice(indexOfFirstPost, indexOfLastPost);
 
   const count = Math.ceil(tempPosts.length / PER_PAGE);
-  const _DATA = usePagination(users, PER_PAGE);
+  const _DATA = usePagination(umkms, PER_PAGE);
 
   const handleChange = (e, p) => {
     setPage(p);
@@ -94,69 +63,51 @@ const DaftarUser = () => {
   };
 
   useEffect(() => {
-    getUsers();
-    id && getUserById();
+    getUmkms();
+    id && getUmkmById();
   }, [id]);
 
-  const getUsers = async () => {
+  const getUmkms = async () => {
     setLoading(true);
     try {
-      const response = await axios.post(`${tempUrl}/users`, {
-        tipeAdmin: user.tipeUser,
+      const response = await axios.post(`${tempUrl}/umkms`, {
         _id: user.id,
         token: user.token,
       });
-      setUser(response.data);
+      setUmkms(response.data);
     } catch (err) {
       setIsFetchError(true);
     }
     setLoading(false);
   };
 
-  const getUserById = async () => {
+  const getUmkmById = async () => {
     if (id) {
-      const response = await axios.post(`${tempUrl}/findUser/${id}`, {
+      const response = await axios.post(`${tempUrl}/umkms/${id}`, {
         _id: user.id,
         token: user.token,
       });
-      setUsername(response.data.username);
-      setTipeUser(response.data.tipeUser);
-
-      // Akses Desa
-      setRt(response.data.akses.rt);
-      setPenduduk(response.data.akses.penduduk);
-      setBankSampah(response.data.akses.bankSampah);
-
-      // Akses Data Web
-      setLokasiPetinggi(response.data.akses.lokasiPetinggi);
-      setLokasiUmkm(response.data.akses.lokasiUmkm);
-      setLokasiWisata(response.data.akses.lokasiWisata);
-      setUmkm(response.data.akses.umkm);
-
-      // Akses Posyandu
-      setPosyanduLansia(response.data.akses.posyanduLansia);
-
-      // Akses Utility
-      setProfilUser(response.data.akses.profilUser);
-      setDaftarUser(response.data.akses.daftarUser);
-      setSettingAkses(response.data.akses.setting);
+      setNamaUmkm(response.data.namaUmkm);
+      setLinkImage(response.data.linkImage);
+      setLinkWebsite(response.data.linkWebsite);
     }
   };
 
-  const deleteUser = async (id) => {
+  const deleteUmkm = async (id) => {
     setLoading(true);
     try {
-      await axios.post(`${tempUrl}/users/deleteUser/${id}`, {
-        tipeAdmin: user.tipeUser,
+      await axios.post(`${tempUrl}/deleteUmkm/${id}`, {
         _id: user.id,
         token: user.token,
       });
-      getUsers();
-
-      navigate("/daftarUser");
+      getUmkms();
+      setNamaUmkm("");
+      setLinkImage("");
+      setLinkWebsite("");
+      navigate("/umkm");
     } catch (error) {
       if (error.response.data.message.includes("foreign key")) {
-        alert(`${username} tidak bisa dihapus karena sudah ada data!`);
+        alert(`${namaUmkm} tidak bisa dihapus karena sudah ada data!`);
       }
     }
     setLoading(false);
@@ -196,7 +147,7 @@ const DaftarUser = () => {
     doc.text(`${setting.namaDesa} - ${setting.kotaDesa}`, 15, 10);
     doc.text(`${setting.alamatDesa}`, 15, 15);
     doc.setFontSize(16);
-    doc.text(`Daftar User`, 90, 30);
+    doc.text(`Daftar UMKM`, 75, 30);
     doc.setFontSize(10);
     doc.text(
       `Dicetak Oleh: ${user.username} | Tanggal : ${current_date} | Jam : ${current_time}`,
@@ -211,22 +162,17 @@ const DaftarUser = () => {
         color: [0, 0, 0],
       },
     });
-    doc.save("daftarUser.pdf");
+    doc.save("daftarUMKM.pdf");
   };
 
   const { onDownload } = useDownloadExcel({
     currentTableRef: tableRef.current,
-    filename: "Daftar User",
-    sheet: "DaftarUser",
+    filename: "UMKM",
+    sheet: "DaftarUMKM",
   });
 
   const textRight = {
     textAlign: screenSize >= 650 && "right",
-  };
-
-  const textRightSmall = {
-    textAlign: screenSize >= 650 && "right",
-    fontSize: "14px",
   };
 
   if (loading) {
@@ -239,8 +185,8 @@ const DaftarUser = () => {
 
   return (
     <Container>
-      <h3>Utility</h3>
-      <h5 style={{ fontWeight: 400 }}>Daftar User</h5>
+      <h3>Data Web</h3>
+      <h5 style={{ fontWeight: 400 }}>UMKM</h5>
       <Box sx={downloadButtons}>
         <ButtonGroup variant="outlined" color="secondary">
           <Button
@@ -278,15 +224,13 @@ const DaftarUser = () => {
           <table class="table" id="table">
             <thead>
               <tr>
-                <th>Username</th>
-                <th>Tipe User</th>
+                <th>Nama UMKM</th>
               </tr>
             </thead>
             <tbody>
-              {users.map((user, index) => (
+              {umkms.map((user, index) => (
                 <tr key={user.id}>
-                  <td>{user.username}</td>
-                  <td>{user.tipeUser}</td>
+                  <td>{user.namaUmkm}</td>
                 </tr>
               ))}
             </tbody>
@@ -308,13 +252,11 @@ const DaftarUser = () => {
           {previewExcel && (
             <tbody>
               <tr>
-                <th>Username</th>
-                <th>Tipe User</th>
+                <th>Nama UMKM</th>
               </tr>
-              {users.map((user, index) => (
+              {umkms.map((user, index) => (
                 <tr key={user.id}>
-                  <td>{user.username}</td>
-                  <td>{user.tipeUser}</td>
+                  <td>{user.namaUmkm}</td>
                 </tr>
               ))}
             </tbody>
@@ -325,10 +267,10 @@ const DaftarUser = () => {
         <ButtonModifier
           id={id}
           kode={id}
-          addLink={`/daftarUser/tambahUser`}
-          editLink={`/daftarUser/${id}/edit`}
-          deleteUser={deleteUser}
-          nameUser={username}
+          addLink={`/umkm/tambahUmkm`}
+          editLink={`/umkm/${id}/edit`}
+          deleteUser={deleteUmkm}
+          nameUser={namaUmkm}
         />
       </Box>
       {id && (
@@ -343,10 +285,10 @@ const DaftarUser = () => {
                   controlId="formPlaintextPassword"
                 >
                   <Form.Label column sm="3" style={textRight}>
-                    Username :
+                    Nama UMKM :
                   </Form.Label>
                   <Col sm="9">
-                    <Form.Control value={username} disabled readOnly />
+                    <Form.Control value={namaUmkm} disabled readOnly />
                   </Col>
                 </Form.Group>
               </Col>
@@ -359,104 +301,31 @@ const DaftarUser = () => {
                   controlId="formPlaintextPassword"
                 >
                   <Form.Label column sm="3" style={textRight}>
-                    Tipe User :
+                    Link Gambar :
                   </Form.Label>
                   <Col sm="9">
-                    <Form.Control value={tipeUser} disabled readOnly />
+                    <Form.Control value={linkImage} disabled readOnly />
+                  </Col>
+                </Form.Group>
+              </Col>
+            </Row>
+            <Row>
+              <Col sm={6}>
+                <Form.Group
+                  as={Row}
+                  className="mb-3"
+                  controlId="formPlaintextPassword"
+                >
+                  <Form.Label column sm="3" style={textRight}>
+                    Link Website :
+                  </Form.Label>
+                  <Col sm="9">
+                    <Form.Control value={linkWebsite} disabled readOnly />
                   </Col>
                 </Form.Group>
               </Col>
             </Row>
           </Form>
-          {user.tipeUser !== "ADMIN" && (
-            <Container style={{ marginTop: 30 }}>
-              <h4>Hak Akses User</h4>
-              <Box sx={showDataContainer}>
-                <Box sx={showDataWrapper}>
-                  <p style={checkboxTitle}>Desa</p>
-                  <Form>
-                    <Form.Check
-                      type="checkbox"
-                      label="Rt"
-                      disabled
-                      checked={rt}
-                    />
-                    <Form.Check
-                      type="checkbox"
-                      label="Penduduk"
-                      disabled
-                      checked={penduduk}
-                    />
-                    <Form.Check
-                      type="checkbox"
-                      label="Bank Sampah"
-                      disabled
-                      checked={bankSampah}
-                    />
-                  </Form>
-                  <p style={checkboxTitle}>Data Web</p>
-                  <Form>
-                    <Form.Check
-                      type="checkbox"
-                      label="Lokasi Petinggi"
-                      disabled
-                      checked={lokasiPetinggi}
-                    />
-                    <Form.Check
-                      type="checkbox"
-                      label="Lokasi UMKM"
-                      disabled
-                      checked={lokasiUmkm}
-                    />
-                    <Form.Check
-                      type="checkbox"
-                      label="Lokasi Wisata"
-                      disabled
-                      checked={lokasiWisata}
-                    />
-                    <Form.Check
-                      type="checkbox"
-                      label="UMKM"
-                      disabled
-                      checked={umkm}
-                    />
-                  </Form>
-                  <p style={checkboxTitle}>Posyandu</p>
-                  <Form>
-                    <Form.Check
-                      type="checkbox"
-                      label="Lansia"
-                      disabled
-                      checked={posyanduLansia}
-                    />
-                  </Form>
-                </Box>
-                <Box sx={[showDataWrapper, secondWrapper]}>
-                  <p style={secondCheckboxTitle}>Utility</p>
-                  <Form>
-                    <Form.Check
-                      type="checkbox"
-                      label="Profil User"
-                      disabled
-                      checked={profilUser}
-                    />
-                    <Form.Check
-                      type="checkbox"
-                      label="Daftar User"
-                      disabled
-                      checked={daftarUser}
-                    />
-                    <Form.Check
-                      type="checkbox"
-                      label="Setting"
-                      disabled
-                      checked={settingAkses}
-                    />
-                  </Form>
-                </Box>
-              </Box>
-            </Container>
-          )}
         </Container>
       )}
       <hr />
@@ -464,7 +333,7 @@ const DaftarUser = () => {
         <SearchBar setSearchTerm={setSearchTerm} />
       </Box>
       <Box sx={tableContainer}>
-        <ShowTableUser currentPosts={currentPosts} searchTerm={searchTerm} />
+        <ShowTableUmkm currentPosts={currentPosts} searchTerm={searchTerm} />
       </Box>
       <Box sx={tableContainer}>
         <Pagination
@@ -479,7 +348,7 @@ const DaftarUser = () => {
   );
 };
 
-export default DaftarUser;
+export default TampilUmkm;
 
 const buttonModifierContainer = {
   mt: 4,
@@ -493,43 +362,6 @@ const downloadButtons = {
   display: "flex",
   flexWrap: "wrap",
   justifyContent: "center",
-};
-
-const showDataContainer = {
-  mt: 2,
-  display: "flex",
-  flexDirection: {
-    xs: "column",
-    sm: "row",
-  },
-};
-
-const showDataWrapper = {
-  display: "flex",
-  flex: 1,
-  flexDirection: "column",
-  maxWidth: {
-    md: "40vw",
-  },
-};
-
-const secondWrapper = {
-  marginLeft: {
-    sm: 4,
-  },
-  marginTop: {
-    sm: 0,
-    xs: 2,
-  },
-};
-
-const checkboxTitle = {
-  marginBottom: 0,
-};
-
-const secondCheckboxTitle = {
-  marginTop: 15,
-  marginBottom: 0,
 };
 
 const searchBarContainer = {

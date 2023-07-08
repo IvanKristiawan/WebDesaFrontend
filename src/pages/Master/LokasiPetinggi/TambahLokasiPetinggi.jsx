@@ -68,7 +68,7 @@ const TambahLokasiPetinggi = () => {
 
   return (
     <Container>
-      <h3>Lokasi Web</h3>
+      <h3>Data Web</h3>
       <h5 style={{ fontWeight: 400 }}>Tambah Lokasi Petinggi</h5>
       <hr />
       <Card>
