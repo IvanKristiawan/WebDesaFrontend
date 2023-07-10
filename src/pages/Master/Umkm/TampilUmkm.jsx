@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useContext, useRef } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import axios from "axios";
+import "../../../constants/report.css";
 import { AuthContext } from "../../../contexts/AuthContext";
 import { tempUrl, useStateContext } from "../../../contexts/ContextProvider";
 import { ShowTableUmkm } from "../../../components/ShowTable";
@@ -221,7 +222,7 @@ const TampilUmkm = () => {
           >
             CETAK
           </Button>
-          <table class="table" id="table">
+          <table class="styled-table" id="table">
             <thead>
               <tr>
                 <th>Nama UMKM</th>
@@ -248,7 +249,7 @@ const TampilUmkm = () => {
             EXCEL
           </Button>
         )}
-        <table ref={tableRef}>
+        <table class="styled-table" ref={tableRef}>
           {previewExcel && (
             <tbody>
               <tr>

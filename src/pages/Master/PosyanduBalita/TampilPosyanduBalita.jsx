@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useContext, useRef } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import axios from "axios";
+import "../../../constants/report.css";
 import { AuthContext } from "../../../contexts/AuthContext";
 import { tempUrl, useStateContext } from "../../../contexts/ContextProvider";
 import { ShowTablePosyanduBalita } from "../../../components/ShowTable";
@@ -218,7 +219,7 @@ const TampilPosyanduBalita = () => {
     doc.text(`${setting.namaDesa} - ${setting.kotaDesa}`, 15, 10);
     doc.text(`${setting.alamatDesa}`, 15, 15);
     doc.setFontSize(16);
-    doc.text(`Daftar Posyandu Balita`, 90, 30);
+    doc.text(`Daftar Posyandu Balita`, 150, 30);
     doc.setFontSize(10);
     doc.text(
       `Dicetak Oleh: ${user.username} | Tanggal : ${current_date} | Jam : ${current_time}`,
@@ -295,7 +296,7 @@ const TampilPosyanduBalita = () => {
           >
             CETAK
           </Button>
-          <table class="table" id="table">
+          <table class="styled-table" id="table" style={{ fontSize: "10px" }}>
             <thead>
               <tr>
                 <th>KK</th>
@@ -358,7 +359,7 @@ const TampilPosyanduBalita = () => {
             EXCEL
           </Button>
         )}
-        <table ref={tableRef}>
+        <table ref={tableRef} class="styled-table" style={{ fontSize: "10px" }}>
           {previewExcel && (
             <tbody>
               <tr>

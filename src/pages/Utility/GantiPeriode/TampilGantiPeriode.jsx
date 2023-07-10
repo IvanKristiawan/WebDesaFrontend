@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useContext, useRef } from "react";
 import { useLocation } from "react-router-dom";
 import axios from "axios";
+import "../../../constants/report.css";
 import { AuthContext } from "../../../contexts/AuthContext";
 import { tempUrl, useStateContext } from "../../../contexts/ContextProvider";
 import { ShowTableGantiPeriode } from "../../../components/ShowTable";
@@ -238,7 +239,7 @@ const TampilGantiPeriode = () => {
           >
             CETAK
           </Button>
-          <table class="table" id="table">
+          <table class="styled-table" id="table">
             <thead>
               <tr>
                 <th>Nama</th>
@@ -269,7 +270,7 @@ const TampilGantiPeriode = () => {
             EXCEL
           </Button>
         )}
-        <table ref={tableRef}>
+        <table ref={tableRef} class="styled-table">
           {previewExcel && (
             <tbody>
               <tr>

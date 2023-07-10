@@ -1,6 +1,7 @@
 import { useContext, useState, useEffect, useRef } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import axios from "axios";
+import "../../../constants/report.css";
 import { AuthContext } from "../../../contexts/AuthContext";
 import { tempUrl, useStateContext } from "../../../contexts/ContextProvider";
 import { Loader, usePagination, SearchBar } from "../../../components";
@@ -227,7 +228,7 @@ const TampilPenduduk = () => {
           >
             CETAK
           </Button>
-          <table class="table" id="table">
+          <table class="styled-table" id="table">
             <thead>
               <tr>
                 <th>KK</th>
@@ -256,7 +257,7 @@ const TampilPenduduk = () => {
             EXCEL
           </Button>
         )}
-        <table ref={tableRef}>
+        <table class="styled-table" ref={tableRef}>
           {previewExcel && (
             <tbody>
               <tr>

@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useContext, useRef } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import axios from "axios";
+import "../../../constants/report.css";
 import { AuthContext } from "../../../contexts/AuthContext";
 import { tempUrl, useStateContext } from "../../../contexts/ContextProvider";
 import { ShowTableUser } from "../../../components/ShowTable";
@@ -277,7 +278,7 @@ const DaftarUser = () => {
           >
             CETAK
           </Button>
-          <table class="table" id="table">
+          <table class="styled-table" id="table">
             <thead>
               <tr>
                 <th>Username</th>
@@ -306,7 +307,7 @@ const DaftarUser = () => {
             EXCEL
           </Button>
         )}
-        <table ref={tableRef}>
+        <table ref={tableRef} class="styled-table">
           {previewExcel && (
             <tbody>
               <tr>
