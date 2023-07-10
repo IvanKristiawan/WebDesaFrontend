@@ -11,6 +11,7 @@ import {
   usePagination,
   ButtonModifier,
 } from "../../../components";
+import { formatDate } from "../../../constants/helper";
 import { Container, Form, Row, Col } from "react-bootstrap";
 import {
   Box,
@@ -34,13 +35,19 @@ const TampilPosyanduLansia = () => {
   const { screenSize } = useStateContext();
 
   const [isFetchError, setIsFetchError] = useState(false);
-  const [kkPosyanduLansia, setKkPosyanduLansia] = useState("");
-  const [nikPosyanduLansia, setNikPosyanduLansia] = useState("");
-  const [namaPosyanduLansia, setNamaPosyanduLansia] = useState("");
-  const [umurPosyanduLansia, setUmurPosyanduLansia] = useState("");
-  const [tglLahirPosyanduLansia, setTglLahirPosyanduLansia] = useState("");
-  const [bbPosyanduLansia, setBbPosyanduLansia] = useState("");
-  const [tensiPosyanduLansia, setTensiPosyanduLansia] = useState("");
+  const [namaLansia, setNamaLansia] = useState("");
+  const [tglLahirLansia, setTglLahirLansia] = useState("");
+  const [umurLansia, setUmurLansia] = useState("");
+  const [noRmLansia, setNoRmLansia] = useState("");
+  const [tglPemeriksaan, setTglPemeriksaan] = useState("");
+  const [tempatPemeriksaanLansia, setTempatPemeriksaanLansia] = useState("");
+  const [noJaminanLansia, setNoJaminanLansia] = useState("");
+  const [tekananDarahLansia, setTekananDarahLansia] = useState("");
+  const [gulaDarahLansia, setGulaDarahLansia] = useState("");
+  const [kolesterolLansia, setKolesterolLansia] = useState("");
+  const [tbLansia, setTbLansia] = useState("");
+  const [bbLansia, setBbLansia] = useState("");
+  const [lpLansia, setLpLansia] = useState("");
 
   const [previewPdf, setPreviewPdf] = useState(false);
   const [previewExcel, setPreviewExcel] = useState(false);
@@ -59,9 +66,14 @@ const TampilPosyanduLansia = () => {
     if (searchTerm === "") {
       return val;
     } else if (
-      val.kkPosyanduLansia.toUpperCase().includes(searchTerm.toUpperCase()) ||
-      val.nikPosyanduLansia.toUpperCase().includes(searchTerm.toUpperCase()) ||
-      val.namaPosyanduLansia.toUpperCase().includes(searchTerm.toUpperCase())
+      val.namaLansia.toUpperCase().includes(searchTerm.toUpperCase()) ||
+      val.tglLahirLansiaFormatted
+        .toUpperCase()
+        .includes(searchTerm.toUpperCase()) ||
+      val.noRmLansia.toUpperCase().includes(searchTerm.toUpperCase()) ||
+      val.tempatPemeriksaanLansia
+        .toUpperCase()
+        .includes(searchTerm.toUpperCase())
     ) {
       return val;
     }
@@ -105,23 +117,19 @@ const TampilPosyanduLansia = () => {
         _id: user.id,
         token: user.token,
       });
-      setKkPosyanduLansia(response.data.kkPosyanduLansia);
-      setNikPosyanduLansia(response.data.nikPosyanduLansia);
-      setNamaPosyanduLansia(response.data.namaPosyanduLansia);
-      setUmurPosyanduLansia(response.data.umurPosyanduLansia);
-      let newTanggalLahir = new Date(response.data.tglLahirPosyanduLansia);
-      let tempTanggalLahir = `${newTanggalLahir
-        .getDate()
-        .toLocaleString("en-US", {
-          minimumIntegerDigits: 2,
-          useGrouping: false,
-        })}-${(newTanggalLahir.getMonth() + 1).toLocaleString("en-US", {
-        minimumIntegerDigits: 2,
-        useGrouping: false,
-      })}-${newTanggalLahir.getFullYear()}`;
-      setTglLahirPosyanduLansia(tempTanggalLahir);
-      setBbPosyanduLansia(response.data.bbPosyanduLansia);
-      setTensiPosyanduLansia(response.data.tensiPosyanduLansia);
+      setNamaLansia(response.data.namaLansia);
+      setTglLahirLansia(formatDate(response.data.tglLahirLansia));
+      setUmurLansia(response.data.umurLansia);
+      setNoRmLansia(response.data.noRmLansia);
+      setTglPemeriksaan(formatDate(response.data.tglPemeriksaan));
+      setTempatPemeriksaanLansia(response.data.tempatPemeriksaanLansia);
+      setNoJaminanLansia(response.data.noJaminanLansia);
+      setTekananDarahLansia(response.data.tekananDarahLansia);
+      setGulaDarahLansia(response.data.gulaDarahLansia);
+      setKolesterolLansia(response.data.kolesterolLansia);
+      setTbLansia(response.data.tbLansia);
+      setBbLansia(response.data.bbLansia);
+      setLpLansia(response.data.lpLansia);
     }
   };
 
@@ -132,17 +140,23 @@ const TampilPosyanduLansia = () => {
         _id: user.id,
         token: user.token,
       });
-      getPosyanduLansias();
-      setKkPosyanduLansia("");
-      setNikPosyanduLansia("");
-      setNamaPosyanduLansia("");
-      setTglLahirPosyanduLansia("");
-      setBbPosyanduLansia("");
-      setTensiPosyanduLansia("");
+      setNamaLansia("");
+      setTglLahirLansia("");
+      setUmurLansia("");
+      setNoRmLansia("");
+      setTglPemeriksaan("");
+      setTempatPemeriksaanLansia("");
+      setNoJaminanLansia("");
+      setTekananDarahLansia("");
+      setGulaDarahLansia("");
+      setKolesterolLansia("");
+      setTbLansia("");
+      setBbLansia("");
+      setLpLansia("");
       navigate("/posyanduLansia");
     } catch (error) {
       if (error.response.data.message.includes("foreign key")) {
-        alert(`${kkPosyanduLansia} tidak bisa dihapus karena sudah ada data!`);
+        alert(`${namaLansia} tidak bisa dihapus karena sudah ada data!`);
       }
     }
     setLoading(false);
@@ -177,7 +191,7 @@ const TampilPosyanduLansia = () => {
         minimumIntegerDigits: 2,
         useGrouping: false,
       });
-    const doc = new jsPDF();
+    const doc = new jsPDF("l", "mm", [350, 210]);
     doc.setFontSize(12);
     doc.text(`${setting.namaDesa} - ${setting.kotaDesa}`, 15, 10);
     doc.text(`${setting.alamatDesa}`, 15, 15);
@@ -262,24 +276,37 @@ const TampilPosyanduLansia = () => {
           <table class="table" id="table">
             <thead>
               <tr>
-                <th>KK</th>
-                <th>NIK</th>
                 <th>Nama</th>
-                <th>Umur</th>
                 <th>Tgl. Lahir</th>
+                <th>Umur</th>
+                <th>No. RM</th>
+                <th>Tgl.</th>
+                <th>Tempat Pemeriksaan</th>
+                <th>No. Jaminan</th>
+                <th>Tekanan Darah</th>
+                <th>Gula Darah</th>
+                <th>Kolesterol</th>
+                <th>TB</th>
                 <th>BB</th>
-                <th>Tensi</th>
+                <th>LP</th>
               </tr>
             </thead>
             <tbody>
               {posyanduLansias.map((user, index) => (
                 <tr key={user.id}>
-                  <td>{user.kkPosyanduLansia}</td>
-                  <td>{user.nikPosyanduLansia}</td>
-                  <td>{user.umurPosyanduLansia}</td>
-                  <td>{user.tglLahirPosyanduLansia}</td>
-                  <td>{user.bbPosyanduLansia}</td>
-                  <td>{user.tensiPosyanduLansia}</td>
+                  <td>{user.namaLansia}</td>
+                  <td>{user.tglLahirLansiaFormatted}</td>
+                  <td>{user.umurLansia}</td>
+                  <td>{user.noRmLansia}</td>
+                  <td>{user.tglPemeriksaanFormatted}</td>
+                  <td>{user.tempatPemeriksaanLansia}</td>
+                  <td>{user.noJaminanLansia}</td>
+                  <td>{user.tekananDarahLansia}</td>
+                  <td>{user.gulaDarahLansia}</td>
+                  <td>{user.kolesterolLansia}</td>
+                  <td>{user.tbLansia}</td>
+                  <td>{user.bbLansia}</td>
+                  <td>{user.lpLansia}</td>
                 </tr>
               ))}
             </tbody>
@@ -301,23 +328,35 @@ const TampilPosyanduLansia = () => {
           {previewExcel && (
             <tbody>
               <tr>
-                <th>KK</th>
-                <th>NIK</th>
                 <th>Nama</th>
-                <th>Umur</th>
                 <th>Tgl. Lahir</th>
+                <th>Umur</th>
+                <th>No. RM</th>
+                <th>Tgl.</th>
+                <th>Tempat Pemeriksaan</th>
+                <th>No. Jaminan</th>
+                <th>Tekanan Darah</th>
+                <th>Gula Darah</th>
+                <th>Kolesterol</th>
+                <th>TB</th>
                 <th>BB</th>
-                <th>Tensi</th>
+                <th>LP</th>
               </tr>
               {posyanduLansias.map((user, index) => (
                 <tr key={user.id}>
-                  <td>{user.kkPosyanduLansia}</td>
-                  <td>{user.nikPosyanduLansia}</td>
-                  <td>{user.namaPosyanduLansia}</td>
-                  <td>{user.umurPosyanduLansia}</td>
-                  <td>{user.tglLahirPosyanduLansia}</td>
-                  <td>{user.bbPosyanduLansia}</td>
-                  <td>{user.tensiPosyanduLansia}</td>
+                  <td>{user.namaLansia}</td>
+                  <td>{user.tglLahirLansiaFormatted}</td>
+                  <td>{user.umurLansia}</td>
+                  <td>{user.noRmLansia}</td>
+                  <td>{user.tglPemeriksaanFormatted}</td>
+                  <td>{user.tempatPemeriksaanLansia}</td>
+                  <td>{user.noJaminanLansia}</td>
+                  <td>{user.tekananDarahLansia}</td>
+                  <td>{user.gulaDarahLansia}</td>
+                  <td>{user.kolesterolLansia}</td>
+                  <td>{user.tbLansia}</td>
+                  <td>{user.bbLansia}</td>
+                  <td>{user.lpLansia}</td>
                 </tr>
               ))}
             </tbody>
@@ -331,7 +370,7 @@ const TampilPosyanduLansia = () => {
           addLink={`/posyanduLansia/tambahPosyanduLansia`}
           editLink={`/posyanduLansia/${id}/edit`}
           deleteUser={deletePosyanduLansia}
-          nameUser={kkPosyanduLansia}
+          nameUser={namaLansia}
         />
       </Box>
       {id && (
@@ -346,66 +385,10 @@ const TampilPosyanduLansia = () => {
                   controlId="formPlaintextPassword"
                 >
                   <Form.Label column sm="3" style={textRight}>
-                    KK :
-                  </Form.Label>
-                  <Col sm="9">
-                    <Form.Control value={kkPosyanduLansia} disabled readOnly />
-                  </Col>
-                </Form.Group>
-              </Col>
-            </Row>
-            <Row>
-              <Col sm={6}>
-                <Form.Group
-                  as={Row}
-                  className="mb-3"
-                  controlId="formPlaintextPassword"
-                >
-                  <Form.Label column sm="3" style={textRight}>
-                    NIK :
-                  </Form.Label>
-                  <Col sm="9">
-                    <Form.Control value={nikPosyanduLansia} disabled readOnly />
-                  </Col>
-                </Form.Group>
-              </Col>
-            </Row>
-            <Row>
-              <Col sm={6}>
-                <Form.Group
-                  as={Row}
-                  className="mb-3"
-                  controlId="formPlaintextPassword"
-                >
-                  <Form.Label column sm="3" style={textRight}>
                     Nama :
                   </Form.Label>
                   <Col sm="9">
-                    <Form.Control
-                      value={namaPosyanduLansia}
-                      disabled
-                      readOnly
-                    />
-                  </Col>
-                </Form.Group>
-              </Col>
-            </Row>
-            <Row>
-              <Col sm={6}>
-                <Form.Group
-                  as={Row}
-                  className="mb-3"
-                  controlId="formPlaintextPassword"
-                >
-                  <Form.Label column sm="3" style={textRight}>
-                    Umur :
-                  </Form.Label>
-                  <Col sm="9">
-                    <Form.Control
-                      value={umurPosyanduLansia}
-                      disabled
-                      readOnly
-                    />
+                    <Form.Control value={namaLansia} disabled readOnly />
                   </Col>
                 </Form.Group>
               </Col>
@@ -421,11 +404,159 @@ const TampilPosyanduLansia = () => {
                     Tgl. Lahir :
                   </Form.Label>
                   <Col sm="9">
+                    <Form.Control value={tglLahirLansia} disabled readOnly />
+                  </Col>
+                </Form.Group>
+              </Col>
+            </Row>
+            <Row>
+              <Col sm={6}>
+                <Form.Group
+                  as={Row}
+                  className="mb-3"
+                  controlId="formPlaintextPassword"
+                >
+                  <Form.Label column sm="3" style={textRight}>
+                    Umur :
+                  </Form.Label>
+                  <Col sm="9">
+                    <Form.Control value={umurLansia} disabled readOnly />
+                  </Col>
+                </Form.Group>
+              </Col>
+            </Row>
+            <Row>
+              <Col sm={6}>
+                <Form.Group
+                  as={Row}
+                  className="mb-3"
+                  controlId="formPlaintextPassword"
+                >
+                  <Form.Label column sm="3" style={textRight}>
+                    No. RM :
+                  </Form.Label>
+                  <Col sm="9">
+                    <Form.Control value={noRmLansia} disabled readOnly />
+                  </Col>
+                </Form.Group>
+              </Col>
+            </Row>
+            <Row>
+              <Col sm={6}>
+                <Form.Group
+                  as={Row}
+                  className="mb-3"
+                  controlId="formPlaintextPassword"
+                >
+                  <Form.Label column sm="3" style={textRight}>
+                    Tgl. Pemeriksaan :
+                  </Form.Label>
+                  <Col sm="9">
+                    <Form.Control value={tglPemeriksaan} disabled readOnly />
+                  </Col>
+                </Form.Group>
+              </Col>
+            </Row>
+            <Row>
+              <Col sm={6}>
+                <Form.Group
+                  as={Row}
+                  className="mb-3"
+                  controlId="formPlaintextPassword"
+                >
+                  <Form.Label column sm="3" style={textRight}>
+                    Tempat Pemeriksaan :
+                  </Form.Label>
+                  <Col sm="9">
                     <Form.Control
-                      value={tglLahirPosyanduLansia}
+                      value={tempatPemeriksaanLansia}
                       disabled
                       readOnly
                     />
+                  </Col>
+                </Form.Group>
+              </Col>
+            </Row>
+            <Row>
+              <Col sm={6}>
+                <Form.Group
+                  as={Row}
+                  className="mb-3"
+                  controlId="formPlaintextPassword"
+                >
+                  <Form.Label column sm="3" style={textRight}>
+                    No. Jaminan :
+                  </Form.Label>
+                  <Col sm="9">
+                    <Form.Control value={noJaminanLansia} disabled readOnly />
+                  </Col>
+                </Form.Group>
+              </Col>
+            </Row>
+            <Row>
+              <Col sm={6}>
+                <Form.Group
+                  as={Row}
+                  className="mb-3"
+                  controlId="formPlaintextPassword"
+                >
+                  <Form.Label column sm="3" style={textRight}>
+                    Tekanan Darah :
+                  </Form.Label>
+                  <Col sm="9">
+                    <Form.Control
+                      value={tekananDarahLansia}
+                      disabled
+                      readOnly
+                    />
+                  </Col>
+                </Form.Group>
+              </Col>
+            </Row>
+            <Row>
+              <Col sm={6}>
+                <Form.Group
+                  as={Row}
+                  className="mb-3"
+                  controlId="formPlaintextPassword"
+                >
+                  <Form.Label column sm="3" style={textRight}>
+                    Gula Darah :
+                  </Form.Label>
+                  <Col sm="9">
+                    <Form.Control value={gulaDarahLansia} disabled readOnly />
+                  </Col>
+                </Form.Group>
+              </Col>
+            </Row>
+            <Row>
+              <Col sm={6}>
+                <Form.Group
+                  as={Row}
+                  className="mb-3"
+                  controlId="formPlaintextPassword"
+                >
+                  <Form.Label column sm="3" style={textRight}>
+                    Kolesterol :
+                  </Form.Label>
+                  <Col sm="9">
+                    <Form.Control value={kolesterolLansia} disabled readOnly />
+                  </Col>
+                </Form.Group>
+              </Col>
+            </Row>
+            <Row>
+              <Col sm={6}>
+                <Form.Group
+                  as={Row}
+                  className="mb-3"
+                  controlId="formPlaintextPassword"
+                >
+                  <Form.Label column sm="3" style={textRight}>
+                    Tinggi Badan :
+                  </Form.Label>
+                  <Col sm="9">
+                    <Form.Control value={tbLansia} disabled readOnly />
                   </Col>
                 </Form.Group>
               </Col>
@@ -441,7 +572,7 @@ const TampilPosyanduLansia = () => {
                     Berat Badan :
                   </Form.Label>
                   <Col sm="9">
-                    <Form.Control value={bbPosyanduLansia} disabled readOnly />
+                    <Form.Control value={bbLansia} disabled readOnly />
                   </Col>
                 </Form.Group>
               </Col>
@@ -454,14 +585,10 @@ const TampilPosyanduLansia = () => {
                   controlId="formPlaintextPassword"
                 >
                   <Form.Label column sm="3" style={textRight}>
-                    Tensi :
+                    Lingkar Perut :
                   </Form.Label>
                   <Col sm="9">
-                    <Form.Control
-                      value={tensiPosyanduLansia}
-                      disabled
-                      readOnly
-                    />
+                    <Form.Control value={lpLansia} disabled readOnly />
                   </Col>
                 </Form.Group>
               </Col>

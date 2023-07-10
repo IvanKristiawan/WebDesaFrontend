@@ -589,15 +589,23 @@ export function ShowTablePosyanduLansia({ currentPosts, searchTerm }) {
               sx={{ fontWeight: "bold" }}
               className={classes.tableRightBorder}
             >
-              KK
+              Nama
             </TableCell>
             <TableCell
               sx={{ fontWeight: "bold" }}
               className={classes.tableRightBorder}
             >
-              NIK
+              Tgl. Lahir
             </TableCell>
-            <TableCell sx={{ fontWeight: "bold" }}>Nama</TableCell>
+            <TableCell
+              sx={{ fontWeight: "bold" }}
+              className={classes.tableRightBorder}
+            >
+              No. RM
+            </TableCell>
+            <TableCell sx={{ fontWeight: "bold" }}>
+              Tempat Pemeriksaan
+            </TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
@@ -606,13 +614,16 @@ export function ShowTablePosyanduLansia({ currentPosts, searchTerm }) {
               if (searchTerm === "") {
                 return val;
               } else if (
-                val.kkPosyanduLansia
+                val.namaLansia
                   .toUpperCase()
                   .includes(searchTerm.toUpperCase()) ||
-                val.nikPosyanduLansia
+                val.tglLahirLansiaFormatted
                   .toUpperCase()
                   .includes(searchTerm.toUpperCase()) ||
-                val.namaPosyanduLansia
+                val.noRmLansia
+                  .toUpperCase()
+                  .includes(searchTerm.toUpperCase()) ||
+                val.tempatPemeriksaanLansia
                   .toUpperCase()
                   .includes(searchTerm.toUpperCase())
               ) {
@@ -632,10 +643,11 @@ export function ShowTablePosyanduLansia({ currentPosts, searchTerm }) {
                 }}
               >
                 <TableCell component="th" scope="row">
-                  {user.kkPosyanduLansia}
+                  {user.namaLansia}
                 </TableCell>
-                <TableCell>{user.nikPosyanduLansia}</TableCell>
-                <TableCell>{user.namaPosyanduLansia}</TableCell>
+                <TableCell>{user.tglLahirLansiaFormatted}</TableCell>
+                <TableCell>{user.noRmLansia}</TableCell>
+                <TableCell>{user.tempatPemeriksaanLansia}</TableCell>
               </TableRow>
             ))}
         </TableBody>

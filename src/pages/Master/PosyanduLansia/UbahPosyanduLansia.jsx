@@ -15,15 +15,19 @@ const UbahPosyanduLansia = () => {
   const { user } = useContext(AuthContext);
   const [open, setOpen] = useState(false);
   const [validated, setValidated] = useState(false);
-  const [kkPosyanduLansia, setKkPosyanduLansia] = useState("");
-  const [nikPosyanduLansia, setNikPosyanduLansia] = useState("");
-  const [namaPosyanduLansia, setNamaPosyanduLansia] = useState("");
-  const [umurPosyanduLansia, setUmurPosyanduLansia] = useState("");
-  const [tglLahirPosyanduLansia, setTglLahirPosyanduLansia] = useState(
-    new Date()
-  );
-  const [bbPosyanduLansia, setBbPosyanduLansia] = useState("");
-  const [tensiPosyanduLansia, setTensiPosyanduLansia] = useState("");
+  const [namaLansia, setNamaLansia] = useState("");
+  const [tglLahirLansia, setTglLahirLansia] = useState(new Date());
+  const [umurLansia, setUmurLansia] = useState("");
+  const [noRmLansia, setNoRmLansia] = useState("");
+  const [tglPemeriksaan, setTglPemeriksaan] = useState("");
+  const [tempatPemeriksaanLansia, setTempatPemeriksaanLansia] = useState("");
+  const [noJaminanLansia, setNoJaminanLansia] = useState("");
+  const [tekananDarahLansia, setTekananDarahLansia] = useState("");
+  const [gulaDarahLansia, setGulaDarahLansia] = useState("");
+  const [kolesterolLansia, setKolesterolLansia] = useState("");
+  const [tbLansia, setTbLansia] = useState("");
+  const [bbLansia, setBbLansia] = useState("");
+  const [lpLansia, setLpLansia] = useState("");
 
   const [error, setError] = useState(false);
   const navigate = useNavigate();
@@ -45,15 +49,21 @@ const UbahPosyanduLansia = () => {
     setLoading(true);
     const response = await axios.post(`${tempUrl}/posyanduLansias/${id}`, {
       _id: user.id,
-      token: user.token
+      token: user.token,
     });
-    setKkPosyanduLansia(response.data.kkPosyanduLansia);
-    setNikPosyanduLansia(response.data.nikPosyanduLansia);
-    setNamaPosyanduLansia(response.data.namaPosyanduLansia);
-    setUmurPosyanduLansia(response.data.umurPosyanduLansia);
-    setTglLahirPosyanduLansia(new Date(response.data.tglLahirPosyanduLansia));
-    setBbPosyanduLansia(response.data.bbPosyanduLansia);
-    setTensiPosyanduLansia(response.data.tensiPosyanduLansia);
+    setNamaLansia(response.data.namaLansia);
+    setTglLahirLansia(new Date(response.data.tglLahirLansia));
+    setUmurLansia(response.data.umurLansia);
+    setNoRmLansia(response.data.noRmLansia);
+    setTglPemeriksaan(new Date(response.data.tglPemeriksaan));
+    setTempatPemeriksaanLansia(response.data.tempatPemeriksaanLansia);
+    setNoJaminanLansia(response.data.noJaminanLansia);
+    setTekananDarahLansia(response.data.tekananDarahLansia);
+    setGulaDarahLansia(response.data.gulaDarahLansia);
+    setKolesterolLansia(response.data.kolesterolLansia);
+    setTbLansia(response.data.tbLansia);
+    setBbLansia(response.data.bbLansia);
+    setLpLansia(response.data.lpLansia);
     setLoading(false);
   };
 
@@ -68,14 +78,21 @@ const UbahPosyanduLansia = () => {
         try {
           setLoading(true);
           await axios.post(`${tempUrl}/updatePosyanduLansia/${id}`, {
-            kkPosyanduLansia,
-            nikPosyanduLansia,
-            namaPosyanduLansia,
-            tglLahirPosyanduLansia,
-            bbPosyanduLansia,
-            tensiPosyanduLansia,
+            namaLansia,
+            tglLahirLansia,
+            umurLansia,
+            noRmLansia,
+            tglPemeriksaan,
+            tempatPemeriksaanLansia,
+            noJaminanLansia,
+            tekananDarahLansia,
+            gulaDarahLansia,
+            kolesterolLansia,
+            tbLansia,
+            bbLansia,
+            lpLansia,
             _id: user.id,
-            token: user.token
+            token: user.token,
           });
           setLoading(false);
           navigate(`/posyanduLansia/${id}`);
@@ -95,7 +112,7 @@ const UbahPosyanduLansia = () => {
   };
 
   const textRight = {
-    textAlign: screenSize >= 650 && "right"
+    textAlign: screenSize >= 650 && "right",
   };
 
   if (loading) {
@@ -122,59 +139,15 @@ const UbahPosyanduLansia = () => {
                   className="mb-3"
                   controlId="formPlaintextPassword"
                 >
-                  <Form.Label column sm="3" style={textRight}>
-                    KK :
-                  </Form.Label>
-                  <Col sm="9">
-                    <Form.Control
-                      required
-                      value={kkPosyanduLansia}
-                      onChange={(e) =>
-                        setKkPosyanduLansia(e.target.value.toUpperCase())
-                      }
-                    />
-                  </Col>
-                </Form.Group>
-              </Col>
-            </Row>
-            <Row>
-              <Col sm={6}>
-                <Form.Group
-                  as={Row}
-                  className="mb-3"
-                  controlId="formPlaintextPassword"
-                >
-                  <Form.Label column sm="3" style={textRight}>
-                    NIK :
-                  </Form.Label>
-                  <Col sm="9">
-                    <Form.Control
-                      required
-                      value={nikPosyanduLansia}
-                      onChange={(e) =>
-                        setNikPosyanduLansia(e.target.value.toUpperCase())
-                      }
-                    />
-                  </Col>
-                </Form.Group>
-              </Col>
-            </Row>
-            <Row>
-              <Col sm={6}>
-                <Form.Group
-                  as={Row}
-                  className="mb-3"
-                  controlId="formPlaintextPassword"
-                >
-                  <Form.Label column sm="3" style={textRight}>
+                  <Form.Label column sm="4" style={textRight}>
                     Nama :
                   </Form.Label>
-                  <Col sm="9">
+                  <Col sm="8">
                     <Form.Control
                       required
-                      value={namaPosyanduLansia}
+                      value={namaLansia}
                       onChange={(e) =>
-                        setNamaPosyanduLansia(e.target.value.toUpperCase())
+                        setNamaLansia(e.target.value.toUpperCase())
                       }
                     />
                   </Col>
@@ -188,38 +161,16 @@ const UbahPosyanduLansia = () => {
                   className="mb-3"
                   controlId="formPlaintextPassword"
                 >
-                  <Form.Label column sm="3" style={textRight}>
-                    Umur :
-                  </Form.Label>
-                  <Col sm="9">
-                    <Form.Control
-                      required
-                      value={umurPosyanduLansia}
-                      onChange={(e) =>
-                        setUmurPosyanduLansia(e.target.value.toUpperCase())
-                      }
-                    />
-                  </Col>
-                </Form.Group>
-              </Col>
-            </Row>
-            <Row>
-              <Col sm={6}>
-                <Form.Group
-                  as={Row}
-                  className="mb-3"
-                  controlId="formPlaintextPassword"
-                >
-                  <Form.Label column sm="3" style={textRight}>
+                  <Form.Label column sm="4" style={textRight}>
                     Tgl. Lahir :
                   </Form.Label>
-                  <Col sm="9">
+                  <Col sm="8">
                     <DatePicker
                       required
                       dateFormat="dd/MM/yyyy"
-                      selected={tglLahirPosyanduLansia}
+                      selected={tglLahirLansia}
                       customInput={<Form.Control required />}
-                      onChange={(date) => setTglLahirPosyanduLansia(date)}
+                      onChange={(date) => setTglLahirLansia(date)}
                     />
                   </Col>
                 </Form.Group>
@@ -232,15 +183,15 @@ const UbahPosyanduLansia = () => {
                   className="mb-3"
                   controlId="formPlaintextPassword"
                 >
-                  <Form.Label column sm="3" style={textRight}>
-                    Berat Badan :
+                  <Form.Label column sm="4" style={textRight}>
+                    Umur :
                   </Form.Label>
-                  <Col sm="9">
+                  <Col sm="8">
                     <Form.Control
                       required
-                      value={bbPosyanduLansia}
+                      value={umurLansia}
                       onChange={(e) =>
-                        setBbPosyanduLansia(e.target.value.toUpperCase())
+                        setUmurLansia(e.target.value.toUpperCase())
                       }
                     />
                   </Col>
@@ -254,15 +205,204 @@ const UbahPosyanduLansia = () => {
                   className="mb-3"
                   controlId="formPlaintextPassword"
                 >
-                  <Form.Label column sm="3" style={textRight}>
-                    Tensi :
+                  <Form.Label column sm="4" style={textRight}>
+                    No. RM :
                   </Form.Label>
-                  <Col sm="9">
+                  <Col sm="8">
                     <Form.Control
-                      required
-                      value={tensiPosyanduLansia}
+                      value={noRmLansia}
                       onChange={(e) =>
-                        setTensiPosyanduLansia(e.target.value.toUpperCase())
+                        setNoRmLansia(e.target.value.toUpperCase())
+                      }
+                    />
+                  </Col>
+                </Form.Group>
+              </Col>
+            </Row>
+            <Row>
+              <Col sm={6}>
+                <Form.Group
+                  as={Row}
+                  className="mb-3"
+                  controlId="formPlaintextPassword"
+                >
+                  <Form.Label column sm="4" style={textRight}>
+                    Tgl. Pemeriksaan :
+                  </Form.Label>
+                  <Col sm="8">
+                    <DatePicker
+                      required
+                      dateFormat="dd/MM/yyyy"
+                      selected={tglPemeriksaan}
+                      customInput={<Form.Control required />}
+                      onChange={(date) => setTglPemeriksaan(date)}
+                    />
+                  </Col>
+                </Form.Group>
+              </Col>
+            </Row>
+            <Row>
+              <Col sm={6}>
+                <Form.Group
+                  as={Row}
+                  className="mb-3"
+                  controlId="formPlaintextPassword"
+                >
+                  <Form.Label column sm="4" style={textRight}>
+                    Tempat Pemeriksaan :
+                  </Form.Label>
+                  <Col sm="8">
+                    <Form.Control
+                      value={tempatPemeriksaanLansia}
+                      onChange={(e) =>
+                        setTempatPemeriksaanLansia(e.target.value.toUpperCase())
+                      }
+                    />
+                  </Col>
+                </Form.Group>
+              </Col>
+            </Row>
+            <Row>
+              <Col sm={6}>
+                <Form.Group
+                  as={Row}
+                  className="mb-3"
+                  controlId="formPlaintextPassword"
+                >
+                  <Form.Label column sm="4" style={textRight}>
+                    No. Jaminan :
+                  </Form.Label>
+                  <Col sm="8">
+                    <Form.Control
+                      value={noJaminanLansia}
+                      onChange={(e) =>
+                        setNoJaminanLansia(e.target.value.toUpperCase())
+                      }
+                    />
+                  </Col>
+                </Form.Group>
+              </Col>
+            </Row>
+            <Row>
+              <Col sm={6}>
+                <Form.Group
+                  as={Row}
+                  className="mb-3"
+                  controlId="formPlaintextPassword"
+                >
+                  <Form.Label column sm="4" style={textRight}>
+                    Tekanan Darah :
+                  </Form.Label>
+                  <Col sm="8">
+                    <Form.Control
+                      value={tekananDarahLansia}
+                      onChange={(e) =>
+                        setTekananDarahLansia(e.target.value.toUpperCase())
+                      }
+                    />
+                  </Col>
+                </Form.Group>
+              </Col>
+            </Row>
+            <Row>
+              <Col sm={6}>
+                <Form.Group
+                  as={Row}
+                  className="mb-3"
+                  controlId="formPlaintextPassword"
+                >
+                  <Form.Label column sm="4" style={textRight}>
+                    Gula Darah :
+                  </Form.Label>
+                  <Col sm="8">
+                    <Form.Control
+                      value={gulaDarahLansia}
+                      onChange={(e) =>
+                        setGulaDarahLansia(e.target.value.toUpperCase())
+                      }
+                    />
+                  </Col>
+                </Form.Group>
+              </Col>
+            </Row>
+            <Row>
+              <Col sm={6}>
+                <Form.Group
+                  as={Row}
+                  className="mb-3"
+                  controlId="formPlaintextPassword"
+                >
+                  <Form.Label column sm="4" style={textRight}>
+                    Kolesterol :
+                  </Form.Label>
+                  <Col sm="8">
+                    <Form.Control
+                      value={kolesterolLansia}
+                      onChange={(e) =>
+                        setKolesterolLansia(e.target.value.toUpperCase())
+                      }
+                    />
+                  </Col>
+                </Form.Group>
+              </Col>
+            </Row>
+            <Row>
+              <Col sm={6}>
+                <Form.Group
+                  as={Row}
+                  className="mb-3"
+                  controlId="formPlaintextPassword"
+                >
+                  <Form.Label column sm="4" style={textRight}>
+                    Tinggi Badan :
+                  </Form.Label>
+                  <Col sm="8">
+                    <Form.Control
+                      value={tbLansia}
+                      onChange={(e) =>
+                        setTbLansia(e.target.value.toUpperCase())
+                      }
+                    />
+                  </Col>
+                </Form.Group>
+              </Col>
+            </Row>
+            <Row>
+              <Col sm={6}>
+                <Form.Group
+                  as={Row}
+                  className="mb-3"
+                  controlId="formPlaintextPassword"
+                >
+                  <Form.Label column sm="4" style={textRight}>
+                    Berat Badan :
+                  </Form.Label>
+                  <Col sm="8">
+                    <Form.Control
+                      value={bbLansia}
+                      onChange={(e) =>
+                        setBbLansia(e.target.value.toUpperCase())
+                      }
+                    />
+                  </Col>
+                </Form.Group>
+              </Col>
+            </Row>
+            <Row>
+              <Col sm={6}>
+                <Form.Group
+                  as={Row}
+                  className="mb-3"
+                  controlId="formPlaintextPassword"
+                >
+                  <Form.Label column sm="4" style={textRight}>
+                    Lingkar Perut :
+                  </Form.Label>
+                  <Col sm="8">
+                    <Form.Control
+                      value={lpLansia}
+                      onChange={(e) =>
+                        setLpLansia(e.target.value.toUpperCase())
                       }
                     />
                   </Col>
@@ -303,5 +443,5 @@ const UbahPosyanduLansia = () => {
 export default UbahPosyanduLansia;
 
 const alertBox = {
-  width: "100%"
+  width: "100%",
 };
