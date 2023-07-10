@@ -208,7 +208,6 @@ const UbahPosyanduBalita = () => {
                   </Form.Label>
                   <Col sm="7">
                     <Form.Control
-                      required
                       type="number"
                       value={anakKeBalita}
                       onChange={(e) =>
