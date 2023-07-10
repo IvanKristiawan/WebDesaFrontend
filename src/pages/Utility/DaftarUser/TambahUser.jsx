@@ -40,6 +40,7 @@ const TambahUser = () => {
 
   // Akses Posyandu
   const [posyanduLansia, setPosyanduLansia] = useState(false);
+  const [posyanduBalita, setPosyanduBalita] = useState(false);
 
   // Akses Utility
   const [profilUser, setProfilUser] = useState(false);
@@ -100,6 +101,7 @@ const TambahUser = () => {
               lokasiWisata,
               umkm,
               posyanduLansia,
+              posyanduBalita,
               profilUser,
               daftarUser,
               setting: settingAkses,
@@ -257,47 +259,45 @@ const TambahUser = () => {
                       checked={bankSampah}
                       onChange={() => setBankSampah(!bankSampah)}
                     />
+                    <p style={checkboxTitle}>Data Web</p>
+                    <Form>
+                      <Form.Check
+                        type="checkbox"
+                        label="Lokasi Petinggi"
+                        checked={lokasiPetinggi}
+                        onChange={() => setLokasiPetinggi(!lokasiPetinggi)}
+                      />
+                      <Form.Check
+                        type="checkbox"
+                        label="Lokasi UMKM"
+                        checked={lokasiUmkm}
+                        onChange={() => setLokasiUmkm(!lokasiUmkm)}
+                      />
+                      <Form.Check
+                        type="checkbox"
+                        label="Lokasi Wisata"
+                        checked={lokasiWisata}
+                        onChange={() => setLokasiWisata(!lokasiWisata)}
+                      />
+                      <Form.Check
+                        type="checkbox"
+                        label="UMKM"
+                        checked={umkm}
+                        onChange={() => setUmkm(!umkm)}
+                      />
+                    </Form>
+                    <p style={checkboxTitle}>Posyandu</p>
                     <Form.Check
                       type="checkbox"
                       label="Posyandu Lansia"
                       checked={posyanduLansia}
                       onChange={() => setPosyanduLansia(!posyanduLansia)}
                     />
-                  </Form>
-                  <p style={checkboxTitle}>Data Web</p>
-                  <Form>
                     <Form.Check
                       type="checkbox"
-                      label="Lokasi Petinggi"
-                      checked={lokasiPetinggi}
-                      onChange={() => setLokasiPetinggi(!lokasiPetinggi)}
-                    />
-                    <Form.Check
-                      type="checkbox"
-                      label="Lokasi UMKM"
-                      checked={lokasiUmkm}
-                      onChange={() => setLokasiUmkm(!lokasiUmkm)}
-                    />
-                    <Form.Check
-                      type="checkbox"
-                      label="Lokasi Wisata"
-                      checked={lokasiWisata}
-                      onChange={() => setLokasiWisata(!lokasiWisata)}
-                    />
-                    <Form.Check
-                      type="checkbox"
-                      label="UMKM"
-                      checked={umkm}
-                      onChange={() => setUmkm(!umkm)}
-                    />
-                  </Form>
-                  <p style={checkboxTitle}>Posyandu</p>
-                  <Form>
-                    <Form.Check
-                      type="checkbox"
-                      label="Lansia"
-                      checked={posyanduLansia}
-                      onChange={() => setPosyanduLansia(!posyanduLansia)}
+                      label="Posyandu Balita"
+                      checked={posyanduBalita}
+                      onChange={() => setPosyanduBalita(!posyanduBalita)}
                     />
                   </Form>
                 </Box>

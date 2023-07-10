@@ -26,6 +26,9 @@ import {
   TampilPosyanduLansia,
   TambahPosyanduLansia,
   UbahPosyanduLansia,
+  TampilPosyanduBalita,
+  UbahPosyanduBalita,
+  TambahPosyanduBalita,
   TampilLokasiPetinggi,
   UbahLokasiPetinggi,
   TambahLokasiPetinggi,
@@ -129,6 +132,16 @@ const App = () => {
     const { user } = useContext(AuthContext);
 
     if (user.akses.posyanduLansia) {
+      return children;
+    }
+
+    return <Navigate to="/unauthorized" />;
+  };
+
+  const POSYANDUBALITARoute = ({ children }) => {
+    const { user } = useContext(AuthContext);
+
+    if (user.akses.posyanduBalita) {
       return children;
     }
 
@@ -401,6 +414,39 @@ const App = () => {
               <POSYANDULANSIARoute>
                 <TambahPosyanduLansia />
               </POSYANDULANSIARoute>
+            }
+          />
+          {/* Posyandu Balita */}
+          <Route
+            path="/posyanduBalita"
+            element={
+              <POSYANDUBALITARoute>
+                <TampilPosyanduBalita />
+              </POSYANDUBALITARoute>
+            }
+          />
+          <Route
+            path="/posyanduBalita/:id"
+            element={
+              <POSYANDUBALITARoute>
+                <TampilPosyanduBalita />
+              </POSYANDUBALITARoute>
+            }
+          />
+          <Route
+            path="/posyanduBalita/:id/edit"
+            element={
+              <POSYANDUBALITARoute>
+                <UbahPosyanduBalita />
+              </POSYANDUBALITARoute>
+            }
+          />
+          <Route
+            path="/posyanduBalita/tambahPosyanduBalita"
+            element={
+              <POSYANDUBALITARoute>
+                <TambahPosyanduBalita />
+              </POSYANDUBALITARoute>
             }
           />
           {/* Lokasi Petinggi */}

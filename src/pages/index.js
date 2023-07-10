@@ -26,6 +26,10 @@ export { default as UbahPendudukChild } from "./Master/Penduduk/UbahPendudukChil
 export { default as TampilPosyanduLansia } from "./Master/PosyanduLansia/TampilPosyanduLansia";
 export { default as TambahPosyanduLansia } from "./Master/PosyanduLansia/TambahPosyanduLansia";
 export { default as UbahPosyanduLansia } from "./Master/PosyanduLansia/UbahPosyanduLansia";
+// Posyandu Balita
+export { default as TampilPosyanduBalita } from "./Master/PosyanduBalita/TampilPosyanduBalita";
+export { default as TambahPosyanduBalita } from "./Master/PosyanduBalita/TambahPosyanduBalita";
+export { default as UbahPosyanduBalita } from "./Master/PosyanduBalita/UbahPosyanduBalita";
 // Lokasi Petinggi
 export { default as TampilLokasiPetinggi } from "./Master/LokasiPetinggi/TampilLokasiPetinggi";
 export { default as TambahLokasiPetinggi } from "./Master/LokasiPetinggi/TambahLokasiPetinggi";

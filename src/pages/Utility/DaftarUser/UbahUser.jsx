@@ -41,6 +41,7 @@ const UbahUser = () => {
 
   // Akses Posyandu
   const [posyanduLansia, setPosyanduLansia] = useState(false);
+  const [posyanduBalita, setPosyanduBalita] = useState(false);
 
   // Akses Utility
   const [profilUser, setProfilUser] = useState(false);
@@ -98,6 +99,7 @@ const UbahUser = () => {
 
     // Akses Posyandu
     setPosyanduLansia(response.data.akses.posyanduLansia);
+    setPosyanduBalita(response.data.akses.posyanduBalita);
 
     // Akses Utility
     setProfilUser(response.data.akses.profilUser);
@@ -142,6 +144,7 @@ const UbahUser = () => {
               lokasiWisata,
               umkm,
               posyanduLansia,
+              posyanduBalita,
               profilUser,
               daftarUser,
               setting: settingAkses,
@@ -304,12 +307,6 @@ const UbahUser = () => {
                       checked={bankSampah}
                       onChange={() => setBankSampah(!bankSampah)}
                     />
-                    <Form.Check
-                      type="checkbox"
-                      label="Posyandu Lansia"
-                      checked={posyanduLansia}
-                      onChange={() => setPosyanduLansia(!posyanduLansia)}
-                    />
                   </Form>
                   <p style={checkboxTitle}>Data Web</p>
                   <Form>
@@ -342,9 +339,15 @@ const UbahUser = () => {
                   <Form>
                     <Form.Check
                       type="checkbox"
-                      label="Lansia"
+                      label="Posyandu Lansia"
                       checked={posyanduLansia}
                       onChange={() => setPosyanduLansia(!posyanduLansia)}
+                    />
+                    <Form.Check
+                      type="checkbox"
+                      label="Posyandu Balita"
+                      checked={posyanduBalita}
+                      onChange={() => setPosyanduBalita(!posyanduBalita)}
                     />
                   </Form>
                 </Box>

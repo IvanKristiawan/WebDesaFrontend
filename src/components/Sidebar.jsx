@@ -119,6 +119,11 @@ const Sidebar = ({
                 Lansia <NavLink to="/posyanduLansia" />
               </MenuItem>
             )}
+            {user.akses.posyanduBalita === true && (
+              <MenuItem>
+                Balita <NavLink to="/posyanduBalita" />
+              </MenuItem>
+            )}
           </SubMenu>
           <SubMenu title={"Setelan"} icon={<FaUserCog />}>
             {user.akses.profilUser === true && (

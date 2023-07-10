@@ -655,3 +655,98 @@ export function ShowTablePosyanduLansia({ currentPosts, searchTerm }) {
     </TableContainer>
   );
 }
+
+export function ShowTablePosyanduBalita({ currentPosts, searchTerm }) {
+  let navigate = useNavigate();
+  const classes = useStyles();
+  return (
+    <TableContainer component={Paper} sx={{ width: "100%" }}>
+      <Table aria-label="simple table">
+        <TableHead className={classes.root}>
+          <TableRow>
+            <TableCell
+              sx={{ fontWeight: "bold" }}
+              className={classes.tableRightBorder}
+            >
+              KK
+            </TableCell>
+            <TableCell
+              sx={{ fontWeight: "bold" }}
+              className={classes.tableRightBorder}
+            >
+              NIK
+            </TableCell>
+            <TableCell
+              sx={{ fontWeight: "bold" }}
+              className={classes.tableRightBorder}
+            >
+              Nama
+            </TableCell>
+            <TableCell
+              sx={{ fontWeight: "bold" }}
+              className={classes.tableRightBorder}
+            >
+              Tgl. Lahir
+            </TableCell>
+            <TableCell
+              sx={{ fontWeight: "bold" }}
+              className={classes.tableRightBorder}
+            >
+              Umur
+            </TableCell>
+            <TableCell sx={{ fontWeight: "bold" }}>JK</TableCell>
+          </TableRow>
+        </TableHead>
+        <TableBody>
+          {currentPosts
+            .filter((val) => {
+              if (searchTerm === "") {
+                return val;
+              } else if (
+                val.kkBalita.toUpperCase().includes(searchTerm.toUpperCase()) ||
+                val.nikBalita
+                  .toUpperCase()
+                  .includes(searchTerm.toUpperCase()) ||
+                val.namaBalita
+                  .toUpperCase()
+                  .includes(searchTerm.toUpperCase()) ||
+                val.tglLahirBalitaFormatted
+                  .toUpperCase()
+                  .includes(searchTerm.toUpperCase()) ||
+                val.umurBalita
+                  .toUpperCase()
+                  .includes(searchTerm.toUpperCase()) ||
+                val.jenisKelaminBalita
+                  .toUpperCase()
+                  .includes(searchTerm.toUpperCase())
+              ) {
+                return val;
+              }
+            })
+            .map((user, index) => (
+              <TableRow
+                key={user.id}
+                sx={{
+                  "&:last-child td, &:last-child th": { border: 0 },
+                  "&:hover": { bgcolor: Colors.grey300 },
+                  cursor: "pointer",
+                }}
+                onClick={() => {
+                  navigate(`/posyanduBalita/${user.id}`);
+                }}
+              >
+                <TableCell component="th" scope="row">
+                  {user.kkBalita}
+                </TableCell>
+                <TableCell>{user.nikBalita}</TableCell>
+                <TableCell>{user.namaBalita}</TableCell>
+                <TableCell>{user.tglLahirBalitaFormatted}</TableCell>
+                <TableCell>{user.umurBalita}</TableCell>
+                <TableCell>{user.jenisKelaminBalita}</TableCell>
+              </TableRow>
+            ))}
+        </TableBody>
+      </Table>
+    </TableContainer>
+  );
+}

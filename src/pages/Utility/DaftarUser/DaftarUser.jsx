@@ -44,6 +44,7 @@ const DaftarUser = () => {
 
   // Akses Posyandu
   const [posyanduLansia, setPosyanduLansia] = useState(false);
+  const [posyanduBalita, setPosyanduBalita] = useState(false);
 
   // Akses Utility
   const [profilUser, setProfilUser] = useState(false);
@@ -135,6 +136,7 @@ const DaftarUser = () => {
 
       // Akses Posyandu
       setPosyanduLansia(response.data.akses.posyanduLansia);
+      setPosyanduBalita(response.data.akses.posyanduBalita);
 
       // Akses Utility
       setProfilUser(response.data.akses.profilUser);
@@ -428,6 +430,14 @@ const DaftarUser = () => {
                       label="Lansia"
                       disabled
                       checked={posyanduLansia}
+                    />
+                  </Form>
+                  <Form>
+                    <Form.Check
+                      type="checkbox"
+                      label="Balita"
+                      disabled
+                      checked={posyanduBalita}
                     />
                   </Form>
                 </Box>
