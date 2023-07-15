@@ -43,8 +43,8 @@ const TampilPosyanduBalita = () => {
   const [tglLahirBalita, setTglLahirBalita] = useState("");
   const [umurBalita, setUmurBalita] = useState("");
   const [jenisKelaminBalita, setJenisKelaminBalita] = useState("");
-  const [beratBadanLamaBalita, setBeratBadanLamaBalita] = useState("");
-  const [panjangBadanLamaBalita, setPanjangBadanLamaBalita] = useState("");
+  const [beratBadanLahirBalita, setBeratBadanLahirBalita] = useState("");
+  const [panjangBadanLahirBalita, setPanjangBadanLahirBalita] = useState("");
   const [namaAyahBalita, setNamaAyahBalita] = useState("");
   const [namaIbuBalita, setNamaIbuBalita] = useState("");
   const [nikAyahBalita, setNikAyahBalita] = useState("");
@@ -133,8 +133,8 @@ const TampilPosyanduBalita = () => {
       setTglLahirBalita(formatDate(response.data.tglLahirBalita));
       setUmurBalita(response.data.umurBalita);
       setJenisKelaminBalita(response.data.jenisKelaminBalita);
-      setBeratBadanLamaBalita(response.data.beratBadanLamaBalita);
-      setPanjangBadanLamaBalita(response.data.panjangBadanLamaBalita);
+      setBeratBadanLahirBalita(response.data.beratBadanLahirBalita);
+      setPanjangBadanLahirBalita(response.data.panjangBadanLahirBalita);
       setNamaAyahBalita(response.data.namaAyahBalita);
       setNamaIbuBalita(response.data.namaIbuBalita);
       setNikAyahBalita(response.data.nikAyahBalita);
@@ -164,8 +164,8 @@ const TampilPosyanduBalita = () => {
       setTglLahirBalita(formatDate(""));
       setUmurBalita("");
       setJenisKelaminBalita("");
-      setBeratBadanLamaBalita("");
-      setPanjangBadanLamaBalita("");
+      setBeratBadanLahirBalita("");
+      setPanjangBadanLahirBalita("");
       setNamaAyahBalita("");
       setNamaIbuBalita("");
       setNikAyahBalita("");
@@ -330,8 +330,8 @@ const TampilPosyanduBalita = () => {
                   <td>{user.tglLahirBalitaFormatted}</td>
                   <td>{user.umurBalita}</td>
                   <td>{user.jenisKelaminBalita}</td>
-                  <td>{user.beratBadanLamaBalita}</td>
-                  <td>{user.panjangBadanLamaBalita}</td>
+                  <td>{user.beratBadanLahirBalita}</td>
+                  <td>{user.panjangBadanLahirBalita}</td>
                   <td>{user.namaAyahBalita}</td>
                   <td>{user.namaIbuBalita}</td>
                   <td>{user.nikAyahBalita}</td>
@@ -392,8 +392,8 @@ const TampilPosyanduBalita = () => {
                   <td>{user.tglLahirBalitaFormatted}</td>
                   <td>{user.umurBalita}</td>
                   <td>{user.jenisKelaminBalita}</td>
-                  <td>{user.beratBadanLamaBalita}</td>
-                  <td>{user.panjangBadanLamaBalita}</td>
+                  <td>{user.beratBadanLahirBalita}</td>
+                  <td>{user.panjangBadanLahirBalita}</td>
                   <td>{user.namaAyahBalita}</td>
                   <td>{user.namaIbuBalita}</td>
                   <td>{user.nikAyahBalita}</td>
@@ -548,11 +548,11 @@ const TampilPosyanduBalita = () => {
                   controlId="formPlaintextPassword"
                 >
                   <Form.Label column sm="5" style={textRight}>
-                    Berat Badan Lama :
+                    Berat Badan Lahir :
                   </Form.Label>
                   <Col sm="7">
                     <Form.Control
-                      value={beratBadanLamaBalita}
+                      value={beratBadanLahirBalita}
                       disabled
                       readOnly
                     />
@@ -568,11 +568,11 @@ const TampilPosyanduBalita = () => {
                   controlId="formPlaintextPassword"
                 >
                   <Form.Label column sm="5" style={textRight}>
-                    Panjang Badan Lama :
+                    Panjang Badan Lahir :
                   </Form.Label>
                   <Col sm="7">
                     <Form.Control
-                      value={panjangBadanLamaBalita}
+                      value={panjangBadanLahirBalita}
                       disabled
                       readOnly
                     />

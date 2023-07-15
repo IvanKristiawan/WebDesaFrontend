@@ -22,8 +22,8 @@ const TambahPosyanduBalita = () => {
   const [tglLahirBalita, setTglLahirBalita] = useState(new Date());
   const [umurBalita, setUmurBalita] = useState("");
   const [jenisKelaminBalita, setJenisKelaminBalita] = useState("L");
-  const [beratBadanLamaBalita, setBeratBadanLamaBalita] = useState("");
-  const [panjangBadanLamaBalita, setPanjangBadanLamaBalita] = useState("");
+  const [beratBadanLahirBalita, setBeratBadanLahirBalita] = useState("");
+  const [panjangBadanLahirBalita, setPanjangBadanLahirBalita] = useState("");
   const [namaAyahBalita, setNamaAyahBalita] = useState("");
   const [namaIbuBalita, setNamaIbuBalita] = useState("");
   const [nikAyahBalita, setNikAyahBalita] = useState("");
@@ -65,8 +65,8 @@ const TambahPosyanduBalita = () => {
           tglLahirBalita,
           umurBalita,
           jenisKelaminBalita,
-          beratBadanLamaBalita,
-          panjangBadanLamaBalita,
+          beratBadanLahirBalita,
+          panjangBadanLahirBalita,
           namaAyahBalita,
           namaIbuBalita,
           nikAyahBalita,
@@ -276,14 +276,14 @@ const TambahPosyanduBalita = () => {
                   controlId="formPlaintextPassword"
                 >
                   <Form.Label column sm="5" style={textRight}>
-                    Berat Badan Lama :
+                    Berat Badan Lahir :
                   </Form.Label>
                   <Col sm="7">
                     <Form.Control
-                      value={beratBadanLamaBalita}
+                      value={beratBadanLahirBalita}
                       type="number"
                       onChange={(e) =>
-                        setBeratBadanLamaBalita(e.target.value.toUpperCase())
+                        setBeratBadanLahirBalita(e.target.value.toUpperCase())
                       }
                     />
                   </Col>
@@ -298,14 +298,14 @@ const TambahPosyanduBalita = () => {
                   controlId="formPlaintextPassword"
                 >
                   <Form.Label column sm="5" style={textRight}>
-                    Panjang Badan Lama :
+                    Panjang Badan Lahir :
                   </Form.Label>
                   <Col sm="7">
                     <Form.Control
-                      value={panjangBadanLamaBalita}
+                      value={panjangBadanLahirBalita}
                       type="number"
                       onChange={(e) =>
-                        setPanjangBadanLamaBalita(e.target.value.toUpperCase())
+                        setPanjangBadanLahirBalita(e.target.value.toUpperCase())
                       }
                     />
                   </Col>
