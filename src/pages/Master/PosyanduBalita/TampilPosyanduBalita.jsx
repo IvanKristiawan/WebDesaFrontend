@@ -57,6 +57,7 @@ const TampilPosyanduBalita = () => {
   const [panjangBadanBalita, setPanjangBadanBalita] = useState("");
   const [lingkarLenganAtasBalita, setLingkarLenganAtasBalita] = useState("");
   const [lingkarKepalaBalita, setLingkarKepalaBalita] = useState("");
+  const [status, setStatus] = useState("");
 
   const [previewPdf, setPreviewPdf] = useState(false);
   const [previewExcel, setPreviewExcel] = useState(false);
@@ -147,6 +148,7 @@ const TampilPosyanduBalita = () => {
       setPanjangBadanBalita(response.data.panjangBadanBalita);
       setLingkarLenganAtasBalita(response.data.lingkarLenganAtasBalita);
       setLingkarKepalaBalita(response.data.lingkarKepalaBalita);
+      setStatus(response.data.status);
     }
   };
 
@@ -176,6 +178,7 @@ const TampilPosyanduBalita = () => {
       setPanjangBadanBalita("");
       setLingkarLenganAtasBalita("");
       setLingkarKepalaBalita("");
+      setStatus("");
       navigate("/posyanduBalita");
     } catch (error) {
       if (error.response.data.message.includes("foreign key")) {
@@ -756,6 +759,22 @@ const TampilPosyanduBalita = () => {
                       disabled
                       readOnly
                     />
+                  </Col>
+                </Form.Group>
+              </Col>
+            </Row>
+            <Row>
+              <Col sm={6}>
+                <Form.Group
+                  as={Row}
+                  className="mb-3"
+                  controlId="formPlaintextPassword"
+                >
+                  <Form.Label column sm="5" style={textRight}>
+                    Status :
+                  </Form.Label>
+                  <Col sm="7">
+                    <Form.Control value={status} disabled readOnly />
                   </Col>
                 </Form.Group>
               </Col>

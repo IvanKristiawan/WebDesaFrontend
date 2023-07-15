@@ -36,6 +36,7 @@ const UbahPosyanduBalita = () => {
   const [panjangBadanBalita, setPanjangBadanBalita] = useState("");
   const [lingkarLenganAtasBalita, setLingkarLenganAtasBalita] = useState("");
   const [lingkarKepalaBalita, setLingkarKepalaBalita] = useState("");
+  const [status, setStatus] = useState("");
 
   const [error, setError] = useState(false);
   const navigate = useNavigate();
@@ -48,6 +49,8 @@ const UbahPosyanduBalita = () => {
     }
     setOpen(false);
   };
+
+  const statusOption = ["ADA", "MENINGGAL", "PINDAH"];
 
   useEffect(() => {
     getPosyanduBalitaById();
@@ -78,6 +81,7 @@ const UbahPosyanduBalita = () => {
     setPanjangBadanBalita(response.data.panjangBadanBalita);
     setLingkarLenganAtasBalita(response.data.lingkarLenganAtasBalita);
     setLingkarKepalaBalita(response.data.lingkarKepalaBalita);
+    setStatus(response.data.status);
     setLoading(false);
   };
 
@@ -111,6 +115,7 @@ const UbahPosyanduBalita = () => {
             panjangBadanBalita,
             lingkarLenganAtasBalita,
             lingkarKepalaBalita,
+            status,
             _id: user.id,
             token: user.token,
           });
@@ -568,6 +573,32 @@ const UbahPosyanduBalita = () => {
                         setLingkarKepalaBalita(e.target.value.toUpperCase())
                       }
                     />
+                  </Col>
+                </Form.Group>
+              </Col>
+            </Row>
+            <Row>
+              <Col sm={6}>
+                <Form.Group
+                  as={Row}
+                  className="mb-3"
+                  controlId="formPlaintextPassword"
+                >
+                  <Form.Label column sm="5" style={textRight}>
+                    Status :
+                  </Form.Label>
+                  <Col sm="7">
+                    <Form.Select
+                      required
+                      value={status}
+                      onChange={(e) => {
+                        setStatus(e.target.value);
+                      }}
+                    >
+                      {statusOption.map((status) => (
+                        <option value={status}>{status}</option>
+                      ))}
+                    </Form.Select>
                   </Col>
                 </Form.Group>
               </Col>
