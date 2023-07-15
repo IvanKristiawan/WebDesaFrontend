@@ -160,6 +160,15 @@ const TutupPeriode = () => {
           token: user.token,
         }
       );
+      const generatedPosyanduBalita = await axios.post(
+        `${tempUrl}/generatePosyanduBalitas`,
+        {
+          dariTanggal: periode.data.dariTanggal,
+          sampaiTanggal: periode.data.sampaiTanggal,
+          _id: user.id,
+          token: user.token,
+        }
+      );
       await axios.post(`${tempUrl}/saveLastTutupPeriode`, {
         userIdInput: user.id,
         _id: user.id,
