@@ -146,17 +146,26 @@ const TutupPeriode = () => {
   const tutupPeriode = async () => {
     setLoading(true);
     try {
+      // Ganti Periode
+      const periode = await axios.post(`${tempUrl}/lastTutupPeriode`, {
+        _id: user.id,
+        token: user.token,
+      });
+      const generatedPosyanduLansia = await axios.post(
+        `${tempUrl}/generatePosyanduLansias`,
+        {
+          dariTanggal: periode.data.dariTanggal,
+          sampaiTanggal: periode.data.sampaiTanggal,
+          _id: user.id,
+          token: user.token,
+        }
+      );
       await axios.post(`${tempUrl}/saveLastTutupPeriode`, {
         userIdInput: user.id,
         _id: user.id,
         token: user.token,
       });
 
-      // Ganti Periode
-      const periode = await axios.post(`${tempUrl}/lastTutupPeriode`, {
-        _id: user.id,
-        token: user.token,
-      });
       const findSetting = await axios.post(`${tempUrl}/lastSetting`, {
         _id: user.id,
         token: user.token,

@@ -28,6 +28,7 @@ const UbahPosyanduLansia = () => {
   const [tbLansia, setTbLansia] = useState("");
   const [bbLansia, setBbLansia] = useState("");
   const [lpLansia, setLpLansia] = useState("");
+  const [status, setStatus] = useState("");
 
   const [error, setError] = useState(false);
   const navigate = useNavigate();
@@ -40,6 +41,8 @@ const UbahPosyanduLansia = () => {
     }
     setOpen(false);
   };
+
+  const statusOption = ["ADA", "MENINGGAL", "PINDAH"];
 
   useEffect(() => {
     getPosyanduLansiaById();
@@ -64,6 +67,7 @@ const UbahPosyanduLansia = () => {
     setTbLansia(response.data.tbLansia);
     setBbLansia(response.data.bbLansia);
     setLpLansia(response.data.lpLansia);
+    setStatus(response.data.status);
     setLoading(false);
   };
 
@@ -91,6 +95,7 @@ const UbahPosyanduLansia = () => {
             tbLansia,
             bbLansia,
             lpLansia,
+            status,
             _id: user.id,
             token: user.token,
           });
@@ -405,6 +410,32 @@ const UbahPosyanduLansia = () => {
                         setLpLansia(e.target.value.toUpperCase())
                       }
                     />
+                  </Col>
+                </Form.Group>
+              </Col>
+            </Row>
+            <Row>
+              <Col sm={6}>
+                <Form.Group
+                  as={Row}
+                  className="mb-3"
+                  controlId="formPlaintextPassword"
+                >
+                  <Form.Label column sm="4" style={textRight}>
+                    Status :
+                  </Form.Label>
+                  <Col sm="8">
+                    <Form.Select
+                      required
+                      value={status}
+                      onChange={(e) => {
+                        setStatus(e.target.value);
+                      }}
+                    >
+                      {statusOption.map((status) => (
+                        <option value={status}>{status}</option>
+                      ))}
+                    </Form.Select>
                   </Col>
                 </Form.Group>
               </Col>
