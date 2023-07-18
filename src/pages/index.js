@@ -22,6 +22,10 @@ export { default as TampilPenduduk } from "./Master/Penduduk/TampilPenduduk";
 export { default as TambahPenduduk } from "./Master/Penduduk/TambahPenduduk";
 export { default as TampilPendudukChild } from "./Master/Penduduk/TampilPendudukChild";
 export { default as UbahPendudukChild } from "./Master/Penduduk/UbahPendudukChild";
+// Daftar Penduduk Page
+export { default as TambahDaftarPenduduk } from "./Master/DaftarPenduduk/TambahDaftarPenduduk";
+export { default as TampilDaftarPendudukKk } from "./Master/DaftarPenduduk/TampilDaftarPendudukKk";
+export { default as UbahDaftarPenduduk } from "./Master/DaftarPenduduk/UbahDaftarPenduduk";
 // Posyandu Lansia
 export { default as TampilPosyanduLansia } from "./Master/PosyanduLansia/TampilPosyanduLansia";
 export { default as TambahPosyanduLansia } from "./Master/PosyanduLansia/TambahPosyanduLansia";

@@ -343,6 +343,80 @@ export function ShowTablePenduduk({ id, currentPosts, searchTerm }) {
   );
 }
 
+export function ShowTablePendudukKk({ id, idPendudukChild, currentPosts, searchTerm }) {
+  let navigate = useNavigate();
+  const classes = useStyles();
+  return (
+    <TableContainer component={Paper} sx={{ width: "100%" }}>
+      <Table aria-label="simple table">
+        <TableHead className={classes.root}>
+          <TableRow>
+            <TableCell
+              sx={{ fontWeight: "bold" }}
+              className={classes.tableRightBorder}
+            >
+              KK
+            </TableCell>
+            <TableCell
+              sx={{ fontWeight: "bold" }}
+              className={classes.tableRightBorder}
+            >
+              NIK
+            </TableCell>
+            <TableCell
+              sx={{ fontWeight: "bold" }}
+              className={classes.tableRightBorder}
+            >
+              Nama
+            </TableCell>
+          </TableRow>
+        </TableHead>
+        <TableBody>
+          {currentPosts
+            .filter((val) => {
+              if (searchTerm === "") {
+                return val;
+              } else if (
+                val.kkPenduduk
+                  .toUpperCase()
+                  .includes(searchTerm.toUpperCase()) ||
+                val.nikDaftarPenduduk
+                  .toUpperCase()
+                  .includes(searchTerm.toUpperCase()) ||
+                val.namaDaftarPenduduk
+                  .toUpperCase()
+                  .includes(searchTerm.toUpperCase())
+              ) {
+                return val;
+              }
+            })
+            .map((user, index) => {
+              return (
+                <TableRow
+                  key={user.id}
+                  sx={{
+                    "&:last-child td, &:last-child th": { border: 0 },
+                    "&:hover": { bgcolor: Colors.grey300 },
+                    cursor: "pointer",
+                  }}
+                  onClick={() => {
+                    navigate(`/daftarPenduduk/penduduk/${id}/${idPendudukChild}/${user.id}`);
+                  }}
+                >
+                  <TableCell component="th" scope="row">
+                    {user.kkPenduduk}
+                  </TableCell>
+                  <TableCell>{user.nikDaftarPenduduk}</TableCell>
+                  <TableCell>{user.namaDaftarPenduduk}</TableCell>
+                </TableRow>
+              );
+            })}
+        </TableBody>
+      </Table>
+    </TableContainer>
+  );
+}
+
 export function ShowTableLokasiPetinggi({ currentPosts, searchTerm }) {
   let navigate = useNavigate();
   const classes = useStyles();

@@ -23,6 +23,9 @@ import {
   TambahPenduduk,
   TampilPendudukChild,
   UbahPendudukChild,
+  TambahDaftarPenduduk,
+  TampilDaftarPendudukKk,
+  UbahDaftarPenduduk,
   TampilPosyanduLansia,
   TambahPosyanduLansia,
   UbahPosyanduLansia,
@@ -380,6 +383,31 @@ const App = () => {
             element={
               <PENDUDUKRoute>
                 <UbahPendudukChild />
+              </PENDUDUKRoute>
+            }
+          />
+          {/* Daftar Penduduk */}
+          <Route
+            path="/daftarPenduduk/penduduk/:id/:idPendudukChild/tambahDaftarPenduduk"
+            element={
+              <PENDUDUKRoute>
+                <TambahDaftarPenduduk />
+              </PENDUDUKRoute>
+            }
+          />
+          <Route
+            path="/daftarPenduduk/penduduk/:id/:idPendudukChild/:idDaftarPenduduk"
+            element={
+              <PENDUDUKRoute>
+                <TampilDaftarPendudukKk />
+              </PENDUDUKRoute>
+            }
+          />
+          <Route
+            path="/daftarPenduduk/penduduk/:id/:idPendudukChild/:idDaftarPenduduk/edit"
+            element={
+              <PENDUDUKRoute>
+                <UbahDaftarPenduduk />
               </PENDUDUKRoute>
             }
           />

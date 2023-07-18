@@ -3,7 +3,8 @@ import { useNavigate, useParams } from "react-router-dom";
 import axios from "axios";
 import { AuthContext } from "../../../contexts/AuthContext";
 import { tempUrl, useStateContext } from "../../../contexts/ContextProvider";
-import { Loader } from "../../../components";
+import { Loader, ButtonModifier, usePagination, SearchBar } from "../../../components";
+import { ShowTablePendudukKk } from "../../../components/ShowTable";
 import Pin from "../../../assets/pin";
 import { Container, Card, Form, Row, Col } from "react-bootstrap";
 import {
@@ -41,11 +42,45 @@ const TampilPendudukChild = () => {
   const [linkGoogleMaps, setLinkGoogleMaps] = useState("");
   const [latitude, setLatitude] = useState(0);
   const [longitude, setLongitude] = useState(0);
+  const [searchTerm, setSearchTerm] = useState("");
   const [penduduk, setPenduduk] = useState({});
+  const [penduduksKk, setPenduduksKk] = useState([]);
 
   const navigate = useNavigate();
   const [open, setOpen] = useState(false);
   const [loading, setLoading] = useState(false);
+  let [page, setPage] = useState(1);
+  const PER_PAGE = 20;
+
+  // Get current posts
+  const indexOfLastPost = page * PER_PAGE;
+  const indexOfFirstPost = indexOfLastPost - PER_PAGE;
+  const tempPosts = penduduksKk.filter((val) => {
+    if (searchTerm === "") {
+      return val;
+    } else if (
+      val.kkPenduduk
+        .toUpperCase()
+        .includes(searchTerm.toUpperCase()) ||
+      val.nikDaftarPenduduk
+        .toUpperCase()
+        .includes(searchTerm.toUpperCase()) ||
+      val.namaDaftarPenduduk
+        .toUpperCase()
+        .includes(searchTerm.toUpperCase())
+    ) {
+      return val;
+    }
+  });
+  const currentPosts = tempPosts.slice(indexOfFirstPost, indexOfLastPost);
+
+  const count = Math.ceil(penduduksKk.length / PER_PAGE);
+  const _DATA = usePagination(penduduksKk, PER_PAGE);
+
+  const handleChange = (e, p) => {
+    setPage(p);
+    _DATA.jump(p);
+  };
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -75,6 +110,12 @@ const TampilPendudukChild = () => {
       setLinkGoogleMaps(response.data.linkGoogleMaps);
       setLatitude(response.data.latitude);
       setLongitude(response.data.longitude);
+      const response2 = await axios.post(`${tempUrl}/daftarPenduduksByRt`, {
+        kkPenduduk: response.data.kkPenduduk,
+        _id: user.id,
+        token: user.token,
+      });
+      setPenduduksKk(response2.data);
     }
   };
 
@@ -185,29 +226,14 @@ const TampilPendudukChild = () => {
             <Button onClick={handleClose}>Cancel</Button>
           </DialogActions>
         </Dialog>
-        <ButtonGroup variant="contained">
-          <Button
-            color="primary"
-            startIcon={<EditIcon />}
-            sx={{ textTransform: "none" }}
-            onClick={() => {
-              navigate(
-                `/daftarPenduduk/penduduk/${id}/${idPendudukChild}/edit`
-              );
-            }}
-          >
-            Ubah
-          </Button>
-          <Button
-            variant="contained"
-            color="error"
-            startIcon={<DeleteOutlineIcon />}
-            sx={{ textTransform: "none" }}
-            onClick={handleClickOpen}
-          >
-            Hapus
-          </Button>
-        </ButtonGroup>
+        <ButtonModifier
+          id={id}
+          kode={id}
+          addLink={`/daftarPenduduk/penduduk/${id}/${idPendudukChild}/tambahDaftarPenduduk`}
+          editLink={`/daftarPenduduk/penduduk/${id}/${idPendudukChild}/edit`}
+          deleteUser={deletePenduduk}
+          nameUser={kkPenduduk}
+        />
       </Box>
       <hr />
       <Card>
@@ -296,6 +322,17 @@ const TampilPendudukChild = () => {
           </Form>
         </Card.Body>
       </Card>
+      <Box sx={searchBarContainer}>
+        <SearchBar setSearchTerm={setSearchTerm} />
+      </Box>
+      <Box sx={tableContainer}>
+        <ShowTablePendudukKk
+          id={id}
+          idPendudukChild={idPendudukChild}
+          currentPosts={currentPosts}
+          searchTerm={searchTerm}
+        />
+      </Box>
     </Container>
   );
 };
@@ -306,5 +343,17 @@ const deleteButtonContainer = {
   mt: 4,
   display: "flex",
   flexWrap: "wrap",
+  justifyContent: "center",
+};
+
+const tableContainer = {
+  pt: 4,
+  display: "flex",
+  justifyContent: "center",
+};
+
+const searchBarContainer = {
+  pt: 6,
+  display: "flex",
   justifyContent: "center",
 };
