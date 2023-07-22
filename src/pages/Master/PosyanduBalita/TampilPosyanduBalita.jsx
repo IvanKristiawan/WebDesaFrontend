@@ -217,21 +217,56 @@ const TampilPosyanduBalita = () => {
         minimumIntegerDigits: 2,
         useGrouping: false,
       });
-    const doc = new jsPDF("l", "mm", [350, 210]);
+    const doc = new jsPDF("l", "mm", [600, 300]);
     doc.setFontSize(12);
     doc.text(`${setting.namaDesa} - ${setting.kotaDesa}`, 15, 10);
     doc.text(`${setting.alamatDesa}`, 15, 15);
     doc.setFontSize(16);
-    doc.text(`Daftar Posyandu Balita`, 150, 30);
+    doc.text(`FORMULIR PEMANTAUAN PERTUMBUHAN BALITA DI POSYANDU`, 280, 30);
     doc.setFontSize(10);
     doc.text(
       `Dicetak Oleh: ${user.username} | Tanggal : ${current_date} | Jam : ${current_time}`,
       15,
       290
     );
+    doc.text(`DESA`, 20, 40);
+    doc.text(` : GUWOSARI`, 70, 40);
+    doc.text(`HASIL (Wajib Diisi)`, 120, 40);
+    doc.text(`Keterangan`, 300, 40);
+
+    doc.text(`NAMA POSYANDU`, 20, 45);
+    doc.text(` : ASTER`, 70, 45);
+    doc.text(`S : Semua Balita`, 300, 45);
+    doc.text(`BB : Berat Badan`, 400, 45);
+
+    doc.text(`NAMA DUSUN`, 20, 50);
+    doc.text(` : KEMBANG PUTIHAN`, 70, 50);
+    doc.text(`N : Naik`, 300, 50);
+    doc.text(`TB : Tinggi Badan diukur 3 bulan 1X (Februari, Mei, Agustus, November)`, 400, 50);
+
+    doc.text(`BULAN PENIMBANGAN`, 20, 55);
+    doc.text(`: ${user.tutupperiode.namaPeriode}`, 70, 55);
+    doc.text(`T : Turun/Tetap`, 300, 55);
+    doc.text(`LLA : Lingkar lengan atas, LK : Lingkar Kepala`, 400, 55);
+
+    doc.text(`TANGGAL PENIMBANGAN`, 20, 60);
+    doc.text(`:`, 70, 60);
+    doc.text(`O : Bulan kemarin tidak nimbang`, 300, 60);
+    doc.text(`ASIE : Air Susu Ibu Saja (Eksklusif)`, 400, 60);
+
+    doc.text(`KADER YANG HADIR`, 20, 65);
+    doc.text(`:`, 70, 65);
+    doc.text(`B : Baru`, 300, 65);
+    doc.text(`BR : Vit A Biru, M ; Vit A Merah`, 400, 65);
+
+    doc.text(``, 20, 70);
+    doc.text(``, 70, 70);
+    doc.text(`D : Ditimbang`, 300, 70);
+    doc.text(`(Vit A diisi hanya bulan Februari & Agustus)`, 400, 70);
+
     doc.autoTable({
       html: "#table",
-      startY: doc.pageCount > 1 ? doc.autoTableEndPosY() + 20 : 45,
+      startY: doc.pageCount > 1 ? doc.autoTableEndPosY() + 20 : 75,
       headStyles: {
         fillColor: [117, 117, 117],
         color: [0, 0, 0],
@@ -302,51 +337,75 @@ const TampilPosyanduBalita = () => {
           <table class="styled-table" id="table" style={{ fontSize: "10px" }}>
             <thead>
               <tr>
-                <th>KK</th>
-                <th>NIK</th>
-                <th>Anak Ke</th>
-                <th>Nama</th>
-                <th>Tgl. Lahir</th>
-                <th>Umur</th>
+                <th>No</th>
+                <th>NO KK</th>
+                <th>NIK BALITA</th>
+                <th>ANAK KE</th>
+                <th>NAMA ANAK</th>
+                <th>TGL LAHIR</th>
+                <th>UMUR (Bln)</th>
                 <th>JK</th>
-                <th>BBL</th>
-                <th>PBL</th>
-                <th>Nama Ayah</th>
-                <th>Nama Ibu</th>
-                <th>NIK Ayah</th>
-                <th>Pendidikan Terakhir Ayah</th>
-                <th>Pendidikan Terakhir Ibu</th>
+                <th>IMD</th>
+                <th>BBL L (kg)</th>
+                <th>PBL L (cm)</th>
+                <th>NAMA ORTU (AYAH)</th>
+                <th>NAMA ORTU (IBU)</th>
+                <th>NIK AYAH</th>
+                <th>PENDIDIKAN TERAKHIR AYAH</th>
+                <th>PENDIDIKAN TERAKHIR IBU</th>
+                <th>RIWAYAT KEHAMILAN IBU LILA</th>
+                <th>RIWAYAT KEHAMILAN IBU Hb</th>
                 <th>RT</th>
-                <th>BB</th>
-                <th>PB</th>
+                <th>BB (kg)</th>
+                <th>PB/TB (cm)</th>
                 <th>LLA</th>
                 <th>LK</th>
+                <th>N</th>
+                <th>T/Tt</th>
+                <th>O</th>
+                <th>B</th>
+                <th>ASI</th>
+                <th>Vit A</th>
               </tr>
             </thead>
             <tbody>
-              {posyanduBalitas.map((user, index) => (
-                <tr key={user.id}>
-                  <td>{user.kkBalita}</td>
-                  <td>{user.nikBalita}</td>
-                  <td>{user.anakKeBalita}</td>
-                  <td>{user.namaBalita}</td>
-                  <td>{user.tglLahirBalitaFormatted}</td>
-                  <td>{user.umurBalita}</td>
-                  <td>{user.jenisKelaminBalita}</td>
-                  <td>{user.beratBadanLahirBalita}</td>
-                  <td>{user.panjangBadanLahirBalita}</td>
-                  <td>{user.namaAyahBalita}</td>
-                  <td>{user.namaIbuBalita}</td>
-                  <td>{user.nikAyahBalita}</td>
-                  <td>{user.pendidikanTerakhirAyahBalita}</td>
-                  <td>{user.pendidikanTerakhirIbuBalita}</td>
-                  <td>{user.rtBalita}</td>
-                  <td>{user.beratBadanBalita}</td>
-                  <td>{user.panjangBadanBalita}</td>
-                  <td>{user.lingkarLenganAtasBalita}</td>
-                  <td>{user.lingkarKepalaBalita}</td>
-                </tr>
-              ))}
+              {posyanduBalitas.map((user, index) => {
+                let no = 1
+                return (
+                  <tr key={user.id}>
+                    <td>{no}</td>
+                    <td>{user.kkBalita}</td>
+                    <td>{user.nikBalita}</td>
+                    <td>{user.anakKeBalita}</td>
+                    <td>{user.namaBalita}</td>
+                    <td>{user.tglLahirBalitaFormatted}</td>
+                    <td>{user.umurBalita}</td>
+                    <td>{user.jenisKelaminBalita}</td>
+                    <td></td>
+                    <td>{user.beratBadanLahirBalita}</td>
+                    <td>{user.panjangBadanLahirBalita}</td>
+                    <td>{user.namaAyahBalita}</td>
+                    <td>{user.namaIbuBalita}</td>
+                    <td>{user.nikAyahBalita}</td>
+                    <td>{user.pendidikanTerakhirAyahBalita}</td>
+                    <td>{user.pendidikanTerakhirIbuBalita}</td>
+                    <td></td>
+                    <td></td>
+                    <td>{user.rtBalita}</td>
+                    <td>{user.beratBadanBalita}</td>
+                    <td>{user.panjangBadanBalita}</td>
+                    <td>{user.lingkarLenganAtasBalita}</td>
+                    <td>{user.lingkarKepalaBalita}</td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                  </tr>
+                )
+                no++
+              })}
             </tbody>
           </table>
         </div>
@@ -362,53 +421,139 @@ const TampilPosyanduBalita = () => {
             EXCEL
           </Button>
         )}
-        <table ref={tableRef} class="styled-table" style={{ fontSize: "10px" }}>
+        <table ref={tableRef} class="styled-table" style={{ fontSize: "10px", fontWeight: "500" }}>
           {previewExcel && (
             <tbody>
               <tr>
-                <th>KK</th>
-                <th>NIK</th>
-                <th>Anak Ke</th>
-                <th>Nama</th>
-                <th>Tgl. Lahir</th>
-                <th>Umur</th>
+                <th colspan="29" style={{ textAlign: "center" }} >FORMULIR PEMANTAUAN PERTUMBUHAN BALITA DI POSYANDU 2023</th>
+              </tr>
+              <tr>
+                <td colspan="29"></td>
+              </tr>
+              <tr>
+                <td colspan="2">DESA</td>
+                <td colspan="2"><b> : GUWOSARI</b></td>
+                <td colspan="5"><b>HASIL (Wajib Diisi)</b></td>
+                <td colspan="2"><b>Keterangan</b></td>
+                <td colspan="18"></td>
+              </tr>
+              <tr>
+                <td colspan="2">NAMA POSYANDU</td>
+                <td colspan="2"><b>: ASTER</b></td>
+                <td colspan="5"></td>
+                <td colspan="2"><b>S</b> : Semua Balita</td>
+                <td colspan="2"><b>BB</b> : Berat Badan</td>
+                <td colspan="17"></td>
+              </tr>
+              <tr>
+                <td colspan="2">NAMA DUSUN</td>
+                <td colspan="2"><b>: KEMBANG PUTIHAN</b></td>
+                <td colspan="5"></td>
+                <td colspan="2"><b>N</b> : Naik</td>
+                <td colspan="2"><b>TB</b> : Tinggi Badan diukur 3 bulan 1X (Februari, Mei, Agustus, November)</td>
+                <td colspan="17"></td>
+              </tr>
+              <tr>
+                <td colspan="2">BULAN PENIMBANGAN</td>
+                <td colspan="2">: {user.tutupperiode.namaPeriode}</td>
+                <td colspan="5"></td>
+                <td colspan="2"><b>T</b> : Turun/Tetap</td>
+                <td colspan="2"><b>LLA</b> : Lingkar lengan atas, LK : Lingkar Kepala</td>
+                <td colspan="17"></td>
+              </tr>
+              <tr>
+                <td colspan="2">TANGGAL PENIMBANGAN</td>
+                <td colspan="2">: </td>
+                <td colspan="5"></td>
+                <td colspan="2"><b>O</b> : Bulan kemarin tidak nimbang</td>
+                <td colspan="2"><b>ASIE</b> : Air Susu Ibu Saja (Eksklusif)</td>
+                <td colspan="17"></td>
+              </tr>
+              <tr>
+                <td colspan="2">KADER YANG HADIR</td>
+                <td colspan="2">: </td>
+                <td colspan="5"></td>
+                <td colspan="2"><b>B</b> : Baru</td>
+                <td colspan="2"><b>BR</b> : Vit A Biru, M ; Vit A Merah</td>
+                <td colspan="17"></td>
+              </tr>
+              <tr>
+                <td colspan="2"></td>
+                <td colspan="2"></td>
+                <td colspan="5"></td>
+                <td colspan="2"><b>D</b> : Ditimbang</td>
+                <td colspan="2">(Vit A diisi hanya bulan Februari & Agustus)</td>
+                <td colspan="17"></td>
+              </tr>
+              <tr>
+                <td colspan="29"></td>
+              </tr>
+              <tr>
+                <th>No</th>
+                <th>NO KK</th>
+                <th>NIK BALITA</th>
+                <th>ANAK KE</th>
+                <th>NAMA ANAK</th>
+                <th>TGL LAHIR</th>
+                <th>UMUR (Bln)</th>
                 <th>JK</th>
-                <th>BBL</th>
-                <th>PBL</th>
-                <th>Nama Ayah</th>
-                <th>Nama Ibu</th>
-                <th>NIK Ayah</th>
-                <th>Pendidikan Terakhir Ayah</th>
-                <th>Pendidikan Terakhir Ibu</th>
+                <th>IMD</th>
+                <th>BBL L (kg)</th>
+                <th>PBL L (cm)</th>
+                <th>NAMA ORTU (AYAH)</th>
+                <th>NAMA ORTU (IBU)</th>
+                <th>NIK AYAH</th>
+                <th>PENDIDIKAN TERAKHIR AYAH</th>
+                <th>PENDIDIKAN TERAKHIR IBU</th>
+                <th>RIWAYAT KEHAMILAN IBU LILA</th>
+                <th>RIWAYAT KEHAMILAN IBU Hb</th>
                 <th>RT</th>
-                <th>BB</th>
-                <th>PB</th>
+                <th>BB (kg)</th>
+                <th>PB/TB (cm)</th>
                 <th>LLA</th>
                 <th>LK</th>
+                <th>N</th>
+                <th>T/Tt</th>
+                <th>O</th>
+                <th>B</th>
+                <th>ASI</th>
+                <th>Vit A</th>
               </tr>
-              {posyanduBalitas.map((user, index) => (
-                <tr key={user.id}>
-                  <td>{user.kkBalita}</td>
-                  <td>{user.nikBalita}</td>
-                  <td>{user.anakKeBalita}</td>
-                  <td>{user.namaBalita}</td>
-                  <td>{user.tglLahirBalitaFormatted}</td>
-                  <td>{user.umurBalita}</td>
-                  <td>{user.jenisKelaminBalita}</td>
-                  <td>{user.beratBadanLahirBalita}</td>
-                  <td>{user.panjangBadanLahirBalita}</td>
-                  <td>{user.namaAyahBalita}</td>
-                  <td>{user.namaIbuBalita}</td>
-                  <td>{user.nikAyahBalita}</td>
-                  <td>{user.pendidikanTerakhirAyahBalita}</td>
-                  <td>{user.pendidikanTerakhirIbuBalita}</td>
-                  <td>{user.rtBalita}</td>
-                  <td>{user.beratBadanBalita}</td>
-                  <td>{user.panjangBadanBalita}</td>
-                  <td>{user.lingkarLenganAtasBalita}</td>
-                  <td>{user.lingkarKepalaBalita}</td>
-                </tr>
-              ))}
+              {posyanduBalitas.map((user, index) => {
+                return (
+                  <tr key={user.id}>
+                    <td>{index + 1}</td>
+                    <td>{user.kkBalita}</td>
+                    <td>{user.nikBalita}</td>
+                    <td>{user.anakKeBalita}</td>
+                    <td>{user.namaBalita}</td>
+                    <td>{user.tglLahirBalitaFormatted}</td>
+                    <td>{user.umurBalita}</td>
+                    <td>{user.jenisKelaminBalita}</td>
+                    <td></td>
+                    <td>{user.beratBadanLahirBalita}</td>
+                    <td>{user.panjangBadanLahirBalita}</td>
+                    <td>{user.namaAyahBalita}</td>
+                    <td>{user.namaIbuBalita}</td>
+                    <td>{user.nikAyahBalita}</td>
+                    <td>{user.pendidikanTerakhirAyahBalita}</td>
+                    <td>{user.pendidikanTerakhirIbuBalita}</td>
+                    <td></td>
+                    <td></td>
+                    <td>{user.rtBalita}</td>
+                    <td>{user.beratBadanBalita}</td>
+                    <td>{user.panjangBadanBalita}</td>
+                    <td>{user.lingkarLenganAtasBalita}</td>
+                    <td>{user.lingkarKepalaBalita}</td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                  </tr>
+                )
+              })}
             </tbody>
           )}
         </table>

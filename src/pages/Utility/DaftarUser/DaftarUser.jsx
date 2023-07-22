@@ -46,6 +46,8 @@ const DaftarUser = () => {
   // Akses Posyandu
   const [posyanduLansia, setPosyanduLansia] = useState(false);
   const [posyanduBalita, setPosyanduBalita] = useState(false);
+  const [gantiPeriode, setGantiPeriode] = useState(false);
+  const [tutupPeriode, setTutupPeriode] = useState(false);
 
   // Akses Utility
   const [profilUser, setProfilUser] = useState(false);
@@ -138,6 +140,8 @@ const DaftarUser = () => {
       // Akses Posyandu
       setPosyanduLansia(response.data.akses.posyanduLansia);
       setPosyanduBalita(response.data.akses.posyanduBalita);
+      setGantiPeriode(response.data.akses.gantiPeriode);
+      setTutupPeriode(response.data.akses.tutupPeriode);
 
       // Akses Utility
       setProfilUser(response.data.akses.profilUser);
@@ -439,6 +443,22 @@ const DaftarUser = () => {
                       label="Balita"
                       disabled
                       checked={posyanduBalita}
+                    />
+                  </Form>
+                  <Form>
+                    <Form.Check
+                      type="checkbox"
+                      label="Ganti Periode"
+                      disabled
+                      checked={gantiPeriode}
+                    />
+                  </Form>
+                  <Form>
+                    <Form.Check
+                      type="checkbox"
+                      label="Tutup Periode"
+                      disabled
+                      checked={tutupPeriode}
                     />
                   </Form>
                 </Box>

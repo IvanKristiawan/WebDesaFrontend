@@ -124,6 +124,17 @@ const Sidebar = ({
                 Balita <NavLink to="/posyanduBalita" />
               </MenuItem>
             )}
+            {user.akses.tutupPeriode === true && (
+              <MenuItem>
+                Tutup Periode
+                <NavLink to="/tutupPeriode" />
+              </MenuItem>
+            )}
+            {user.akses.gantiPeriode === true && (
+              <MenuItem>
+                Ganti Periode <NavLink to="/gantiPeriode" />
+              </MenuItem>
+            )}
           </SubMenu>
           <SubMenu title={"Setelan"} icon={<FaUserCog />}>
             {user.akses.profilUser === true && (
@@ -134,17 +145,6 @@ const Sidebar = ({
             {user.akses.daftarUser === true && (
               <MenuItem>
                 Daftar User <NavLink to="/daftarUser" />
-              </MenuItem>
-            )}
-            {user.akses.tutupPeriode === true && (
-              <MenuItem>
-                Tutup Periode
-                <NavLink to="/tutupPeriode" />
-              </MenuItem>
-            )}
-            {user.akses.gantiPeriode === true && (
-              <MenuItem>
-                Ganti Periode <NavLink to="/gantiPeriode" />
               </MenuItem>
             )}
             {user.akses.setting === true && (

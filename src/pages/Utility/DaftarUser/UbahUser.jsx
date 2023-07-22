@@ -42,6 +42,8 @@ const UbahUser = () => {
   // Akses Posyandu
   const [posyanduLansia, setPosyanduLansia] = useState(false);
   const [posyanduBalita, setPosyanduBalita] = useState(false);
+  const [gantiPeriode, setGantiPeriode] = useState(false);
+  const [tutupPeriode, setTutupPeriode] = useState(false);
 
   // Akses Utility
   const [profilUser, setProfilUser] = useState(false);
@@ -100,6 +102,8 @@ const UbahUser = () => {
     // Akses Posyandu
     setPosyanduLansia(response.data.akses.posyanduLansia);
     setPosyanduBalita(response.data.akses.posyanduBalita);
+    setGantiPeriode(response.data.akses.gantiPeriode);
+    setTutupPeriode(response.data.akses.tutupPeriode);
 
     // Akses Utility
     setProfilUser(response.data.akses.profilUser);
@@ -145,6 +149,8 @@ const UbahUser = () => {
               umkm,
               posyanduLansia,
               posyanduBalita,
+              gantiPeriode,
+              tutupPeriode,
               profilUser,
               daftarUser,
               setting: settingAkses,
@@ -252,11 +258,11 @@ const UbahUser = () => {
                     >
                       {user.tipeUser === "OWNER"
                         ? tipeUserOptionOwner.map((tipeUser) => (
-                            <option value={tipeUser}>{tipeUser}</option>
-                          ))
+                          <option value={tipeUser}>{tipeUser}</option>
+                        ))
                         : tipeUserOption.map((tipeUser) => (
-                            <option value={tipeUser}>{tipeUser}</option>
-                          ))}
+                          <option value={tipeUser}>{tipeUser}</option>
+                        ))}
                     </Form.Select>
                   </Col>
                 </Form.Group>
@@ -348,6 +354,18 @@ const UbahUser = () => {
                       label="Posyandu Balita"
                       checked={posyanduBalita}
                       onChange={() => setPosyanduBalita(!posyanduBalita)}
+                    />
+                    <Form.Check
+                      type="checkbox"
+                      label="Ganti Periode"
+                      checked={gantiPeriode}
+                      onChange={() => setGantiPeriode(!gantiPeriode)}
+                    />
+                    <Form.Check
+                      type="checkbox"
+                      label="Tutup Periode"
+                      checked={tutupPeriode}
+                      onChange={() => setTutupPeriode(!tutupPeriode)}
                     />
                   </Form>
                 </Box>

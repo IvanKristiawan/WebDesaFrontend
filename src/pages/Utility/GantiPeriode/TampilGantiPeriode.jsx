@@ -200,7 +200,7 @@ const TampilGantiPeriode = () => {
 
   return (
     <Container>
-      <h3>Utility</h3>
+      <h3>Posyandu</h3>
       <h5 style={{ fontWeight: 400 }}>Daftar Periode</h5>
       <Typography sx={subTitleText}>
         Periode : {user.tutupperiode.namaPeriode}
