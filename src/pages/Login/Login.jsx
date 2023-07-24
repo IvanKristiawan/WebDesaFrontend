@@ -66,7 +66,7 @@ function Login() {
     >
       <Card style={cardContainer}>
         <Card.Header style={headerContainer}>
-          <p style={headerText}>TECHKU</p>
+          <p style={headerText}>KKN UAJY 83</p>
           <p style={headerText}>(SISTEM INFORMASI DESA ONLINE)</p>
           <p style={headerDetail}>Aplikasi Management Desa</p>
         </Card.Header>
