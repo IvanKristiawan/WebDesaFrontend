@@ -31,7 +31,6 @@ const UbahUser = () => {
   // Akses Desa
   const [rt, setRt] = useState(false);
   const [penduduk, setPenduduk] = useState(false);
-  const [bankSampah, setBankSampah] = useState(false);
 
   // Data Web
   const [lokasiPetinggi, setLokasiPetinggi] = useState(false);
@@ -91,7 +90,6 @@ const UbahUser = () => {
     // Akses Desa
     setRt(response.data.akses.rt);
     setPenduduk(response.data.akses.penduduk);
-    setBankSampah(response.data.akses.bankSampah);
 
     // Akses Data Web
     setLokasiPetinggi(response.data.akses.lokasiPetinggi);
@@ -142,7 +140,6 @@ const UbahUser = () => {
             akses: {
               rt,
               penduduk,
-              bankSampah,
               lokasiPetinggi,
               lokasiUmkm,
               lokasiWisata,
@@ -306,12 +303,6 @@ const UbahUser = () => {
                       label="Penduduk"
                       checked={penduduk}
                       onChange={() => setPenduduk(!penduduk)}
-                    />
-                    <Form.Check
-                      type="checkbox"
-                      label="Bank Sampah"
-                      checked={bankSampah}
-                      onChange={() => setBankSampah(!bankSampah)}
                     />
                   </Form>
                   <p style={checkboxTitle}>Data Web</p>

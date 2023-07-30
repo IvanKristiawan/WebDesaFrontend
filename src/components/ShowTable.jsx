@@ -280,13 +280,13 @@ export function ShowTablePenduduk({ id, currentPosts, searchTerm }) {
               sx={{ fontWeight: "bold" }}
               className={classes.tableRightBorder}
             >
-              KK
+              Nama
             </TableCell>
             <TableCell
               sx={{ fontWeight: "bold" }}
               className={classes.tableRightBorder}
             >
-              Nama
+              KK
             </TableCell>
             <TableCell
               sx={{ fontWeight: "bold" }}
@@ -329,9 +329,9 @@ export function ShowTablePenduduk({ id, currentPosts, searchTerm }) {
                   }}
                 >
                   <TableCell component="th" scope="row">
-                    {user.kkPenduduk}
+                    {user.namaPenduduk}
                   </TableCell>
-                  <TableCell>{user.namaPenduduk}</TableCell>
+                  <TableCell>{user.kkPenduduk}</TableCell>
                   <TableCell>{user.latitude}</TableCell>
                   <TableCell>{user.longitude}</TableCell>
                 </TableRow>
@@ -343,7 +343,12 @@ export function ShowTablePenduduk({ id, currentPosts, searchTerm }) {
   );
 }
 
-export function ShowTablePendudukKk({ id, idPendudukChild, currentPosts, searchTerm }) {
+export function ShowTablePendudukKk({
+  id,
+  idPendudukChild,
+  currentPosts,
+  searchTerm,
+}) {
   let navigate = useNavigate();
   const classes = useStyles();
   return (
@@ -355,7 +360,7 @@ export function ShowTablePendudukKk({ id, idPendudukChild, currentPosts, searchT
               sx={{ fontWeight: "bold" }}
               className={classes.tableRightBorder}
             >
-              KK
+              Nama
             </TableCell>
             <TableCell
               sx={{ fontWeight: "bold" }}
@@ -367,7 +372,13 @@ export function ShowTablePendudukKk({ id, idPendudukChild, currentPosts, searchT
               sx={{ fontWeight: "bold" }}
               className={classes.tableRightBorder}
             >
-              Nama
+              Jenis Kelamin
+            </TableCell>
+            <TableCell
+              sx={{ fontWeight: "bold" }}
+              className={classes.tableRightBorder}
+            >
+              Status
             </TableCell>
           </TableRow>
         </TableHead>
@@ -377,13 +388,16 @@ export function ShowTablePendudukKk({ id, idPendudukChild, currentPosts, searchT
               if (searchTerm === "") {
                 return val;
               } else if (
-                val.kkPenduduk
-                  .toUpperCase()
-                  .includes(searchTerm.toUpperCase()) ||
                 val.nikDaftarPenduduk
                   .toUpperCase()
                   .includes(searchTerm.toUpperCase()) ||
                 val.namaDaftarPenduduk
+                  .toUpperCase()
+                  .includes(searchTerm.toUpperCase()) ||
+                val.jenisKelaminPenduduk
+                  .toUpperCase()
+                  .includes(searchTerm.toUpperCase()) ||
+                val.statusPenduduk
                   .toUpperCase()
                   .includes(searchTerm.toUpperCase())
               ) {
@@ -400,14 +414,17 @@ export function ShowTablePendudukKk({ id, idPendudukChild, currentPosts, searchT
                     cursor: "pointer",
                   }}
                   onClick={() => {
-                    navigate(`/daftarPenduduk/penduduk/${id}/${idPendudukChild}/${user.id}`);
+                    navigate(
+                      `/daftarPenduduk/penduduk/${id}/${idPendudukChild}/${user.id}`
+                    );
                   }}
                 >
                   <TableCell component="th" scope="row">
-                    {user.kkPenduduk}
+                    {user.namaDaftarPenduduk}
                   </TableCell>
                   <TableCell>{user.nikDaftarPenduduk}</TableCell>
-                  <TableCell>{user.namaDaftarPenduduk}</TableCell>
+                  <TableCell>{user.jenisKelaminPenduduk}</TableCell>
+                  <TableCell>{user.statusPenduduk}</TableCell>
                 </TableRow>
               );
             })}

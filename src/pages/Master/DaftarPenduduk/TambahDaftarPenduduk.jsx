@@ -17,6 +17,8 @@ const TambahDaftarPenduduk = () => {
   const [kkPenduduk, setKkPenduduk] = useState("");
   const [nikDaftarPenduduk, setNikDaftarPenduduk] = useState("");
   const [namaDaftarPenduduk, setNamaDaftarPenduduk] = useState("");
+  const [jenisKelaminPenduduk, setJenisKelaminPenduduk] = useState("LAKI-LAKI");
+  const [statusPenduduk, setStatusPenduduk] = useState("KEPALA KELUARGA");
 
   const [error, setError] = useState(false);
   const navigate = useNavigate();
@@ -46,7 +48,6 @@ const TambahDaftarPenduduk = () => {
     setLoading(false);
   };
 
-
   const saveDaftarPenduduk = async (e) => {
     e.preventDefault();
     e.stopPropagation();
@@ -59,6 +60,8 @@ const TambahDaftarPenduduk = () => {
           kkPenduduk,
           nikDaftarPenduduk,
           namaDaftarPenduduk,
+          jenisKelaminPenduduk,
+          statusPenduduk,
           pendudukId: idPendudukChild,
           _id: user.id,
           token: user.token,
@@ -104,10 +107,28 @@ const TambahDaftarPenduduk = () => {
                     KK :
                   </Form.Label>
                   <Col sm="8">
+                    <Form.Control value={kkPenduduk} disabled readOnly />
+                  </Col>
+                </Form.Group>
+              </Col>
+            </Row>
+            <Row>
+              <Col sm={6}>
+                <Form.Group
+                  as={Row}
+                  className="mb-3"
+                  controlId="formPlaintextPassword"
+                >
+                  <Form.Label column sm="4" style={textRight}>
+                    Nama :
+                  </Form.Label>
+                  <Col sm="8">
                     <Form.Control
-                      value={kkPenduduk}
-                      disabled
-                      readOnly
+                      required
+                      value={namaDaftarPenduduk}
+                      onChange={(e) =>
+                        setNamaDaftarPenduduk(e.target.value.toUpperCase())
+                      }
                     />
                   </Col>
                 </Form.Group>
@@ -143,16 +164,47 @@ const TambahDaftarPenduduk = () => {
                   controlId="formPlaintextPassword"
                 >
                   <Form.Label column sm="4" style={textRight}>
-                    Nama :
+                    Jenis Kelamin :
                   </Form.Label>
                   <Col sm="8">
-                    <Form.Control
+                    <Form.Select
                       required
-                      value={namaDaftarPenduduk}
-                      onChange={(e) =>
-                        setNamaDaftarPenduduk(e.target.value.toUpperCase())
-                      }
-                    />
+                      value={jenisKelaminPenduduk}
+                      onChange={(e) => {
+                        setJenisKelaminPenduduk(e.target.value);
+                      }}
+                    >
+                      <option value={"LAKI-LAKI"}>LAKI-LAKI</option>
+                      <option value={"PEREMPUAN"}>PEREMPUAN</option>
+                    </Form.Select>
+                  </Col>
+                </Form.Group>
+              </Col>
+            </Row>
+            <Row>
+              <Col sm={6}>
+                <Form.Group
+                  as={Row}
+                  className="mb-3"
+                  controlId="formPlaintextPassword"
+                >
+                  <Form.Label column sm="4" style={textRight}>
+                    Status :
+                  </Form.Label>
+                  <Col sm="8">
+                    <Form.Select
+                      required
+                      value={statusPenduduk}
+                      onChange={(e) => {
+                        setStatusPenduduk(e.target.value);
+                      }}
+                    >
+                      <option value={"KEPALA KELUARGA"}>KEPALA KELUARGA</option>
+                      <option value={"ISTRI"}>ISTRI</option>
+                      <option value={"ANAK"}>ANAK</option>
+                      <option value={"CUCU"}>CUCU</option>
+                      <option value={"FAMILI LAIN"}>FAMILI LAIN</option>
+                    </Form.Select>
                   </Col>
                 </Form.Group>
               </Col>
@@ -161,7 +213,9 @@ const TambahDaftarPenduduk = () => {
               <Button
                 variant="outlined"
                 color="secondary"
-                onClick={() => navigate(`/daftarPenduduk/penduduk/${id}/${idPendudukChild}`)}
+                onClick={() =>
+                  navigate(`/daftarPenduduk/penduduk/${id}/${idPendudukChild}`)
+                }
                 sx={{ marginRight: 2 }}
               >
                 {"< Kembali"}

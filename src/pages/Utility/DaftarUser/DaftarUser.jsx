@@ -35,7 +35,6 @@ const DaftarUser = () => {
   // Akses Desa
   const [rt, setRt] = useState(false);
   const [penduduk, setPenduduk] = useState(false);
-  const [bankSampah, setBankSampah] = useState(false);
 
   // Data Web
   const [lokasiPetinggi, setLokasiPetinggi] = useState(false);
@@ -129,7 +128,6 @@ const DaftarUser = () => {
       // Akses Desa
       setRt(response.data.akses.rt);
       setPenduduk(response.data.akses.penduduk);
-      setBankSampah(response.data.akses.bankSampah);
 
       // Akses Data Web
       setLokasiPetinggi(response.data.akses.lokasiPetinggi);
@@ -393,12 +391,6 @@ const DaftarUser = () => {
                       label="Penduduk"
                       disabled
                       checked={penduduk}
-                    />
-                    <Form.Check
-                      type="checkbox"
-                      label="Bank Sampah"
-                      disabled
-                      checked={bankSampah}
                     />
                   </Form>
                   <p style={checkboxTitle}>Data Web</p>

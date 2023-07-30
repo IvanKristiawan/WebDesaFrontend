@@ -25,6 +25,8 @@ const TampilDaftarPendudukKk = () => {
   const [kkPenduduk, setKkPenduduk] = useState("");
   const [nikDaftarPenduduk, setNikDaftarPenduduk] = useState("");
   const [namaDaftarPenduduk, setNamaDaftarPenduduk] = useState("");
+  const [jenisKelaminPenduduk, setJenisKelaminPenduduk] = useState("");
+  const [statusPenduduk, setStatusPenduduk] = useState("");
   const [penduduk, setPenduduk] = useState({});
 
   const navigate = useNavigate();
@@ -57,6 +59,8 @@ const TampilDaftarPendudukKk = () => {
       setKkPenduduk(response.data.kkPenduduk);
       setNikDaftarPenduduk(response.data.nikDaftarPenduduk);
       setNamaDaftarPenduduk(response.data.namaDaftarPenduduk);
+      setJenisKelaminPenduduk(response.data.jenisKelaminPenduduk);
+      setStatusPenduduk(response.data.statusPenduduk);
     }
   };
 
@@ -64,10 +68,13 @@ const TampilDaftarPendudukKk = () => {
     try {
       setLoading(true);
       // Delete Penduduk
-      await axios.post(`${tempUrl}/deleteDaftarPenduduk/${tempIdPendudukChild}`, {
-        _id: user.id,
-        token: user.token,
-      });
+      await axios.post(
+        `${tempUrl}/deleteDaftarPenduduk/${tempIdPendudukChild}`,
+        {
+          _id: user.id,
+          token: user.token,
+        }
+      );
       setLoading(false);
       navigate(`/daftarPenduduk/penduduk/${id}/${idPendudukChild}`);
     } catch (error) {
@@ -90,7 +97,9 @@ const TampilDaftarPendudukKk = () => {
       <Button
         variant="outlined"
         color="secondary"
-        onClick={() => navigate(`/daftarPenduduk/penduduk/${id}/${idPendudukChild}`)}
+        onClick={() =>
+          navigate(`/daftarPenduduk/penduduk/${id}/${idPendudukChild}`)
+        }
         sx={{ marginLeft: 2, marginTop: 4 }}
       >
         {"< Kembali"}
@@ -135,12 +144,12 @@ const TampilDaftarPendudukKk = () => {
                   controlId="formPlaintextPassword"
                 >
                   <Form.Label column sm="3" style={textRight}>
-                    KK :
+                    Nama :
                   </Form.Label>
                   <Col sm="9">
                     <Form.Control
                       required
-                      value={kkPenduduk}
+                      value={namaDaftarPenduduk}
                       disabled
                       readOnly
                     />
@@ -177,12 +186,33 @@ const TampilDaftarPendudukKk = () => {
                   controlId="formPlaintextPassword"
                 >
                   <Form.Label column sm="3" style={textRight}>
-                    Nama :
+                    Jenis Kelamin :
                   </Form.Label>
                   <Col sm="9">
                     <Form.Control
                       required
-                      value={namaDaftarPenduduk}
+                      value={jenisKelaminPenduduk}
+                      disabled
+                      readOnly
+                    />
+                  </Col>
+                </Form.Group>
+              </Col>
+            </Row>
+            <Row>
+              <Col sm={6}>
+                <Form.Group
+                  as={Row}
+                  className="mb-3"
+                  controlId="formPlaintextPassword"
+                >
+                  <Form.Label column sm="3" style={textRight}>
+                    Status :
+                  </Form.Label>
+                  <Col sm="9">
+                    <Form.Control
+                      required
+                      value={statusPenduduk}
                       disabled
                       readOnly
                     />

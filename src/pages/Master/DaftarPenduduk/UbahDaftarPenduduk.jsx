@@ -18,6 +18,8 @@ const UbahDaftarPenduduk = () => {
   const [nikDaftarPenduduk, setNikDaftarPenduduk] = useState("");
   const [nikDaftarPendudukLama, setNikDaftarPendudukLama] = useState("");
   const [namaDaftarPenduduk, setNamaDaftarPenduduk] = useState("");
+  const [jenisKelaminPenduduk, setJenisKelaminPenduduk] = useState("");
+  const [statusPenduduk, setStatusPenduduk] = useState("");
 
   const [error, setError] = useState(false);
   const navigate = useNavigate();
@@ -44,9 +46,11 @@ const UbahDaftarPenduduk = () => {
       }
     );
     setKkPenduduk(pickedBeliChild.data.kkPenduduk);
-    setNikDaftarPendudukLama(pickedBeliChild.data.nikDaftarPendudukLama);
+    setNikDaftarPendudukLama(pickedBeliChild.data.nikDaftarPenduduk);
     setNikDaftarPenduduk(pickedBeliChild.data.nikDaftarPenduduk);
     setNamaDaftarPenduduk(pickedBeliChild.data.namaDaftarPenduduk);
+    setJenisKelaminPenduduk(pickedBeliChild.data.jenisKelaminPenduduk);
+    setStatusPenduduk(pickedBeliChild.data.statusPenduduk);
     setLoading(false);
   };
 
@@ -58,16 +62,23 @@ const UbahDaftarPenduduk = () => {
       setLoading(true);
       try {
         setLoading(true);
-        await axios.post(`${tempUrl}/updateDaftarPenduduk/${idDaftarPenduduk}`, {
-          kkPenduduk,
-          nikDaftarPendudukLama,
-          nikDaftarPenduduk,
-          namaDaftarPenduduk,
-          _id: user.id,
-          token: user.token,
-        });
+        await axios.post(
+          `${tempUrl}/updateDaftarPenduduk/${idDaftarPenduduk}`,
+          {
+            kkPenduduk,
+            nikDaftarPendudukLama,
+            nikDaftarPenduduk,
+            namaDaftarPenduduk,
+            jenisKelaminPenduduk,
+            statusPenduduk,
+            _id: user.id,
+            token: user.token,
+          }
+        );
         setLoading(false);
-        navigate(`/daftarPenduduk/penduduk/${id}/${idPendudukChild}/${idDaftarPenduduk}`);
+        navigate(
+          `/daftarPenduduk/penduduk/${id}/${idPendudukChild}/${idDaftarPenduduk}`
+        );
       } catch (error) {
         alert(error.response.data.message);
       }
@@ -95,7 +106,11 @@ const UbahDaftarPenduduk = () => {
       <Card>
         <Card.Header>Detail Daftar Penduduk</Card.Header>
         <Card.Body>
-          <Form noValidate validated={validated} onSubmit={updateDaftarPenduduk}>
+          <Form
+            noValidate
+            validated={validated}
+            onSubmit={updateDaftarPenduduk}
+          >
             <Row>
               <Col sm={6}>
                 <Form.Group
@@ -107,10 +122,28 @@ const UbahDaftarPenduduk = () => {
                     KK :
                   </Form.Label>
                   <Col sm="8">
+                    <Form.Control value={kkPenduduk} disabled readOnly />
+                  </Col>
+                </Form.Group>
+              </Col>
+            </Row>
+            <Row>
+              <Col sm={6}>
+                <Form.Group
+                  as={Row}
+                  className="mb-3"
+                  controlId="formPlaintextPassword"
+                >
+                  <Form.Label column sm="4" style={textRight}>
+                    Nama :
+                  </Form.Label>
+                  <Col sm="8">
                     <Form.Control
-                      value={kkPenduduk}
-                      disabled
-                      readOnly
+                      required
+                      value={namaDaftarPenduduk}
+                      onChange={(e) =>
+                        setNamaDaftarPenduduk(e.target.value.toUpperCase())
+                      }
                     />
                   </Col>
                 </Form.Group>
@@ -146,16 +179,47 @@ const UbahDaftarPenduduk = () => {
                   controlId="formPlaintextPassword"
                 >
                   <Form.Label column sm="4" style={textRight}>
-                    Nama :
+                    Jenis Kelamin :
                   </Form.Label>
                   <Col sm="8">
-                    <Form.Control
+                    <Form.Select
                       required
-                      value={namaDaftarPenduduk}
-                      onChange={(e) =>
-                        setNamaDaftarPenduduk(e.target.value.toUpperCase())
-                      }
-                    />
+                      value={jenisKelaminPenduduk}
+                      onChange={(e) => {
+                        setJenisKelaminPenduduk(e.target.value);
+                      }}
+                    >
+                      <option value={"LAKI-LAKI"}>LAKI-LAKI</option>
+                      <option value={"PEREMPUAN"}>PEREMPUAN</option>
+                    </Form.Select>
+                  </Col>
+                </Form.Group>
+              </Col>
+            </Row>
+            <Row>
+              <Col sm={6}>
+                <Form.Group
+                  as={Row}
+                  className="mb-3"
+                  controlId="formPlaintextPassword"
+                >
+                  <Form.Label column sm="4" style={textRight}>
+                    Status :
+                  </Form.Label>
+                  <Col sm="8">
+                    <Form.Select
+                      required
+                      value={statusPenduduk}
+                      onChange={(e) => {
+                        setStatusPenduduk(e.target.value);
+                      }}
+                    >
+                      <option value={"KEPALA KELUARGA"}>KEPALA KELUARGA</option>
+                      <option value={"ISTRI"}>ISTRI</option>
+                      <option value={"ANAK"}>ANAK</option>
+                      <option value={"CUCU"}>CUCU</option>
+                      <option value={"FAMILI LAIN"}>FAMILI LAIN</option>
+                    </Form.Select>
                   </Col>
                 </Form.Group>
               </Col>
@@ -165,7 +229,9 @@ const UbahDaftarPenduduk = () => {
                 variant="outlined"
                 color="secondary"
                 onClick={() =>
-                  navigate(`/daftarPenduduk/penduduk/${id}/${idPendudukChild}/${idDaftarPenduduk}`)
+                  navigate(
+                    `/daftarPenduduk/penduduk/${id}/${idPendudukChild}/${idDaftarPenduduk}`
+                  )
                 }
                 sx={{ marginRight: 2 }}
               >

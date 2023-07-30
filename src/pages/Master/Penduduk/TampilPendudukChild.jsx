@@ -3,7 +3,12 @@ import { useNavigate, useParams } from "react-router-dom";
 import axios from "axios";
 import { AuthContext } from "../../../contexts/AuthContext";
 import { tempUrl, useStateContext } from "../../../contexts/ContextProvider";
-import { Loader, ButtonModifier, usePagination, SearchBar } from "../../../components";
+import {
+  Loader,
+  ButtonModifier,
+  usePagination,
+  SearchBar,
+} from "../../../components";
 import { ShowTablePendudukKk } from "../../../components/ShowTable";
 import Pin from "../../../assets/pin";
 import { Container, Card, Form, Row, Col } from "react-bootstrap";
@@ -59,15 +64,12 @@ const TampilPendudukChild = () => {
     if (searchTerm === "") {
       return val;
     } else if (
-      val.kkPenduduk
+      val.nikDaftarPenduduk.toUpperCase().includes(searchTerm.toUpperCase()) ||
+      val.namaDaftarPenduduk.toUpperCase().includes(searchTerm.toUpperCase()) ||
+      val.jenisKelaminPenduduk
         .toUpperCase()
         .includes(searchTerm.toUpperCase()) ||
-      val.nikDaftarPenduduk
-        .toUpperCase()
-        .includes(searchTerm.toUpperCase()) ||
-      val.namaDaftarPenduduk
-        .toUpperCase()
-        .includes(searchTerm.toUpperCase())
+      val.statusPenduduk.toUpperCase().includes(searchTerm.toUpperCase())
     ) {
       return val;
     }

@@ -30,7 +30,6 @@ const TambahUser = () => {
   // Akses Desa
   const [rt, setRt] = useState(false);
   const [penduduk, setPenduduk] = useState(false);
-  const [bankSampah, setBankSampah] = useState(false);
 
   // Data Web
   const [lokasiPetinggi, setLokasiPetinggi] = useState(false);
@@ -97,7 +96,6 @@ const TambahUser = () => {
             akses: {
               rt,
               penduduk,
-              bankSampah,
               lokasiPetinggi,
               lokasiUmkm,
               lokasiWisata,
@@ -208,11 +206,11 @@ const TambahUser = () => {
                     >
                       {user.tipeUser === "OWNER"
                         ? tipeUserOptionOwner.map((tipeUser) => (
-                          <option value={tipeUser}>{tipeUser}</option>
-                        ))
+                            <option value={tipeUser}>{tipeUser}</option>
+                          ))
                         : tipeUserOption.map((tipeUser) => (
-                          <option value={tipeUser}>{tipeUser}</option>
-                        ))}
+                            <option value={tipeUser}>{tipeUser}</option>
+                          ))}
                     </Form.Select>
                   </Col>
                 </Form.Group>
@@ -257,12 +255,6 @@ const TambahUser = () => {
                       label="Penduduk"
                       checked={penduduk}
                       onChange={() => setPenduduk(!penduduk)}
-                    />
-                    <Form.Check
-                      type="checkbox"
-                      label="Bank Sampah"
-                      checked={bankSampah}
-                      onChange={() => setBankSampah(!bankSampah)}
                     />
                     <p style={checkboxTitle}>Data Web</p>
                     <Form>
